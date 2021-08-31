@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_link_components_metas",
+  "info": {
+    "name": "meta",
+    "icon": "american-sign-language-interpreting"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "content": {
+      "type": "richtext"
+    }
+  }
+}
