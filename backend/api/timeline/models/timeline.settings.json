@@ -1,0 +1,23 @@
+{
+  "kind": "singleType",
+  "collectionName": "timelines",
+  "info": {
+    "name": "Timeline",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "events": {
+      "type": "dynamiczone",
+      "components": [
+        "timeline.job",
+        "timeline.verv"
+      ]
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_timeline_descriptions",
+  "info": {
+    "name": "description",
+    "icon": "align-left"
+  },
+  "options": {},
+  "attributes": {
+    "status": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "date": {
+      "type": "datetime"
+    }
+  }
+}
