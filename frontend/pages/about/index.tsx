@@ -13,7 +13,11 @@ const About: NextPage = ({ timeline }: any) => {
         <meta name="description" content="Created by Mathias Bøe" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Timeline timeline={timeline.events} />
+      <div className="flex flex-col md:flex-row">
+        <div className="w-full md:w-1/2">
+          <Timeline timeline={timeline.events} />
+        </div>
+      </div>
     </Layout>
   );
 };
