@@ -1,7 +1,6 @@
 import "tailwindcss/tailwind.css";
 import Markdown from "../../../components/contentBlocks/markdown";
 import Layout from "../../../components/layout";
-import { useRouter } from "next/dist/client/router";
 import { fetchAPI } from "../../../lib/api";
 import { getStrapiMedia } from "../../../utils";
 import Image from "next/image";
@@ -33,6 +32,21 @@ export default function Post({ content }: any) {
                 {content.title}
               </span>
             </h1>
+            <div className="w-full content-center">
+              <div className="mx-auto py-4">
+                {console.log(content.titleImage)}
+                <Image
+                  className="rounded-lg"
+                  src={
+                    content.titleImage.url &&
+                    getStrapiMedia(content.titleImage.url)
+                  }
+                  width={content.titleImage.width}
+                  height={content.titleImage.height}
+                  alt="title image"
+                />
+              </div>
+            </div>
             {content.content.map((data: any) => renderSwitch(data))}
           </div>
         </div>
