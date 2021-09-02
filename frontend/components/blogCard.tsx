@@ -11,7 +11,7 @@ export default function BlogCard({ post, image }: BlogCardProps) {
     <div className="flex flex-col rounded-lg shadow-lg overflow-hidden m-auto">
       {image ? (
         <div className="flex-shrink-0">
-          <div className="max-h-48 border-2 border-black relative overflow-hidden">
+          <div className="max-h-48 relative overflow-hidden">
             {post.titleImage ? <Image image={post.titleImage} /> : null}
           </div>
         </div>
