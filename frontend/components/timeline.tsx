@@ -19,9 +19,8 @@ const eventTypes = {
 };
 
 export default function Timeline({ timeline }: any) {
-  console.log(timeline);
   return (
-    <div className="relative min-h-screen bg-gray-100">
+    <div className="relative min-h-screen">
       <section
         aria-labelledby="timeline-title"
         className="lg:col-start-3 lg:col-span-1"
