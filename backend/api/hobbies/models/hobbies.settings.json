@@ -1,0 +1,30 @@
+{
+  "kind": "singleType",
+  "collectionName": "hobbies",
+  "info": {
+    "name": "Hobbies",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "content": {
+      "type": "dynamiczone",
+      "components": [
+        "content.hobby"
+      ]
+    },
+    "title": {
+      "type": "string",
+      "required": true,
+      "default": "Hobbies"
+    },
+    "description": {
+      "type": "richtext"
+    }
+  }
+}
