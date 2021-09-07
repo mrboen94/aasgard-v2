@@ -16,15 +16,17 @@ const Image = ({ image, style, responsive }: ImageProps) => {
 
   return (
     <div className={style ? style + " overflow-hidden" : ""}>
-      <NextImage
-        loader={loader}
-        width={image.width}
-        height={image.height}
-        objectFit="fill"
-        layout={responsive ? "responsive" : "intrinsic"}
-        src={url}
-        alt={alternativeText ?? ""}
-      />
+      <div className="flex justify-center relative">
+        <NextImage
+          loader={loader}
+          width={image.width}
+          height={image.height}
+          objectFit="fill"
+          layout={responsive ? "responsive" : "intrinsic"}
+          src={url}
+          alt={alternativeText ?? ""}
+        />
+      </div>
     </div>
   );
 };

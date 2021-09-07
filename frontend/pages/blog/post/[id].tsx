@@ -3,16 +3,14 @@ import Markdown from "../../../components/contentBlocks/markdown";
 import Layout from "../../../components/layout";
 import { fetchAPI } from "../../../lib/api";
 import { getStrapiMedia } from "../../../utils";
-import Image from "next/image";
+import Image from "../../../components/image";
 
 export default function Post({ content }: any) {
   function renderSwitch(data: any) {
     switch (data.__component) {
       case "content.media":
         const url = getStrapiMedia(data.media[0].url);
-        return (
-          <Image src={url ? url : ""} width="50%" height="50%" alt="image" />
-        );
+        return <Image style="mx-auto" image={data.media[0]} />;
       case "content.text":
         return <Markdown markdown={data.text} />;
       default:
@@ -34,17 +32,7 @@ export default function Post({ content }: any) {
             </h1>
             <div className="w-full content-center">
               <div className="mx-auto py-4">
-                {console.log(content.titleImage)}
-                <Image
-                  className="rounded-lg"
-                  src={
-                    content.titleImage.url &&
-                    getStrapiMedia(content.titleImage.url)
-                  }
-                  width={content.titleImage.width}
-                  height={content.titleImage.height}
-                  alt="title image"
-                />
+                <Image style="rounded-lg mx-0" image={content.titleImage} />
               </div>
             </div>
             {content.content.map((data: any) => renderSwitch(data))}
