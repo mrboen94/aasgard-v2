@@ -1,7 +1,13 @@
 import { getStrapiMedia } from "../lib/media";
 import NextImage from "next/image";
 
-const Image = ({ image, style }: any) => {
+type ImageProps = {
+  image: any;
+  style?: string;
+  responsive?: boolean;
+};
+
+const Image = ({ image, style, responsive }: ImageProps) => {
   const { url, alternativeText } = image;
 
   const loader = () => {
@@ -9,14 +15,17 @@ const Image = ({ image, style }: any) => {
   };
 
   return (
-    <NextImage
-      loader={loader}
-      width={image.width}
-      height={image.height}
-      objectFit="fill"
-      src={url}
-      alt={alternativeText ?? ""}
-    />
+    <div className={style ? style + " overflow-hidden" : ""}>
+      <NextImage
+        loader={loader}
+        width={image.width}
+        height={image.height}
+        objectFit="fill"
+        layout={responsive ? "responsive" : "intrinsic"}
+        src={url}
+        alt={alternativeText ?? ""}
+      />
+    </div>
   );
 };
 
