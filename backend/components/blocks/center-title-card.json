@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_blocks_center_title_cards",
+  "info": {
+    "name": "centerTitleCard",
+    "icon": "address-book",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "intro": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "infoCard": {
+      "type": "component",
+      "repeatable": true,
+      "component": "blocks.info-card"
+    }
+  }
+}

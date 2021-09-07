@@ -1,0 +1,32 @@
+{
+  "collectionName": "components_blocks_quotes",
+  "info": {
+    "name": "quote",
+    "icon": "quote-right"
+  },
+  "options": {},
+  "attributes": {
+    "image": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "files",
+        "images",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": true,
+      "pluginOptions": {}
+    },
+    "quote": {
+      "type": "richtext",
+      "required": true
+    },
+    "author": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    }
+  }
+}
