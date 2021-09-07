@@ -53,7 +53,8 @@ export default function NavBar() {
                       <Link key={item.name} href={item.href}>
                         <a
                           className={classNames(
-                            router.pathname === item.href
+                            router.pathname.split("/")[1] ===
+                              item.href.split("/")[1]
                               ? "bg-gray-900 text-white"
                               : "text-gray-300 hover:bg-gray-700 hover:text-white cursor-pointer",
                             "px-3 py-2 rounded-md text-sm font-medium"
@@ -141,7 +142,7 @@ export default function NavBar() {
                   key={item.name}
                   href={item.href}
                   className={classNames(
-                    item.href === router.pathname
+                    item.href.split("/")[1] === router.pathname.split("/")[1]
                       ? "bg-gray-900 text-white"
                       : "text-gray-300 hover:bg-gray-700 hover:text-white",
                     "block px-3 py-2 rounded-md text-base font-medium"

@@ -14,7 +14,7 @@ export default function ImageQuote({
   title,
 }: ImageQuoteProps) {
   return (
-    <div className="pb-16 bg-gradient-to-r from-teal-500 to-cyan-600 lg:pb-0 lg:z-10 lg:relative my-10">
+    <div className="pb-16 bg-gradient-to-r from-teal-500 to-cyan-600 lg:pb-0 lg:z-10 lg:relative mt-10 mb-20">
       <div className="lg:mx-auto lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-3 lg:gap-8">
         <div className="relative lg:-my-8">
           <div

@@ -1,3 +1,4 @@
+import Footer from "./footer";
 import NavBar from "./navbar";
 
 type LayoutProps = {
@@ -9,6 +10,7 @@ export default function Layout({ children }: LayoutProps) {
     <>
       <NavBar />
       {children}
+      <Footer />
     </>
   );
 }
