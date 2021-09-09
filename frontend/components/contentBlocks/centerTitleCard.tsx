@@ -33,9 +33,18 @@ export default function CenterTitleCard({
                 <div className="flow-root bg-gray-50 rounded-lg px-6 pb-8">
                   <div className="-mt-6">
                     <div>
-                      <span className="inline-flex items-center justify-center p-3 bg-gradient-to-r from-teal-500 to-cyan-600 rounded-md shadow-lg">
-                        <Image style="h-6 w-6 text-white" image={card.icon} />
-                      </span>
+                      {card.icon ? (
+                        <span className="inline-flex items-center justify-center p-3 bg-gradient-to-r from-teal-500 to-cyan-600 rounded-md shadow-lg">
+                          <Image style="h-6 w-6 text-white" image={card.icon} />
+                        </span>
+                      ) : card.image ? (
+                        <span className="inline-flex items-center justify-center p-3 bg-gradient-to-r from-teal-500 to-cyan-600 rounded-md shadow-lg">
+                          <Image
+                            style="h-6 w-6 text-white"
+                            image={card.image}
+                          />
+                        </span>
+                      ) : null}
                     </div>
                     <h3 className="mt-8 text-lg font-medium text-gray-900 tracking-tight">
                       {card.title}

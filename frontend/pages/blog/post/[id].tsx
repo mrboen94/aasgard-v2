@@ -2,21 +2,10 @@ import "tailwindcss/tailwind.css";
 import Markdown from "../../../components/contentBlocks/markdown";
 import Layout from "../../../components/layout";
 import { fetchAPI } from "../../../lib/api";
-import { getStrapiMedia } from "../../../utils";
 import Image from "../../../components/image";
+import renderSwitch from "../../../components/renderSwitch";
 
 export default function Post({ content }: any) {
-  function renderSwitch(data: any) {
-    switch (data.__component) {
-      case "content.media":
-        const url = getStrapiMedia(data.media[0].url);
-        return <Image style="mx-auto" image={data.media[0]} />;
-      case "content.text":
-        return <Markdown markdown={data.text} />;
-      default:
-        return null;
-    }
-  }
   return (
     <Layout>
       <div className="relative py-16 bg-white overflow-hidden">

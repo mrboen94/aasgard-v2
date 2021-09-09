@@ -16,6 +16,7 @@ import TitleImageDescription from "../components/titleImageDescription";
 import CenterTitleImage from "../components/centerTitleImage";
 import CenterTitleCard from "../components/contentBlocks/centerTitleCard";
 import ImageQuote from "../components/contentBlocks/imageQuote";
+import renderSwitch from "../components/renderSwitch";
 
 const features = [
   {
@@ -205,48 +206,6 @@ const footerNavigation = {
 };
 
 const Home: NextPage = ({ home }: any) => {
-  function renderSwitch(data: any) {
-    console.log(data);
-    switch (data.__component) {
-      case "blocks.title-image-and-description":
-        return (
-          <TitleImageDescription
-            title={data.title}
-            image={data.image}
-            description={data.description}
-          />
-        );
-      case "blocks.center-title-image":
-        return (
-          <CenterTitleImage
-            intro={data.intro}
-            title={data.title}
-            description={data.description}
-            image={data.image}
-          />
-        );
-      case "blocks.center-title-card":
-        return (
-          <CenterTitleCard
-            cards={data.infoCard}
-            intro={data.intro ? data.intro : null}
-            title={data.title}
-            description={data.description}
-          />
-        );
-      case "blocks.quote":
-        return (
-          <ImageQuote
-            image={data.image}
-            quote={data.quote}
-            author={data.author}
-            title={data.title}
-          />
-        );
-      default:
-        break;
-    }
-  }
   return (
     <Layout>
       <Head>
@@ -257,7 +216,7 @@ const Home: NextPage = ({ home }: any) => {
       <div className="bg-white">
         <div className="relative overflow-hidden">
           <main>
-            {home.content.map((content: any) => renderSwitch(content))}
+            {home.content.map((content: any) => renderSwitch(content, true))}
             {/* Feature section with screenshot */}
 
             {/* Feature section with grid */}

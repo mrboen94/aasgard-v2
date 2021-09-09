@@ -1,0 +1,33 @@
+{
+  "collectionName": "components_blocks_project_cards",
+  "info": {
+    "name": "projectCard",
+    "icon": "id-card-alt"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "image": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false,
+      "pluginOptions": {}
+    },
+    "links": {
+      "type": "component",
+      "repeatable": true,
+      "component": "link-components.links"
+    }
+  }
+}
