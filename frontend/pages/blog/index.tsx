@@ -20,9 +20,10 @@ const Entry: NextPage = ({ blogs }: any) => {
             </p>
           </div>
           <div className="mt-12 max-w-lg mx-auto grid gap-5 lg:grid-cols-3 lg:max-w-none">
-            {blogs[0].map((post: any) => (
-              <BlogCard key={post.id} image={true} post={post} />
-            ))}
+            {blogs &&
+              blogs.map((post: any) => (
+                <BlogCard key={post.id} image={true} post={post} />
+              ))}
           </div>
         </div>
       </div>
@@ -32,8 +33,8 @@ const Entry: NextPage = ({ blogs }: any) => {
 
 export async function getStaticProps() {
   // Run API calls in parallel
-  const blogs = await Promise.all([fetchAPI("/blogs")]);
-
+  const res = await Promise.all([fetchAPI("/blogs")]);
+  const blogs = res[0];
   return {
     props: { blogs },
     revalidate: 1,

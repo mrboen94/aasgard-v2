@@ -23,7 +23,11 @@ export default function ImageQuote({
           />
           <div className="mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:p-0 lg:h-full">
             <div className="aspect-w-10 aspect-h-6 rounded-xl shadow-xl overflow-hidden sm:aspect-w-16 sm:aspect-h-7 lg:aspect-none lg:h-full">
-              <Image image={image} />
+              <Image
+                fill
+                imageStyle="rounded-xl overflow-hidden"
+                image={image}
+              />
             </div>
           </div>
         </div>

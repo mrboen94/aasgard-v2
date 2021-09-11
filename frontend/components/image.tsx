@@ -4,10 +4,11 @@ import NextImage from "next/image";
 type ImageProps = {
   image: any;
   style?: string;
-  responsive?: boolean;
+  imageStyle?: string;
+  fill?: boolean;
 };
 
-const Image = ({ image, style, responsive }: ImageProps) => {
+const Image = ({ image, imageStyle, style, fill }: ImageProps) => {
   const { url, alternativeText } = image;
 
   const loader = () => {
@@ -15,18 +16,17 @@ const Image = ({ image, style, responsive }: ImageProps) => {
   };
 
   return (
-    <div className={style ? style + " overflow-hidden" : ""}>
-      <div className="flex justify-center relative">
-        <NextImage
-          loader={loader}
-          width={image.width}
-          height={image.height}
-          objectFit="fill"
-          layout={responsive ? "responsive" : "intrinsic"}
-          src={url}
-          alt={alternativeText ?? ""}
-        />
-      </div>
+    <div className={style ? style + " overflow-hidden relative" : " relative"}>
+      <NextImage
+        loader={loader}
+        className={imageStyle ? imageStyle : ""}
+        width={image.width}
+        height={image.height}
+        objectFit="fill"
+        layout={fill ? "fill" : "intrinsic"}
+        src={url}
+        alt={alternativeText ?? ""}
+      />
     </div>
   );
 };
