@@ -1,11 +1,14 @@
 import React from "react";
+import BlogCard from "../blogCard";
 import Image from "../image";
+import SocialIcons from "../socialIcons";
 
 type centerTitleCardProps = {
   cards: [];
   intro?: string;
   title: string;
   description: string;
+  project?: boolean;
 };
 
 export default function CenterTitleCard({
@@ -13,6 +16,7 @@ export default function CenterTitleCard({
   intro,
   title,
   description,
+  project,
 }: centerTitleCardProps) {
   return (
     <div className="relative bg-white py-16 sm:py-24 lg:py-32">
@@ -27,35 +31,89 @@ export default function CenterTitleCard({
           {description}
         </p>
         <div className="mt-12">
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {cards.map((card: any) => (
-              <div key={card.title} className="pt-6">
-                <div className="flow-root bg-gray-50 rounded-lg px-6 pb-8">
-                  <div className="-mt-6">
-                    <div>
-                      {card.icon ? (
-                        <span className="inline-flex items-center justify-center p-3 bg-gradient-to-r from-teal-500 to-cyan-600 rounded-md shadow-lg">
-                          <Image style="h-6 w-6 text-white" image={card.icon} />
-                        </span>
-                      ) : card.image ? (
-                        <span className="inline-flex items-center justify-center p-3 bg-gradient-to-r from-teal-500 to-cyan-600 rounded-md shadow-lg">
-                          <Image
-                            style="h-6 w-6 text-white"
-                            image={card.image}
-                          />
-                        </span>
-                      ) : null}
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
+            {cards.map(
+              (card: any) => (
+                console.log(card),
+                (
+                  <div key={card.title} className="pt-6">
+                    <div className="flow-root bg-gray-50 rounded-lg px-6 pb-8">
+                      {project ? (
+                        <div className="flex-shrink-0">
+                          <div className="max-h-48 relative overflow-hidden">
+                            {card.image ? <Image image={card.image} /> : null}
+                          </div>
+                          <h3 className="mt-8 text-lg font-medium text-gray-900 tracking-tight">
+                            {card.title}
+                          </h3>
+                          <p className="mt-5 text-base text-gray-500">
+                            {card.description}
+                          </p>
+                          <ul role="list" className="divide-y divide-gray-200">
+                            {card.links.map((link: any) => (
+                              <li key={link.id} className="py-4">
+                                <a
+                                  className="px-8 max-w-sm flex justify-between bg-gradient-to-r from-teal-500 to-cyan-600 rounded-lg mx-auto hover:shadow-lg transition-all duration-200"
+                                  href={
+                                    link.url.includes("http://")
+                                      ? link.url
+                                      : `http://${link.url}`
+                                  }
+                                  target="_blank"
+                                  rel="noreferrer"
+                                >
+                                  <div className="w-12 my-0 p-2 text-white">
+                                    <SocialIcons type={link.where} />
+                                  </div>
+                                  <p className="my-auto text-center text-white">
+                                    {link.title}
+                                  </p>
+                                </a>
+                              </li>
+                            ))}
+                          </ul>
+                          {card.blogs[0] ? (
+                            <div>
+                              <p className="text-xl py-4">Related blogposts:</p>
+                              <BlogCard
+                                post={card.blogs[0]}
+                                image={card.blogs[0].titleImage}
+                              ></BlogCard>
+                            </div>
+                          ) : null}
+                        </div>
+                      ) : (
+                        <div className="-mt-6">
+                          <div>
+                            {card.icon ? (
+                              <span className="inline-flex items-center justify-center p-3 bg-gradient-to-r from-teal-500 to-cyan-600 rounded-md shadow-lg">
+                                <Image
+                                  style="h-6 w-6 text-white"
+                                  image={card.icon}
+                                />
+                              </span>
+                            ) : card.image ? (
+                              <span className="inline-flex items-center justify-center p-3 bg-gradient-to-r from-teal-500 to-cyan-600 rounded-md shadow-lg">
+                                <Image
+                                  style="h-6 w-6 text-white"
+                                  image={card.image}
+                                />
+                              </span>
+                            ) : null}
+                          </div>
+                          <h3 className="mt-8 text-lg font-medium text-gray-900 tracking-tight">
+                            {card.title}
+                          </h3>
+                          <p className="mt-5 text-base text-gray-500">
+                            {card.description}
+                          </p>
+                        </div>
+                      )}
                     </div>
-                    <h3 className="mt-8 text-lg font-medium text-gray-900 tracking-tight">
-                      {card.title}
-                    </h3>
-                    <p className="mt-5 text-base text-gray-500">
-                      {card.description}
-                    </p>
                   </div>
-                </div>
-              </div>
-            ))}
+                )
+              )
+            )}
           </div>
         </div>
       </div>

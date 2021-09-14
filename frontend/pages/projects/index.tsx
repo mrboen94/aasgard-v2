@@ -18,6 +18,7 @@ const Projects: NextPage = ({ projects }: any) => {
           cards={projects.projects}
           title={projects.title}
           description={projects.description}
+          project
         />
       )}
     </Layout>

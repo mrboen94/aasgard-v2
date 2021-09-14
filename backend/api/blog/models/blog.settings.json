@@ -29,7 +29,13 @@
       "type": "dynamiczone",
       "components": [
         "content.text",
-        "content.media"
+        "content.media",
+        "blocks.info-card",
+        "blocks.project-card",
+        "blocks.quote",
+        "blocks.center-title-card",
+        "blocks.center-title-image",
+        "blocks.title-image-and-description"
       ],
       "pluginOptions": {
         "i18n": {

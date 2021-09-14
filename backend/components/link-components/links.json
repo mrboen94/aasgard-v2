@@ -2,7 +2,8 @@
   "collectionName": "components_link_components_links",
   "info": {
     "name": "links",
-    "icon": "external-link-alt"
+    "icon": "external-link-alt",
+    "description": ""
   },
   "options": {},
   "attributes": {
@@ -23,6 +24,17 @@
       "plugin": "upload",
       "required": false,
       "pluginOptions": {}
+    },
+    "where": {
+      "type": "enumeration",
+      "enum": [
+        "github",
+        "instagram",
+        "youtube",
+        "facebook",
+        "twitter",
+        "other"
+      ]
     }
   }
 }
