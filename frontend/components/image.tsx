@@ -16,13 +16,19 @@ const Image = ({ image, imageStyle, style, fill }: ImageProps) => {
   };
 
   return (
-    <div className={style ? style + " overflow-hidden relative" : " relative"}>
+    <div
+      className={
+        style
+          ? style + " overflow-hidden relative"
+          : " relative overflow-hidden"
+      }
+    >
       <NextImage
         loader={loader}
         className={imageStyle ? imageStyle : ""}
         width={image.width}
         height={image.height}
-        objectFit="fill"
+        objectFit="cover"
         layout={fill ? "fill" : "intrinsic"}
         src={url}
         alt={alternativeText ?? ""}
