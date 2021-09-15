@@ -10,7 +10,11 @@
     "timestamps": true,
     "draftAndPublish": true
   },
-  "pluginOptions": {},
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
   "attributes": {
     "content": {
       "type": "dynamiczone",
@@ -19,7 +23,12 @@
         "blocks.center-title-image",
         "blocks.center-title-card",
         "blocks.quote"
-      ]
+      ],
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     }
   }
 }
