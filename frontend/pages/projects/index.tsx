@@ -3,7 +3,7 @@ import Head from "next/head";
 import "tailwindcss/tailwind.css";
 import CenterTitleCard from "../../components/contentBlocks/centerTitleCard";
 import Layout from "../../components/layout";
-import { fetchAPI, isEmptyObject } from "../../lib/api";
+import { fetchAPI } from "../../lib/api";
 
 const Projects: NextPage = ({ projects }: any) => {
   return (
@@ -19,6 +19,7 @@ const Projects: NextPage = ({ projects }: any) => {
           title={projects.title}
           description={projects.description}
           project
+          wide
         />
       )}
     </Layout>
@@ -28,7 +29,6 @@ const Projects: NextPage = ({ projects }: any) => {
 export async function getStaticProps() {
   // Run API calls in parallel
   const res: string[] = await Promise.all([fetchAPI("/projects")]);
-  console.log(res);
   const projects = res[0];
 
   return {

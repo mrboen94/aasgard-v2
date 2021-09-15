@@ -9,9 +9,11 @@ export function isEmptyObject(obj: string[]) {
 }
 
 // Helper to make GET requests to Strapi
-export async function fetchAPI(path: string) {
+export async function fetchAPI(path: string, locale?: string) {
   const requestUrl = getStrapiURL(path);
-  const response = await fetch(requestUrl);
+  const response = locale
+    ? await fetch(requestUrl + "?_locale=" + locale)
+    : await fetch(requestUrl);
   const data = response.status === 200 ? await response.json() : null;
   return data;
 }

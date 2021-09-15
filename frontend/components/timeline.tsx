@@ -8,10 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Disclosure } from "@headlessui/react";
 import { getStrapiMedia } from "../utils";
-import ReactMarkdown from "react-markdown";
-import RichText from "./contentBlocks/markdown";
-import BlogCard from "./blogCard";
-import { ExternalLinkIcon, LinkIcon } from "@heroicons/react/outline";
+import { LinkIcon } from "@heroicons/react/outline";
 
 const eventTypes = {
   job: { icon: UserIcon, bgColorClass: "bg-gray-400" },
@@ -85,8 +82,8 @@ export default function Timeline({ timeline }: any) {
                             <ChevronDownIcon
                               className={
                                 open
-                                  ? "-rotate-180 h-6 w-6 transform"
-                                  : "rotate-0 h-6 w-6 transform"
+                                  ? "-rotate-180 h-6 w-6 transform duration-200"
+                                  : "rotate-0 h-6 w-6 transform duration-200"
                               }
                               aria-hidden="true"
                             />

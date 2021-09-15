@@ -4,12 +4,13 @@ import Image from "../components/image";
 type BlogCardProps = {
   post: any;
   image: boolean;
+  noImage?: boolean;
 };
 
-export default function BlogCard({ post, image }: BlogCardProps) {
+export default function BlogCard({ post, image, noImage }: BlogCardProps) {
   return (
     <div className="flex flex-col rounded-lg shadow-lg overflow-hidden m-auto">
-      {image ? (
+      {image && !noImage ? (
         <div className="flex-shrink-0">
           <div className="max-h-48 relative overflow-hidden">
             {post.titleImage ? <Image image={post.titleImage} /> : null}
@@ -21,10 +22,14 @@ export default function BlogCard({ post, image }: BlogCardProps) {
           <p className="text-sm font-medium text-indigo-600">
             <Link href={"/blog/post/" + post.id}>{post.title}</Link>
           </p>
-          <a href={"/entry/" + post.title} className="block mt-2">
-            <p className="text-xl font-semibold text-gray-900">{post.title}</p>
-            <p className="mt-3 text-base text-gray-500">{post.title}</p>
-          </a>
+          {!noImage ? (
+            <a href={"/entry/" + post.title} className="block mt-2">
+              <p className="text-xl font-semibold text-gray-900">
+                {post.title}
+              </p>
+              <p className="mt-3 text-base text-gray-500">{post.title}</p>
+            </a>
+          ) : null}
         </div>
         {/* <div className="mt-6 flex items-center">
                     <div className="flex-shrink-0">

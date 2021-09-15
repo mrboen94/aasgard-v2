@@ -1,7 +1,6 @@
 import { getStrapiMedia } from "../lib/media";
 
 export default function Hobbies({ hobbies }: any) {
-  console.log(hobbies);
   return (
     <div className="bg-white">
       <div className="max-w-7xl mx-auto py-12 px-4 text-center sm:px-6 lg:px-8 lg:py-12">
