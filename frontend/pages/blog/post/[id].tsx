@@ -24,7 +24,7 @@ export default function Post({ content }: any) {
                 <Image style="rounded-lg mx-0" image={content.titleImage} />
               </div>
             </div>
-            {content.content.map((data: any) => renderSwitch(data))}
+            {content && content.content?.map((data: any) => renderSwitch(data))}
           </div>
         </div>
       </div>
