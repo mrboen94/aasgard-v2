@@ -112,8 +112,8 @@ export default function Timeline({ timeline }: any) {
                           ) : (
                             <div className="max-w-1/3 m-auto">
                               <h2>
-                                Unfortunately there doesn't seem to be a blog
-                                post about this yet...
+                                Unfortunately there doesn&apos;t seem to be a
+                                blog post about this yet...
                               </h2>
                             </div>
                           )}

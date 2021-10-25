@@ -15,7 +15,7 @@ const Entry: NextPage = ({ blogs }: any) => {
             </h2>
             <p className="mt-3 max-w-2xl mx-auto text-xl text-gray-500 sm:mt-4">
               This is a place where I write random thoughts and interesting
-              finds, ranging from silly music to what I've learned doing
+              finds, ranging from silly music to what I&apos;ve learned doing
               projects.
             </p>
           </div>
