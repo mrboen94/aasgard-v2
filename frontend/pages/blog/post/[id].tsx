@@ -33,8 +33,19 @@ export default function Post({ content }: any) {
   );
 }
 
+export async function getStaticProps({ params }: any) {
+  // Run API calls in parallel
+  const res: any = await Promise.all([fetchAPI(`/blogs/${params.id}`)]);
+  const content = await res[0];
+
+  return {
+    props: { content },
+    revalidate: 1,
+  };
+}
+
 export async function getStaticPaths() {
-  const res: any = await Promise.all([fetchAPI(`/blogs`)]);
+  const res: any = await Promise.all([fetchAPI(`/blogs`)]).then();
   const posts = await res[0];
 
   const paths = posts?.map((post: any) => ({
@@ -44,16 +55,5 @@ export async function getStaticPaths() {
   return {
     paths,
     fallback: false,
-  };
-}
-
-export async function getStaticProps({ params }: any) {
-  // Run API calls in parallel
-  const res: any = await Promise.all([fetchAPI(`/blogs/${params.id}`)]);
-  const content = await res[0];
-
-  return {
-    props: { content },
-    revalidate: 1,
   };
 }
