@@ -1,5 +1,4 @@
 import "tailwindcss/tailwind.css";
-import Markdown from "../../../components/contentBlocks/markdown";
 import Layout from "../../../components/layout";
 import { fetchAPI } from "../../../lib/api";
 import Image from "../../../components/image";
@@ -21,10 +20,12 @@ export default function Post({ content }: any) {
             </h1>
             <div className="w-full content-center">
               <div className="mx-auto py-4">
-                <Image style="rounded-lg mx-0" image={content.titleImage} />
+                {content?.titleImage ?? (
+                  <Image style="rounded-lg mx-0" image={content.titleImage} />
+                )}
               </div>
             </div>
-            {content && content.content?.map((data: any) => renderSwitch(data))}
+            {content ?? content.content?.map((data: any) => renderSwitch(data))}
           </div>
         </div>
       </div>
