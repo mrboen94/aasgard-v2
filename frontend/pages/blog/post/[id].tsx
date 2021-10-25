@@ -13,10 +13,10 @@ export default function Post({ content }: any) {
           <div className="max-w-prose text-xl mx-auto">
             <h1>
               <span className="block text-base text-center text-indigo-600 font-semibold tracking-wide uppercase">
-                {content.super}
+                {content?.super}
               </span>
               <span className="mt-2 mb-2 block text-3xl text-center leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-                {content.title}
+                {content?.title}
               </span>
             </h1>
             <div className="w-full content-center">
