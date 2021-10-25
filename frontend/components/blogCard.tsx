@@ -23,7 +23,7 @@ export default function BlogCard({ post, image, noImage }: BlogCardProps) {
             <Link href={"/blog/post/" + post.id}>{post.title}</Link>
           </p>
           {!noImage ? (
-            <a href={"/entry/" + post.title} className="block mt-2">
+            <a href={"/blog/post/" + post.id} className="block mt-2">
               <p className="text-xl font-semibold text-gray-900">
                 {post.title}
               </p>
