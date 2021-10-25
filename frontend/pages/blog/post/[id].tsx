@@ -20,12 +20,12 @@ export default function Post({ content }: any) {
             </h1>
             <div className="w-full content-center">
               <div className="mx-auto py-4">
-                {content?.titleImage ?? (
+                {content?.titleImage && (
                   <Image style="rounded-lg mx-0" image={content.titleImage} />
                 )}
               </div>
             </div>
-            {content ?? content.content?.map((data: any) => renderSwitch(data))}
+            {content && content.content?.map((data: any) => renderSwitch(data))}
           </div>
         </div>
       </div>
@@ -37,7 +37,7 @@ export async function getStaticPaths() {
   const res: any = await Promise.all([fetchAPI(`/blogs`)]);
   const posts = await res[0];
 
-  const paths = posts.map((post: any) => ({
+  const paths = posts?.map((post: any) => ({
     params: { id: post.id.toString() },
   }));
 
