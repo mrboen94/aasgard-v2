@@ -3,6 +3,7 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import { useRouter } from "next/dist/client/router";
 import Link from "next/link";
+import Logo from "./logo";
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -36,16 +37,7 @@ export default function NavBar() {
               </div>
               <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex-shrink-0 flex items-center">
-                  <img
-                    className="block lg:hidden h-8 w-auto"
-                    src="logo-white.png"
-                    alt="Workflow"
-                  />
-                  <img
-                    className="hidden lg:block h-8 w-auto"
-                    src="logo-white.png"
-                    alt="Workflow"
-                  />
+                  <Logo />
                 </div>
                 <div className="hidden sm:block sm:ml-6">
                   <div className="flex space-x-4">
