@@ -6,7 +6,7 @@ const footerNavigation = {
   social: [
     {
       name: "facebook",
-      href: "https://www.facebook.com/boemathias",
+      href: "https://www.facebook.com/mathias.boe",
       icon: (props: any) => (
         <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
           <path
@@ -62,7 +62,7 @@ export default function Footer({}: FooterProps) {
       <h2 id="footer-heading" className="sr-only">
         Footer
       </h2>
-      <div className="max-w-md mx-auto pt-12 px-4 sm:max-w-7xl sm:px-6 lg:pt-16 lg:px-8 mt-10">
+      <div className="max-w-md mx-auto pt-12 px-4 sm:max-w-7xl sm:px-6 lg:pt-16 lg:px-8 mt-0">
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-8 xl:col-span-1">
             <Logo color="text-gray-300" />

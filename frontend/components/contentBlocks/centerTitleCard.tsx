@@ -122,16 +122,13 @@ export default function CenterTitleCard({
                     <div className="-mt-6">
                       <div>
                         {card.icon ? (
-                          <span className="inline-flex items-center justify-center p-3 bg-gradient-to-r from-teal-500 to-cyan-600 rounded-md shadow-lg">
-                            <Image
-                              style="h-6 w-6 text-white"
-                              image={card.icon}
-                            />
+                          <span className="w-24 max-h-12 inline-flex items-center justify-center p-3 bg-gradient-to-r from-teal-500 to-cyan-600 rounded-md shadow-lg">
+                            <Image style="w-12 text-white" image={card.icon} />
                           </span>
                         ) : card.image ? (
                           <span className="inline-flex items-center justify-center p-3 bg-gradient-to-r from-teal-500 to-cyan-600 rounded-md shadow-lg">
                             <Image
-                              style="h-6 w-6 text-white"
+                              style="h-24 w-24 text-white"
                               image={card.image}
                             />
                           </span>
