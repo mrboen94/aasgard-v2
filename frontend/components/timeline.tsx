@@ -29,7 +29,7 @@ export default function Timeline({ timeline }: any) {
           <div className="mt-6 flow-root">
             {timeline.map((item: any, itemIdx: number) => (
               <>
-                <Disclosure as="div" className="pt-2">
+                <Disclosure as="div" key={itemIdx} className="pt-2">
                   {({ open }) => (
                     <>
                       <dt className="text-lg">
@@ -72,8 +72,18 @@ export default function Timeline({ timeline }: any) {
                                   <time dateTime={item.startDate}>
                                     {new Date(
                                       item.startDate
-                                    ).toLocaleDateString()}
+                                    ).toLocaleDateString()}{" "}
+                                    -{" "}
                                   </time>
+                                  {item.endDate ? (
+                                    <time dateTime={item.endDate}>
+                                      {new Date(
+                                        item.endDate
+                                      ).toLocaleDateString()}
+                                    </time>
+                                  ) : (
+                                    <span>Current</span>
+                                  )}
                                 </div>
                               </div>
                             </div>

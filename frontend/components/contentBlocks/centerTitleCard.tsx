@@ -137,7 +137,7 @@ export default function CenterTitleCard({
                       <h3 className="mt-8 text-lg font-medium text-gray-900 tracking-tight">
                         {card.title}
                       </h3>
-                      <p className="mt-5 text-base text-gray-500">
+                      <p className="mt-5 text-base text-gray-500 px-3">
                         {card.description}
                       </p>
                     </div>
