@@ -30,7 +30,7 @@ const About: NextPage = ({ timeline, hobbies }: any) => {
           </div>
         </Layout>
       </div>
-      <div className="print:block hidden">
+      <div className="print:block hidden w-full h-full">
         <iframe src="https://aasgard.netlify.app/" />
       </div>
     </div>
