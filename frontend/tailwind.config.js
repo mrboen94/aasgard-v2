@@ -7,6 +7,10 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      screens: {
+        print: { raw: "print" },
+        // => @media print { ... }
+      },
       colors: {
         teal: colors.teal,
         cyan: colors.cyan,
