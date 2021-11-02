@@ -8,29 +8,25 @@ import { fetchAPI } from "../../lib/api";
 
 const About: NextPage = ({ timeline, hobbies }: any) => {
   return (
-    <div className="w-full h-screen border-2 m-0 p-0">
-      <div className="print:hidden">
-        <Layout>
-          <Head>
-            <title>Mathias Bøe</title>
-            <meta name="description" content="Created by Mathias Bøe" />
-            <link rel="icon" href="/favicon.ico" />
-          </Head>
-          <div className="flex flex-col md:flex-row">
-            {hobbies && (
-              <div className="w-full md:w-1/2 p-2">
-                <Hobbies hobbies={hobbies} />
-              </div>
-            )}
-            {timeline && (
-              <div className="w-full md:w-1/2 p-2 my-12 mx-2">
-                <Timeline timeline={timeline.events} />
-              </div>
-            )}
+    <Layout>
+      <Head>
+        <title>Mathias Bøe</title>
+        <meta name="description" content="Created by Mathias Bøe" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <div className="flex flex-col md:flex-row">
+        {hobbies && (
+          <div className="w-full md:w-1/2 p-2">
+            <Hobbies hobbies={hobbies} />
           </div>
-        </Layout>
+        )}
+        {timeline && (
+          <div className="w-full md:w-1/2 p-2 my-12 mx-2">
+            <Timeline timeline={timeline.events} />
+          </div>
+        )}
       </div>
-    </div>
+    </Layout>
   );
 };
 export async function getStaticProps() {
