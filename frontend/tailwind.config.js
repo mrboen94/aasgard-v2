@@ -14,6 +14,11 @@ module.exports = {
       colors: {
         teal: colors.teal,
         cyan: colors.cyan,
+        main: "#2B2D42",
+        secondary: "#8D99AE",
+        secondaryActive: "#EDF2F4",
+        accent: "#D90429",
+        accentActive: "#EF233C",
       },
     },
   },

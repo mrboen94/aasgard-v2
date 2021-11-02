@@ -19,14 +19,14 @@ function classNames(...classes: string[]) {
 export default function NavBar() {
   const router = useRouter();
   return (
-    <Disclosure as="nav" className="bg-gray-800">
+    <Disclosure as="nav" className="bg-main">
       {({ open }) => (
         <>
           <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
             <div className="relative flex items-center justify-between h-16">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
-                <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-secondaryActive focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                   <span className="sr-only">Open main menu</span>
                   {open ? (
                     <XIcon className="block h-6 w-6" aria-hidden="true" />
@@ -47,8 +47,8 @@ export default function NavBar() {
                           className={classNames(
                             router.pathname.split("/")[1] ===
                               item.href.split("/")[1]
-                              ? "bg-gray-900 text-white"
-                              : "text-gray-300 hover:bg-gray-700 hover:text-white cursor-pointer",
+                              ? "bg-secondary text-main"
+                              : "text-gray-300 hover:bg-secondaryActive hover:text-main cursor-pointer",
                             "px-3 py-2 rounded-md text-sm font-medium"
                           )}
                         >
@@ -70,8 +70,8 @@ export default function NavBar() {
                   href={item.href}
                   className={classNames(
                     item.href.split("/")[1] === router.pathname.split("/")[1]
-                      ? "bg-gray-900 text-white"
-                      : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                      ? "bg-secondary text-main"
+                      : "text-gray-300 hover:bg-secondaryActive hover:text-main cursor-pointer",
                     "block px-3 py-2 rounded-md text-base font-medium"
                   )}
                   aria-current={
