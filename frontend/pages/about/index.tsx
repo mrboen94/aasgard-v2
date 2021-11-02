@@ -8,7 +8,7 @@ import { fetchAPI } from "../../lib/api";
 
 const About: NextPage = ({ timeline, hobbies }: any) => {
   return (
-    <div>
+    <div className="w-full h-screen border-2 m-0 p-0">
       <div className="print:hidden">
         <Layout>
           <Head>
