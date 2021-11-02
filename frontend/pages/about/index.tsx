@@ -8,25 +8,32 @@ import { fetchAPI } from "../../lib/api";
 
 const About: NextPage = ({ timeline, hobbies }: any) => {
   return (
-    <Layout>
-      <Head>
-        <title>Mathias Bøe</title>
-        <meta name="description" content="Created by Mathias Bøe" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <div className="flex flex-col md:flex-row">
-        {hobbies && (
-          <div className="w-full md:w-1/2 p-2">
-            <Hobbies hobbies={hobbies} />
+    <div>
+      <div className="print:hidden">
+        <Layout>
+          <Head>
+            <title>Mathias Bøe</title>
+            <meta name="description" content="Created by Mathias Bøe" />
+            <link rel="icon" href="/favicon.ico" />
+          </Head>
+          <div className="flex flex-col md:flex-row">
+            {hobbies && (
+              <div className="w-full md:w-1/2 p-2">
+                <Hobbies hobbies={hobbies} />
+              </div>
+            )}
+            {timeline && (
+              <div className="w-full md:w-1/2 p-2 my-12 mx-2">
+                <Timeline timeline={timeline.events} />
+              </div>
+            )}
           </div>
-        )}
-        {timeline && (
-          <div className="w-full md:w-1/2 p-2 my-12 mx-2">
-            <Timeline timeline={timeline.events} />
-          </div>
-        )}
+        </Layout>
       </div>
-    </Layout>
+      <div className="print:block hidden">
+        <iframe src="https://aasgard.netlify.app/" />
+      </div>
+    </div>
   );
 };
 export async function getStaticProps() {
