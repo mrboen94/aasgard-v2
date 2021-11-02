@@ -6,9 +6,18 @@ type ImageProps = {
   style?: string;
   imageStyle?: string;
   fill?: boolean;
+  responsive?: boolean;
+  unoptimized?: boolean;
 };
 
-const Image = ({ image, imageStyle, style, fill }: ImageProps) => {
+const Image = ({
+  image,
+  imageStyle,
+  style,
+  fill,
+  responsive,
+  unoptimized,
+}: ImageProps) => {
   const { url, alternativeText } = image;
 
   const loader = () => {
@@ -29,9 +38,10 @@ const Image = ({ image, imageStyle, style, fill }: ImageProps) => {
         width={image.width}
         height={image.height}
         objectFit="cover"
-        layout={fill ? "fill" : "intrinsic"}
+        layout={fill ? "fill" : responsive ? "responsive" : "intrinsic"}
         src={url}
         alt={alternativeText ?? ""}
+        unoptimized={unoptimized ? true : false}
       />
     </div>
   );
