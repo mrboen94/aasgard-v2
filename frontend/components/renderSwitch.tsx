@@ -7,7 +7,7 @@ import ImageQuote from "./contentBlocks/imageQuote";
 import React from "react";
 
 export default function renderFunction(data: any, print?: boolean) {
-  print ?? console.log(data);
+  print && console.log(data);
   switch (data.__component) {
     case "content.media":
       return <Image style="mx-auto" image={data.media[0]} />;
