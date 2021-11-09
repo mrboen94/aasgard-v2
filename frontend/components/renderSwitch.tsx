@@ -5,6 +5,8 @@ import CenterTitleCard from "./contentBlocks/centerTitleCard";
 import CenterTitleImage from "./centerTitleImage";
 import ImageQuote from "./contentBlocks/imageQuote";
 import React from "react";
+import HtmlElement from "./contentBlocks/htmlElement";
+import MediaEmbed from "./contentBlocks/mediaEmbed";
 
 export default function renderFunction(data: any, print?: boolean) {
   print && console.log(data);
@@ -48,6 +50,12 @@ export default function renderFunction(data: any, print?: boolean) {
           title={data.title}
         />
       );
+    case "blocks.html-element":
+      return <HtmlElement data={data.html} />;
+    case "blocks.vimeo":
+      return <MediaEmbed data={data.vimeo ? data.vimeo : data.youtube} />;
+    case "blocks.youtube":
+      return <MediaEmbed data={data.vimeo ? data.vimeo : data.youtube} />;
     default:
       console.log(data);
       return null;
