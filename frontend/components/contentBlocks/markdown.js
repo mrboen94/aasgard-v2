@@ -6,11 +6,7 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import CodeBlock from "./codeBlock";
 
-type RichTextProps = {
-  markdown: string;
-};
-
-export default function RichText({ markdown }: RichTextProps) {
+export default function RichText({ markdown }) {
   return (
     <article className="relative prose text-xl max-w-prose mx-auto">
       <ReactMarkdown remarkPlugins={[gfm]} components={CodeBlock}>
