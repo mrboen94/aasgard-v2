@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_blocks_youtubes",
+  "info": {
+    "name": "youtube",
+    "icon": "file-video"
+  },
+  "options": {},
+  "attributes": {
+    "youtube": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

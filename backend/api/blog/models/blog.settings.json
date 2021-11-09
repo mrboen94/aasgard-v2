@@ -40,7 +40,9 @@
         "timeline.image",
         "timeline.description",
         "timeline.job",
-        "blocks.html-element"
+        "blocks.html-element",
+        "blocks.vimeo",
+        "blocks.youtube"
       ],
       "pluginOptions": {
         "i18n": {

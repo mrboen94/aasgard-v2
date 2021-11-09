@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_blocks_vimeos",
+  "info": {
+    "name": "vimeo",
+    "icon": "video"
+  },
+  "options": {},
+  "attributes": {
+    "vimeo": {
+      "type": "string",
+      "required": true
+    }
+  }
+}
