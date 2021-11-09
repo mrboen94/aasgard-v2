@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_blocks_html_elements",
+  "info": {
+    "name": "htmlElement",
+    "icon": "code"
+  },
+  "options": {},
+  "attributes": {
+    "html": {
+      "type": "richtext",
+      "required": true
+    }
+  }
+}

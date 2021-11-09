@@ -35,7 +35,12 @@
         "blocks.quote",
         "blocks.center-title-card",
         "blocks.center-title-image",
-        "blocks.title-image-and-description"
+        "blocks.title-image-and-description",
+        "timeline.verv",
+        "timeline.image",
+        "timeline.description",
+        "timeline.job",
+        "blocks.html-element"
       ],
       "pluginOptions": {
         "i18n": {

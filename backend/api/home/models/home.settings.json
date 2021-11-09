@@ -22,7 +22,14 @@
         "blocks.title-image-and-description",
         "blocks.center-title-image",
         "blocks.center-title-card",
-        "blocks.quote"
+        "blocks.quote",
+        "content.media",
+        "content.hobby",
+        "content.text",
+        "timeline.verv",
+        "timeline.image",
+        "timeline.description",
+        "timeline.job"
       ],
       "pluginOptions": {
         "i18n": {
