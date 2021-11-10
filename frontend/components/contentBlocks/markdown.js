@@ -2,8 +2,6 @@
 import React, { useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import CodeBlock from "./codeBlock";
 
 export default function RichText({ markdown }) {
