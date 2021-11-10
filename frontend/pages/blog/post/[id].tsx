@@ -19,7 +19,7 @@ export default function Post({ content }: any) {
               </span>
             </h1>
             <div className="w-full content-center">
-              <div className="mx-auto py-4">
+              <div className="mx-auto py-4 text-center">
                 {content?.titleImage && (
                   <Image style="rounded-lg mx-0" image={content.titleImage} />
                 )}
