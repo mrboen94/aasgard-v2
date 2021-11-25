@@ -8,9 +8,14 @@ type LayoutProps = {
 export default function Layout({ children }: LayoutProps) {
   return (
     <>
-      <NavBar />
-      {children}
-      <Footer />
+      <div className="print:hidden block">
+        <NavBar />
+        {children}
+        <Footer />
+      </div>
+      <div className="print:block hidden">
+        <iframe src="https://aasgard.netlify.app/" />
+      </div>
     </>
   );
 }
