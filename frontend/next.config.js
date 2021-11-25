@@ -8,6 +8,7 @@ module.exports = {
       "localhost",
       "res.cloudinary.com",
       "aasgard.ams3.digitaloceanspaces.com",
+      "https://aasgard.netlify.app/",
     ],
   },
   i18n: {
