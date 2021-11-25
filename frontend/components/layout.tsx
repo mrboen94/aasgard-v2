@@ -15,7 +15,7 @@ export default function Layout({ children }: LayoutProps) {
       </div>
       <div className="print:block hidden w-full h-screen m-0 p-0">
         <iframe
-          className="w-full h-screen- m-0 p-0"
+          className="w-full h-full m-0 p-0"
           src="https://aasgard.netlify.app/"
           title="Web hosted CV"
         />
