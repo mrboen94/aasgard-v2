@@ -1,5 +1,6 @@
 import { Callout } from '@/components/Callout'
 import { LinkGrid } from '@/components/LinkGrid'
+import InlineImage from '@/components/InlineImage'
 
 const tags = {
   callout: {
@@ -40,6 +41,16 @@ const tags = {
       description: { type: String },
       icon: { type: String },
       href: { type: String },
+    },
+  },
+  'inline-image': {
+    selfClosing: true,
+    render: InlineImage,
+    attributes: {
+      src: { type: String },
+      alt: { type: String },
+      title: { type: String },
+      description: { type: String },
     },
   },
 }

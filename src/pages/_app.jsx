@@ -10,14 +10,14 @@ const navigation = [
   {
     title: 'Introduction',
     links: [
-      { title: 'Getting started', href: '/' },
+      { title: 'About me', href: '/' },
       { title: 'Installation', href: '/docs/installation' },
     ],
   },
   {
-    title: 'Core concepts',
+    title: 'Projects',
     links: [
-      { title: 'Understanding caching', href: '/docs/understanding-caching' },
+      { title: 'Glittertind', href: '/docs/glittertind' },
       {
         title: 'Predicting user behavior',
         href: '/docs/predicting-user-behavior',
@@ -108,6 +108,7 @@ export default function App({ Component, pageProps }) {
     `${pageProps.markdoc?.frontmatter.title} - Docs`
 
   let description = pageProps.markdoc?.frontmatter.description
+  let github = pageProps.markdoc?.frontmatter.github
 
   let tableOfContents = pageProps.markdoc?.content
     ? collectHeadings(pageProps.markdoc.content)
@@ -123,6 +124,7 @@ export default function App({ Component, pageProps }) {
         navigation={navigation}
         title={title}
         tableOfContents={tableOfContents}
+        github={github}
       >
         <Component {...pageProps} />
       </Layout>
