@@ -22,8 +22,10 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        sans: ['Inter', ...defaultTheme.fontFamily.sans],
-        display: ['Lexend', ...defaultTheme.fontFamily.sans],
+        sans: ['Nure Text', ...defaultTheme.fontFamily.sans],
+        display: ['Nure Display', ...defaultTheme.fontFamily.sans],
+        mono: ['PragmataPro Mono', ...defaultTheme.fontFamily.mono],
+        stylistic: ['Nure Stylistic', ...defaultTheme.fontFamily.sans],
       },
       maxWidth: {
         '8xl': '88rem',

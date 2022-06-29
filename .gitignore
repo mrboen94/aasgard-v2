@@ -30,3 +30,7 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# fonts
+/public/fonts/Nure-VF.woff2
+/public/fonts/PragmataProRLiga.woff2

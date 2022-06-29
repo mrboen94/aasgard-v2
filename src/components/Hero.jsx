@@ -10,16 +10,18 @@ import blurIndigoImage from '@/images/blur-indigo.png'
 
 const codeLanguage = 'javascript'
 const code = `export default {
-  strategy: 'predictive',
-  engine: {
-    cpus: 12,
-    backups: ['./storage/cache.wtf'],
+  location: 'Bergen',
+  bio: {
+    born: 1994,
+    from: 'Stryn',
+    education: ['./UiB/computer-security.bachelor', 
+                './UiB/visualization.master'],
   },
 }`
 
 const tabs = [
-  { name: 'cache-advance.config.js', isActive: true },
-  { name: 'package.json', isActive: false },
+  { name: 'about.js', isActive: true },
+  { name: 'dirty-secrets.json', isActive: false },
 ]
 
 export function Hero() {
@@ -40,7 +42,7 @@ export function Hero() {
               />
             </div>
             <div className="relative">
-              <p className="inline bg-gradient-to-r from-indigo-200 via-sky-400 to-indigo-200 bg-clip-text font-display text-5xl tracking-tight text-transparent">
+              <p className="font-nure inline bg-gradient-to-r from-indigo-200 via-sky-400 to-indigo-200 bg-clip-text text-5xl tracking-tight text-transparent">
                 Mathias Bøe
               </p>
               <p className="mt-3 text-2xl tracking-tight text-slate-400">
