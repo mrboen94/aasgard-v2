@@ -4,7 +4,7 @@
   font-display: block;
   font-style: normal;
   font-named-instance: 'Regular';
-  src: url('/fonts/Nure-VF.woff2') format('woff2');
+  src: url('/fonts/aasgard-fonts/Nure-VF.woff2') format('woff2');
 }
 @font-face {
   font-family: 'Nure Text';
@@ -12,7 +12,7 @@
   font-display: block;
   font-style: normal;
   font-named-instance: 'Regular';
-  src: url('/fonts/Nure-VF.woff2') format('woff2');
+  src: url('/fonts/aasgard-fonts/Nure-VF.woff2') format('woff2');
 }
 @font-face {
   font-family: 'Nure Stylistic';
@@ -21,7 +21,7 @@
   font-style: normal;
   font-feature-settings: 'dlig', 'liga', 'clig', 'calt';
   font-named-instance: 'Regular';
-  src: url('/fonts/Nure-VF.woff2') format('woff2');
+  src: url('/fonts/aasgard-fonts/Nure-VF.woff2') format('woff2');
 }
 @font-face {
   font-family: 'PragmataPro Mono';
@@ -29,5 +29,5 @@
   font-style: mono;
   font-named-instance: 'Mono';
   font-feature-settings: 'calt' 1, 'liga' 1;
-  src: url('/fonts/PragmataProRLiga.woff2') format('woff2');
+  src: url('/fonts/aasgard-fonts/PragmataProRLiga.woff2') format('woff2');
 }
