@@ -1,5 +1,5 @@
 ---
-title: Getting started
+title: Mathias Bøe
 pageTitle: Mathias Bøe
 description: Developer, nerd, hobby designer and photographer.
 ---
