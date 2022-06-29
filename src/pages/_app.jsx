@@ -11,26 +11,21 @@ const navigation = [
     title: 'Introduction',
     links: [
       { title: 'About me', href: '/' },
-      { title: 'Installation', href: '/docs/installation' },
+      // { title: 'Installation', href: '/docs/installation' },
     ],
   },
   {
     title: 'Projects',
     links: [
       { title: 'Glittertind', href: '/docs/glittertind' },
-      {
-        title: 'Predicting user behavior',
-        href: '/docs/predicting-user-behavior',
-      },
-      { title: 'Basics of time-travel', href: '/docs/basics-of-time-travel' },
-      {
-        title: 'Introduction to string theory',
-        href: '/docs/introduction-to-string-theory',
-      },
-      { title: 'The buttery effect', href: '/docs/the-butterfly-effect' },
+      { title: 'Shakesbeer', href: '/docs/shakesbeer' },
+      { title: 'Aasgard v1', href: '/docs/aasgard-v1' },
+      { title: 'glassburet', href: '/docs/glassburet' },
+      { title: 'Lesesalen', href: '/docs/lesesalen' },
+      { title: 'Be my friend', href: '/docs/bemyfriend' },
     ],
   },
-  {
+  /* {
     title: 'Advanced guides',
     links: [
       { title: 'Writing plugins', href: '/docs/writing-plugins' },
@@ -60,7 +55,7 @@ const navigation = [
       { title: 'Architecture guide', href: '/docs/architecture-guide' },
       { title: 'Design principles', href: '/docs/design-principles' },
     ],
-  },
+  }, */
 ]
 
 function getNodeText(node) {
@@ -109,6 +104,7 @@ export default function App({ Component, pageProps }) {
 
   let description = pageProps.markdoc?.frontmatter.description
   let github = pageProps.markdoc?.frontmatter.github
+  let docLink = pageProps.markdoc?.frontmatter.link
 
   let tableOfContents = pageProps.markdoc?.content
     ? collectHeadings(pageProps.markdoc.content)
@@ -125,6 +121,7 @@ export default function App({ Component, pageProps }) {
         title={title}
         tableOfContents={tableOfContents}
         github={github}
+        docLink={docLink}
       >
         <Component {...pageProps} />
       </Layout>

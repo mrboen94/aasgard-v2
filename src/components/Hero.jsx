@@ -9,7 +9,14 @@ import blurCyanImage from '@/images/blur-cyan.png'
 import blurIndigoImage from '@/images/blur-indigo.png'
 
 const codeLanguage = 'javascript'
-const code = `export default {
+
+const tabs = [
+  { name: 'about.js', isActive: true },
+  { name: 'dirty-secrets.json', isActive: false },
+]
+
+const code = !tabs[1].isActive
+  ? `export default {
   location: 'Bergen',
   bio: {
     born: 1994,
@@ -18,11 +25,9 @@ const code = `export default {
                 './UiB/visualization.master'],
   },
 }`
-
-const tabs = [
-  { name: 'about.js', isActive: true },
-  { name: 'dirty-secrets.json', isActive: false },
-]
+  : `Wow, I cannot believe you
+went through all that trouble just for this
+tiny easteregg.`
 
 export function Hero() {
   return (
