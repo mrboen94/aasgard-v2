@@ -1,0 +1,3 @@
+[submodule "public/fonts/aasgard-fonts"]
+	path = public/fonts/aasgard-fonts
+	url = git@github.com:mrboen94/aasgard-fonts.git
