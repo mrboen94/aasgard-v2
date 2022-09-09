@@ -1,130 +1,38 @@
-import Head from 'next/head'
-import { slugifyWithCounter } from '@sindresorhus/slugify'
+import { useEffect, useRef } from 'react'
 
-import { Layout } from '@/components/Layout'
+import { Footer } from '@/components/Footer'
+import { Header } from '@/components/Header'
 
-import 'focus-visible'
 import '@/styles/tailwind.css'
+import 'focus-visible'
 
-const navigation = [
-  {
-    title: 'Introduction',
-    links: [
-      { title: 'About me', href: '/' },
-      // { title: 'Installation', href: '/docs/installation' },
-    ],
-  },
-  {
-    title: 'Projects',
-    links: [
-      { title: 'Glittertind', href: '/docs/glittertind' },
-      { title: 'Shakesbeer', href: '/docs/shakesbeer' },
-      { title: 'Aasgard v1', href: '/docs/aasgard-v1' },
-      { title: 'glassburet', href: '/docs/glassburet' },
-      { title: 'Lesesalen', href: '/docs/lesesalen' },
-      { title: 'Be my friend', href: '/docs/bemyfriend' },
-    ],
-  },
-  /* {
-    title: 'Advanced guides',
-    links: [
-      { title: 'Writing plugins', href: '/docs/writing-plugins' },
-      { title: 'Neuralink integration', href: '/docs/neuralink-integration' },
-      { title: 'Temporal paradoxes', href: '/docs/temporal-paradoxes' },
-      { title: 'Testing', href: '/docs/testing' },
-      { title: 'Compile-time caching', href: '/docs/compile-time-caching' },
-      {
-        title: 'Predictive data generation',
-        href: '/docs/predictive-data-generation',
-      },
-    ],
-  },
-  {
-    title: 'API reference',
-    links: [
-      { title: 'CacheAdvance.predict()', href: '/docs/cacheadvance-predict' },
-      { title: 'CacheAdvance.flush()', href: '/docs/cacheadvance-flush' },
-      { title: 'CacheAdvance.revert()', href: '/docs/cacheadvance-revert' },
-      { title: 'CacheAdvance.regret()', href: '/docs/cacheadvance-regret' },
-    ],
-  },
-  {
-    title: 'Contributing',
-    links: [
-      { title: 'How to contribute', href: '/docs/how-to-contribute' },
-      { title: 'Architecture guide', href: '/docs/architecture-guide' },
-      { title: 'Design principles', href: '/docs/design-principles' },
-    ],
-  }, */
-]
+function usePrevious(value) {
+  let ref = useRef()
 
-function getNodeText(node) {
-  let text = ''
-  for (let child of node.children ?? []) {
-    if (typeof child === 'string') {
-      text += child
-    }
-    text += getNodeText(child)
-  }
-  return text
+  useEffect(() => {
+    ref.current = value
+  }, [value])
+
+  return ref.current
 }
 
-function collectHeadings(nodes, slugify = slugifyWithCounter()) {
-  let sections = []
-
-  for (let node of nodes) {
-    if (/^h[23]$/.test(node.name)) {
-      let title = getNodeText(node)
-      if (title) {
-        let id = slugify(title)
-        node.attributes.id = id
-        if (node.name === 'h3') {
-          sections[sections.length - 1].children.push({
-            ...node.attributes,
-            title,
-          })
-        } else {
-          sections.push({ ...node.attributes, title, children: [] })
-        }
-      }
-    }
-
-    sections.push(...collectHeadings(node.children ?? [], slugify))
-  }
-
-  return sections
-}
-
-export default function App({ Component, pageProps }) {
-  let title = pageProps.markdoc?.frontmatter.title
-
-  let pageTitle =
-    pageProps.markdoc?.frontmatter.pageTitle ||
-    `${pageProps.markdoc?.frontmatter.title} - Docs`
-
-  let description = pageProps.markdoc?.frontmatter.description
-  let github = pageProps.markdoc?.frontmatter.github
-  let docLink = pageProps.markdoc?.frontmatter.link
-
-  let tableOfContents = pageProps.markdoc?.content
-    ? collectHeadings(pageProps.markdoc.content)
-    : []
+export default function App({ Component, pageProps, router }) {
+  let previousPathname = usePrevious(router.pathname)
 
   return (
     <>
-      <Head>
-        <title>{pageTitle}</title>
-        {description && <meta name="description" content={description} />}
-      </Head>
-      <Layout
-        navigation={navigation}
-        title={title}
-        tableOfContents={tableOfContents}
-        github={github}
-        docLink={docLink}
-      >
-        <Component {...pageProps} />
-      </Layout>
+      <div className="fixed inset-0 flex justify-center sm:px-8">
+        <div className="flex w-full max-w-7xl lg:px-8">
+          <div className="w-full bg-white ring-1 ring-zinc-100 dark:bg-zinc-900 dark:ring-zinc-300/20" />
+        </div>
+      </div>
+      <div className="relative">
+        <Header />
+        <main>
+          <Component previousPathname={previousPathname} {...pageProps} />
+        </main>
+        <Footer />
+      </div>
     </>
   )
 }
