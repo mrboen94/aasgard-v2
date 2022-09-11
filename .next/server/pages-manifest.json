@@ -2,9 +2,7 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/articles": "pages/articles.js",
-  "/articles/rewriting-the-cosmos-kernel-in-rust": "pages/articles/rewriting-the-cosmos-kernel-in-rust.js",
   "/projects": "pages/projects.js",
-  "/about": "pages/about.js",
-  "/": "pages/index.js"
+  "/": "pages/index.js",
+  "/articles/rewriting-the-cosmos-kernel-in-rust": "pages/articles/rewriting-the-cosmos-kernel-in-rust.js"
 }

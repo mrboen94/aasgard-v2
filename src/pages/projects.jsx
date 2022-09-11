@@ -65,12 +65,12 @@ export default function Projects() {
         <title>Projects - Mathias Bøe</title>
         <meta
           name="description"
-          content="Things I’ve made trying to put my dent in the universe."
+          content="An overview over my past and current projects."
         />
       </Head>
       <SimpleLayout
-        title="Things I’ve made trying to put my dent in the universe."
-        intro="I’ve worked on tons of little projects over the years but these are the ones that I’m most proud of. Many of them are open-source, so if you see something that piques your interest, check out the code and contribute if you have ideas for how it can be improved."
+        title="An overview over my past and current projects"
+        intro="I’ve worked on many projects over the years, some small, some larger, these are some selected ones that I find most interesting."
       >
         <ul
           role="list"
