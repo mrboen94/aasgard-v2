@@ -1,5 +1,5 @@
-import glob from 'fast-glob'
-import * as path from 'path'
+import groq from 'groq'
+import client from '../../client'
 
 async function importArticle(articleFilename) {
   let { meta, default: component } = await import(
@@ -13,11 +13,9 @@ async function importArticle(articleFilename) {
 }
 
 export async function getAllArticles() {
-  let articleFilenames = await glob(['*.mdx', '*/index.mdx'], {
-    cwd: path.join(process.cwd(), 'src/pages/articles'),
-  })
+  let articles = await client.fetch(
+    groq`*[_type == "post"] | order(_createdAt asc)`
+  )
 
-  let articles = await Promise.all(articleFilenames.map(importArticle))
-
-  return articles.sort((a, z) => new Date(z.date) - new Date(a.date))
+  return articles
 }

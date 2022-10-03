@@ -86,16 +86,16 @@ function ArrowDownIcon(props) {
 function Article({ article }) {
   return (
     <Card as="article">
-      <Card.Title href={`/articles/${article.slug}`}>
+      <Card.Title href={`/articles/${article.slug.current}`}>
         {article.title}
       </Card.Title>
       <Card.Eyebrow
         as="time"
         className="font-mono"
-        dateTime={article.date}
+        dateTime={article._publishedAt}
         decorate
       >
-        {formatDate(article.date)}
+        {formatDate(article.publishedAt)}
       </Card.Eyebrow>
       <Card.Description>{article.description}</Card.Description>
       <Card.Cta>Read article</Card.Cta>
@@ -321,9 +321,7 @@ export async function getStaticProps() {
 
   return {
     props: {
-      articles: (await getAllArticles())
-        .slice(0, 4)
-        .map(({ component, ...meta }) => meta),
+      articles: (await getAllArticles()).slice(0, 4),
     },
   }
 }
