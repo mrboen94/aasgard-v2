@@ -2,22 +2,15 @@ import groq from 'groq'
 import { MDXRemote } from 'next-mdx-remote'
 import { serialize } from 'next-mdx-remote/serialize'
 import { ArticleLayout } from '@/components/ArticleLayout'
-import { Code } from '@/components/Code'
 import remarkGfm from 'remark-gfm'
 import rehypePrism from '@mapbox/rehype-prism'
 
 import client from '../../../client'
 
-const components = {
-  pre: Code,
-  code: Code,
-  inlineCode: Code,
-}
-
 const Article = ({ article, body }) => {
   return (
     <ArticleLayout meta={article}>
-      <MDXRemote {...body} componets={components} />
+      <MDXRemote {...body} />
     </ArticleLayout>
   )
 }
