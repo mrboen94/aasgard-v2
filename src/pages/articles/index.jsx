@@ -2,19 +2,20 @@ import Head from 'next/head'
 
 import { Card } from '@/components/Card'
 import { SimpleLayout } from '@/components/SimpleLayout'
-import { getAllArticles } from '@/lib/getAllArticles'
 import { formatDate } from '@/lib/formatDate'
+import client from 'client'
+import groq from 'groq'
 
 function Article({ article }) {
   return (
     <article className="md:grid md:grid-cols-4 md:items-baseline">
       <Card className="md:col-span-3">
-        <Card.Title href={`/articles/${article.slug}`}>
+        <Card.Title href={`/articles/${article.slug.current}`}>
           {article.title}
         </Card.Title>
         <Card.Eyebrow
           as="time"
-          dateTime={article.date}
+          dateTime={article._createdAt}
           className="md:hidden"
           decorate
         >
@@ -25,10 +26,10 @@ function Article({ article }) {
       </Card>
       <Card.Eyebrow
         as="time"
-        dateTime={article.date}
+        dateTime={article._createdAt}
         className="mt-1 hidden md:block"
       >
-        {formatDate(article.date)}
+        {formatDate(article._createdAt)}
       </Card.Eyebrow>
     </article>
   )
@@ -51,7 +52,7 @@ export default function ArticlesIndex({ articles }) {
         <div className="md:border-l md:border-zinc-100 md:pl-6 md:dark:border-zinc-700/40">
           <div className="flex max-w-3xl flex-col space-y-16">
             {articles.map((article) => (
-              <Article key={article.slug} article={article} />
+              <Article key={article.slug.current} article={article} />
             ))}
           </div>
         </div>
@@ -60,10 +61,14 @@ export default function ArticlesIndex({ articles }) {
   )
 }
 
+const articlesQuery = groq`*[_type=="post"]`
+
 export async function getStaticProps() {
+  // It's important to default the slug so that it doesn't return "undefined"
+  const articles = await client.fetch(articlesQuery)
   return {
     props: {
-      articles: (await getAllArticles()).map(({ component, ...meta }) => meta),
+      articles,
     },
   }
 }
