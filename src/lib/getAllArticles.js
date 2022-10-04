@@ -14,7 +14,7 @@ async function importArticle(articleFilename) {
 
 export async function getAllArticles() {
   let articles = await client.fetch(
-    groq`*[_type == "post"] | order(_createdAt asc)`
+    groq`*[_type == "post"] | order(_createdAt desc)`
   )
 
   return articles

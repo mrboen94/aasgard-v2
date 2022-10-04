@@ -3,7 +3,7 @@ import Head from 'next/head'
 import { Card } from '@/components/Card'
 import { SimpleLayout } from '@/components/SimpleLayout'
 import { formatDate } from '@/lib/formatDate'
-import client from 'client'
+import { getAllArticles } from '@/lib/getAllArticles'
 import groq from 'groq'
 
 function Article({ article }) {
@@ -65,7 +65,7 @@ const articlesQuery = groq`*[_type=="post"]`
 
 export async function getStaticProps() {
   // It's important to default the slug so that it doesn't return "undefined"
-  const articles = await client.fetch(articlesQuery)
+  const articles = await getAllArticles()
   return {
     props: {
       articles,
