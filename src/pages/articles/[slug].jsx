@@ -8,10 +8,12 @@ import rehypePrism from '@mapbox/rehype-prism'
 import client from '../../../client'
 
 const Article = ({ article, body }) => {
-  return (
+  return article ? (
     <ArticleLayout meta={article}>
       <MDXRemote {...body} />
     </ArticleLayout>
+  ) : (
+    <div>nothing</div>
   )
 }
 
