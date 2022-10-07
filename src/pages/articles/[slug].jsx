@@ -23,7 +23,8 @@ const query = groq`*[_type == "post" && slug.current == $slug][0]{
   "name": author->name,
   "categories": categories[]->title,
   "authorImage": author->image,
-  "mainImage": mainImage,
+  "mainImage": mainImage.asset,
+  "metadata": mainImage.asset->metadata, 
   "createdAt": _createdAt,
   body
 }`

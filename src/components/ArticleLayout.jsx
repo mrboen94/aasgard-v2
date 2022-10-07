@@ -5,6 +5,8 @@ import { Container } from '@/components/Container'
 import { formatDate } from '@/lib/formatDate'
 import { Prose } from '@/components/Prose'
 import { urlFor } from '@/lib/urlFor'
+import Image from 'next/image'
+import { imageConfigDefault } from 'next/dist/shared/lib/image-config'
 
 function ArrowLeftIcon(props) {
   return (
@@ -51,7 +53,14 @@ export function ArticleLayout({
               </button>
             )}
             <article>
-              <img src={urlFor(meta.mainImage)} />
+              <Image
+                className="transition-all duration-1000"
+                src={urlFor(meta.mainImage)}
+                blurDataURL={meta.metadata.lqip}
+                width={meta.metadata.dimensions.width}
+                height={meta.metadata.dimensions.height}
+                placeholder="blur"
+              />
               <header className="flex flex-col">
                 <h1 className="mt-6 font-display text-4xl tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl">
                   {meta.title}
