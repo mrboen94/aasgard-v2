@@ -4,7 +4,6 @@ import { Card } from '@/components/Card'
 import { SimpleLayout } from '@/components/SimpleLayout'
 import { formatDate } from '@/lib/formatDate'
 import { getAllArticles } from '@/lib/getAllArticles'
-import groq from 'groq'
 
 function Article({ article }) {
   return (
@@ -60,8 +59,6 @@ export default function ArticlesIndex({ articles }) {
     </>
   )
 }
-
-const articlesQuery = groq`*[_type=="post"]`
 
 export async function getStaticProps() {
   // It's important to default the slug so that it doesn't return "undefined"

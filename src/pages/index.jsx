@@ -2,6 +2,7 @@ import Image from 'next/future/image'
 import Head from 'next/head'
 import Link from 'next/link'
 import clsx from 'clsx'
+import groq from 'groq'
 
 import { Button } from '@/components/Button'
 import { Card } from '@/components/Card'
@@ -23,6 +24,9 @@ import logoBouvet from '@/images/logos/bouvet.png'
 import { generateRssFeed } from '@/lib/generateRssFeed'
 import { getAllArticles } from '@/lib/getAllArticles'
 import { formatDate } from '@/lib/formatDate'
+import client from 'client'
+import { urlFor } from '@/lib/urlFor'
+import { useState } from 'react'
 
 function MailIcon(props) {
   return (
@@ -223,25 +227,27 @@ function Resume() {
   )
 }
 
-function Photos() {
+function Photos({ images }) {
   let rotations = ['rotate-2', '-rotate-2', 'rotate-2', 'rotate-2', '-rotate-2']
-
   return (
     <div className="mt-16 sm:mt-20">
       <div className="-my-4 flex justify-center gap-5 overflow-hidden py-4 sm:gap-8">
-        {[image1, image2, image3, image4, image5].map((image, imageIndex) => (
+        {images.map((image, imageIndex) => (
           <div
-            key={image.src}
+            key={image.alt}
             className={clsx(
               'relative aspect-[9/10] w-44 flex-none overflow-hidden rounded-xl bg-zinc-100 dark:bg-zinc-800 sm:w-72 sm:rounded-2xl',
               rotations[imageIndex % rotations.length]
             )}
           >
             <Image
-              src={image}
-              alt=""
+              src={urlFor(image.image)}
+              alt={image.alt}
               sizes="(min-width: 640px) 18rem, 11rem"
               className="absolute inset-0 h-full w-full object-cover"
+              width={image.meta.dimensions.width}
+              height={image.meta.dimensions.height}
+              blurDataURL={image.meta.lqip}
             />
           </div>
         ))}
@@ -250,7 +256,7 @@ function Photos() {
   )
 }
 
-export default function Home({ articles }) {
+export default function Home({ articles, images }) {
   return (
     <>
       <Head>
@@ -296,7 +302,7 @@ export default function Home({ articles }) {
           </div>
         </div>
       </Container>
-      <Photos />
+      <Photos images={images} />
       <Container className="mt-24 md:mt-28">
         <div className="mx-auto grid max-w-xl grid-cols-1 gap-y-20 lg:max-w-none lg:grid-cols-2">
           <div className="flex flex-col gap-16">
@@ -320,9 +326,20 @@ export async function getStaticProps() {
     await generateRssFeed()
   }
 
+  const imageArray = await client.fetch(groq`*[_type == "staticInfo"]
+    {"images":imageGrid[]
+    {
+    "image":image.asset, 
+    "meta":image.asset->metadata, 
+    title, 
+    alt, 
+    caption}}
+`)
+
   return {
     props: {
       articles: (await getAllArticles()).slice(0, 4),
+      images: imageArray[0].images,
     },
   }
 }
