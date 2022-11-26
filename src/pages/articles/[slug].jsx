@@ -25,12 +25,11 @@ const Article = ({ article, body }) => {
 // Choses what information to save as an article object
 const query = groq`*[_type == "post" && slug.current == $slug][0]{
   title,
-  "name": author->name,
+  "authors": author[]->name,
   "categories": categories[]->title,
-  "authorImage": author->image,
   "mainImage": mainImage.asset,
   "metadata": mainImage.asset->metadata, 
-  "createdAt": _createdAt,
+  "publishedAt": publishedAt,
   body
 }`
 

@@ -14,7 +14,7 @@ function Article({ article }) {
         </Card.Title>
         <Card.Eyebrow
           as="time"
-          dateTime={article._createdAt}
+          dateTime={article.publishedAt}
           className="md:hidden"
           decorate
         >
@@ -25,10 +25,10 @@ function Article({ article }) {
       </Card>
       <Card.Eyebrow
         as="time"
-        dateTime={article._createdAt}
+        dateTime={article.publishedAt}
         className="mt-1 hidden md:block"
       >
-        {formatDate(article._createdAt)}
+        {formatDate(article.publishedAt)}
       </Card.Eyebrow>
     </article>
   )

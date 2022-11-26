@@ -6,7 +6,6 @@ import { formatDate } from '@/lib/formatDate'
 import { Prose } from '@/components/Prose'
 import { urlFor } from '@/lib/urlFor'
 import Image from 'next/image'
-import { imageConfigDefault } from 'next/dist/shared/lib/image-config'
 
 function ArrowLeftIcon(props) {
   return (
@@ -53,14 +52,16 @@ export function ArticleLayout({
               </button>
             )}
             <article>
-              <Image
-                className="overflow-visible transition-all duration-1000"
-                src={urlFor(meta.mainImage)}
-                blurDataURL={meta.metadata.lqip}
-                width={meta.metadata.dimensions.width}
-                height={meta.metadata.dimensions.height}
-                placeholder="blur"
-              />
+              <div className="flex items-center justify-center">
+                <Image
+                  className="overflow-visible transition-all duration-1000"
+                  src={urlFor(meta.mainImage)}
+                  blurDataURL={meta.metadata.lqip}
+                  width={meta.metadata.dimensions.width}
+                  height={meta.metadata.dimensions.height}
+                  placeholder="blur"
+                />
+              </div>
               <header className="flex flex-col">
                 <h1 className="mt-6 font-display text-4xl tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl">
                   {meta.title}
@@ -70,8 +71,12 @@ export function ArticleLayout({
                   className="order-first flex items-center font-mono text-base text-zinc-400 dark:text-zinc-500"
                 >
                   <span className="h-4 w-0.5 rounded-full bg-zinc-200 dark:bg-zinc-500" />
-                  <span className="ml-3">{formatDate(meta.createdAt)}</span>
+                  <span className="ml-3">{formatDate(meta.publishedAt)}</span>
                 </time>
+                <p className="order-first flex items-center font-mono text-base text-zinc-400 dark:text-zinc-500">
+                  {meta.authors.length > 1 ? 'Authors: ' : 'Author: '}
+                  {meta.authors.join(', ')}
+                </p>
               </header>
               <Prose className="mt-8">{children}</Prose>
             </article>
