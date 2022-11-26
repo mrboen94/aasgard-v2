@@ -4,13 +4,18 @@ import { serialize } from 'next-mdx-remote/serialize'
 import { ArticleLayout } from '@/components/ArticleLayout'
 import remarkGfm from 'remark-gfm'
 import rehypePrism from '@mapbox/rehype-prism'
+import Video from '@/components/Video'
 
 import client from '../../../client'
+
+const components = { Video }
 
 const Article = ({ article, body }) => {
   return article ? (
     <ArticleLayout meta={article}>
-      <MDXRemote {...body} />
+      <div>
+        <MDXRemote {...body} components={components} lazy />
+      </div>
     </ArticleLayout>
   ) : (
     <div>nothing</div>

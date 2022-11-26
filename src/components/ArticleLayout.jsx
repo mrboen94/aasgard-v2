@@ -54,7 +54,7 @@ export function ArticleLayout({
             )}
             <article>
               <Image
-                className="transition-all duration-1000"
+                className="overflow-visible transition-all duration-1000"
                 src={urlFor(meta.mainImage)}
                 blurDataURL={meta.metadata.lqip}
                 width={meta.metadata.dimensions.width}

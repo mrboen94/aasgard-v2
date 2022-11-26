@@ -5,27 +5,21 @@ import createSchema from 'part:@sanity/base/schema-creator'
 import schemaTypes from 'all:part:@sanity/base/schema-type'
 
 // We import object and document schemas
-import category from './category'
-import post from './post'
-import author from './author'
-import imageGrid from './staticInfo'
-import imageWithAlt from './imageWithAlt'
+import category from './documents/category'
+import post from './documents/post'
+import author from './documents/author'
+import imageGrid from './documents/staticInfo'
+import imageWithAlt from './objects/imageWithAlt'
+import videoContent from './objects/videoContent'
 
-// Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
-  // We name our schema
   name: 'default',
-  // Then proceed to concatenate our document type
-  // to the ones provided by any plugins that are installed
   types: schemaTypes.concat([
-    // The following are document types which will appear
-    // in the studio.
     post,
     author,
     category,
     imageGrid,
     imageWithAlt,
-    // When added to this list, object types can be used as
-    // { type: 'typename' } in other document schemas
+    videoContent,
   ]),
 })
