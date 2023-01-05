@@ -13,11 +13,6 @@ import {
   GitHubIcon,
   LinkedInIcon,
 } from '@/components/SocialIcons'
-import image1 from '@/images/photos/image-1.jpg'
-import image2 from '@/images/photos/image-2.jpg'
-import image3 from '@/images/photos/image-3.jpg'
-import image4 from '@/images/photos/image-4.jpg'
-import image5 from '@/images/photos/image-5.jpg'
 import logoIslandgarden from '@/images/logos/islandgarden.svg'
 import logoSbanken from '@/images/logos/sbanken.png'
 import logoBouvet from '@/images/logos/bouvet.png'
@@ -26,7 +21,7 @@ import { getAllArticles } from '@/lib/getAllArticles'
 import { formatDate } from '@/lib/formatDate'
 import client from 'client'
 import { urlFor } from '@/lib/urlFor'
-import { useState } from 'react'
+import AnimatedCard from '@/components/AnimatedCard'
 
 function MailIcon(props) {
   return (
@@ -88,23 +83,7 @@ function ArrowDownIcon(props) {
 }
 
 function Article({ article }) {
-  return (
-    <Card as="article">
-      <Card.Title href={`/articles/${article.slug.current}`}>
-        {article.title}
-      </Card.Title>
-      <Card.Eyebrow
-        as="time"
-        className="font-mono"
-        dateTime={article._publishedAt}
-        decorate
-      >
-        {formatDate(article.publishedAt)}
-      </Card.Eyebrow>
-      <Card.Description>{article.description}</Card.Description>
-      <Card.Cta>Read article</Card.Cta>
-    </Card>
-  )
+  return <AnimatedCard data={article} />
 }
 
 function SocialLink({ icon: Icon, ...props }) {
@@ -312,7 +291,7 @@ export default function Home({ articles, images }) {
       <Photos images={images} />
       <Container className="mt-24 md:mt-28">
         <div className="mx-auto grid max-w-xl grid-cols-1 gap-y-20 lg:max-w-none lg:grid-cols-2">
-          <div className="flex flex-col gap-16">
+          <div className="flex flex-col gap-8">
             {articles &&
               articles.map((article) => (
                 <Article key={article.slug} article={article} />
