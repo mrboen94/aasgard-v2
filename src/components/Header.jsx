@@ -3,10 +3,15 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Popover, Transition } from '@headlessui/react'
 import clsx from 'clsx'
+import { motion, useMotionTemplate, useMotionValue } from 'framer-motion'
+import { TopographyPattern } from './svgPatterns/TopographyPattern'
+
+import { HexagonPattern } from './svgPatterns/HexagonPattern'
 
 import { Container } from '@/components/Container'
 import avatarImage from '@/images/avatar.jpg'
 import { Fragment, useEffect, useRef } from 'react'
+import { ResourcePattern } from './AnimatedCard'
 
 function CloseIcon(props) {
   return (
@@ -159,9 +164,23 @@ function NavItem({ href, children }) {
 }
 
 function DesktopNavigation(props) {
+  let mouseX = useMotionValue(0)
+  let mouseY = useMotionValue(0)
+  let maskImage = useMotionTemplate`radial-gradient(300px at ${mouseX}px ${mouseY}px, white, transparent)`
+  let style = { maskImage, WebkitMaskImage: maskImage }
+
+  function onMouseMove({ currentTarget, clientX, clientY }) {
+    let { left, top } = currentTarget.getBoundingClientRect()
+    mouseX.set(clientX - left)
+    mouseY.set(clientY - top)
+  }
   return (
     <nav {...props}>
-      <ul className="flex rounded-full bg-white/90 px-3 text-sm font-medium text-zinc-800 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10">
+      <ul
+        onMouseMove={onMouseMove}
+        className="group flex rounded-full bg-white/70 px-3 text-sm font-medium text-zinc-800 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10"
+      >
+        <ResourcePattern mouseX={mouseX} mouseY={mouseY} faded />
         <NavItem href="/about">About</NavItem>
         <NavItem href="/articles">Articles</NavItem>
         <NavItem href="/projects">Projects</NavItem>

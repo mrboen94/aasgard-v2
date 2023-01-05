@@ -2,16 +2,17 @@ import { motion, useMotionTemplate, useMotionValue } from 'framer-motion'
 import Link from 'next/link'
 import { Card } from './Card'
 import { formatDate } from '@/lib/formatDate'
-import { HexagonPattern } from './svgPatterns/HexagonPattern'
 import { TopographyPattern } from './svgPatterns/TopographyPattern'
 
-function ResourcePattern({ mouseX, mouseY }) {
-  let maskImage = useMotionTemplate`radial-gradient(300px at ${mouseX}px ${mouseY}px, white, transparent)`
+export function ResourcePattern({ mouseX, mouseY, faded }) {
+  let maskImage = faded
+    ? useMotionTemplate`radial-gradient(150px at ${mouseX}px ${mouseY}px, rgba(0,0,0,0.3), transparent)`
+    : useMotionTemplate`radial-gradient(300px at ${mouseX}px ${mouseY}px, white, transparent)`
   let style = { maskImage, WebkitMaskImage: maskImage }
 
   return (
     <div className="pointer-events-none">
-      <div className="absolute inset-0 hidden rounded-2xl transition duration-300 [mask-image:linear-gradient(white,transparent)] hover:block group-hover:opacity-50">
+      <div className="absolute inset-0 hidden rounded-2xl transition-all duration-500 [mask-image:linear-gradient(white,transparent)] hover:block group-hover:opacity-50">
         <TopographyPattern
           width={28}
           height={48}
@@ -20,7 +21,7 @@ function ResourcePattern({ mouseX, mouseY }) {
         />
       </div>
       <motion.div
-        className="absolute inset-0 rounded-2xl bg-gradient-to-r from-teal-100 to-cyan-100 opacity-0 transition duration-300 group-hover:opacity-100 dark:from-teal-900/40 dark:to-cyan-900/40"
+        className="absolute inset-0 rounded-2xl bg-gradient-to-r from-teal-100 to-cyan-100 opacity-0 transition-all duration-500 group-hover:opacity-100 dark:from-teal-900/40 dark:to-cyan-900/40"
         style={style}
       />
       <motion.div
@@ -53,7 +54,7 @@ export default function AnimatedCard({ data }) {
       <div
         key={data.slug.current}
         onMouseMove={onMouseMove}
-        className="group relative -inset-y-4 mx-auto flex rounded-2xl bg-white ring-1 ring-inset ring-gray-200/50 transition-all duration-300 hover:scale-100 hover:shadow-md hover:shadow-zinc-900/5 hover:ring-gray-300/50 dark:bg-zinc-900 dark:ring-gray-200/5 dark:hover:shadow-black/5 dark:hover:ring-gray-200/10 sm:-inset-x-6"
+        className="group relative -inset-y-4 mx-auto flex rounded-2xl bg-white ring-1 ring-inset ring-gray-200/50 transition-all duration-500 hover:scale-100 hover:shadow-md hover:shadow-zinc-900/5 hover:ring-gray-300/50 dark:bg-zinc-900 dark:ring-gray-200/5 dark:hover:shadow-black/5 dark:hover:ring-gray-200/10 sm:-inset-x-6"
       >
         <ResourcePattern mouseX={mouseX} mouseY={mouseY} />
         <div className="absolute inset-0 rounded-2xl transition-all" />
