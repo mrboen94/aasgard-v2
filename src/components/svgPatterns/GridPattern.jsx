@@ -1,4 +1,6 @@
 import { useId } from 'react'
+// Width for animated card: 72
+// Height for animated card: 56
 
 export function GridPattern({ width, height, x, y, squares, ...props }) {
   let patternId = useId()

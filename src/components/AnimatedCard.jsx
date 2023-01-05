@@ -2,7 +2,8 @@ import { motion, useMotionTemplate, useMotionValue } from 'framer-motion'
 import Link from 'next/link'
 import { Card } from './Card'
 import { formatDate } from '@/lib/formatDate'
-import { GridPattern } from './GridPattern'
+import { HexagonPattern } from './svgPatterns/HexagonPattern'
+import { TopographyPattern } from './svgPatterns/TopographyPattern'
 
 function ResourcePattern({ mouseX, mouseY }) {
   let maskImage = useMotionTemplate`radial-gradient(180px at ${mouseX}px ${mouseY}px, white, transparent)`
@@ -11,11 +12,11 @@ function ResourcePattern({ mouseX, mouseY }) {
   return (
     <div className="pointer-events-none">
       <div className="absolute inset-0 hidden rounded-2xl transition duration-300 [mask-image:linear-gradient(white,transparent)] hover:block group-hover:opacity-50">
-        <GridPattern
-          width={72}
-          height={56}
-          x="50%"
-          className="dark:fill-white/1 dark:stroke-white/2.5 absolute inset-y-[-30%] h-[160%] w-full skew-y-[-18deg] fill-black/[0.02] stroke-black/5 sm:-inset-x-6"
+        <TopographyPattern
+          width={28}
+          height={48}
+          x="100%"
+          className="dark:fill-white/1 dark:stroke-white/2.5 absolute  w-full fill-black/[0.02] stroke-black/5 sm:-inset-x-6"
         />
       </div>
       <motion.div
@@ -26,11 +27,11 @@ function ResourcePattern({ mouseX, mouseY }) {
         className="absolute inset-0 rounded-2xl opacity-0 mix-blend-overlay transition duration-300 group-hover:opacity-100"
         style={style}
       >
-        <GridPattern
-          width={72}
-          height={56}
-          x="50%"
-          className="dark:fill-white/2.5 absolute inset-x-0 inset-y-[-30%] h-[160%] w-full skew-y-[-18deg] fill-black/50 stroke-black/70 dark:stroke-white/10"
+        <TopographyPattern
+          width={28}
+          height={48}
+          x="100%"
+          className="absolute inset-x-0 h-full w-full fill-black/50 stroke-black/50 dark:fill-white/5 dark:stroke-white/10"
         />
       </motion.div>
     </div>
@@ -52,7 +53,7 @@ export default function AnimatedCard({ data }) {
       <div
         key={data.slug.current}
         onMouseMove={onMouseMove}
-        className="group relative -inset-y-4 mx-auto flex rounded-2xl bg-white ring-1 ring-inset ring-gray-200/50 transition-all duration-300 hover:scale-100 hover:shadow-md hover:shadow-zinc-900/5 dark:bg-zinc-900 dark:ring-gray-200/5 dark:hover:bg-zinc-800 dark:hover:shadow-black/5 sm:-inset-x-6"
+        className="group relative -inset-y-4 mx-auto flex rounded-2xl bg-white ring-1 ring-inset ring-gray-200/50 transition-all duration-300 hover:scale-100 hover:shadow-md hover:shadow-zinc-900/5 hover:ring-gray-300/50 dark:bg-zinc-900 dark:ring-gray-200/5 dark:hover:bg-zinc-800 dark:hover:shadow-black/5 dark:hover:ring-gray-200/10 sm:-inset-x-6"
       >
         <ResourcePattern mouseX={mouseX} mouseY={mouseY} />
         <div className="absolute inset-0 rounded-2xl transition-all" />
