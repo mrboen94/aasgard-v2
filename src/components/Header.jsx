@@ -8,7 +8,7 @@ import { useMotionTemplate, useMotionValue } from 'framer-motion'
 import { Container } from '@/components/Container'
 import avatarImage from '@/images/avatar.jpg'
 import { Fragment, useEffect, useRef } from 'react'
-import { ResourcePattern } from './AnimatedCard'
+import { ResourcePattern } from './ResourcePattern'
 
 function CloseIcon(props) {
   return (
