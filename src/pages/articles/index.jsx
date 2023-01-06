@@ -7,15 +7,18 @@ import AnimatedCard from '@/components/AnimatedCard'
 
 function Article({ article }) {
   return (
-    <article className="md:grid md:grid-cols-4 md:items-baseline">
-      <AnimatedCard data={article} date={true} />
-      <Card.Eyebrow
-        as="time"
+    <article className="gap-x-0 md:grid md:grid-cols-2 md:items-baseline">
+      <time
         dateTime={article.publishedAt}
-        className="mt-1 hidden md:block"
+        className="my-auto mx-0 mt-1 hidden w-48 md:block"
       >
-        {formatDate(article.publishedAt)}
-      </Card.Eyebrow>
+        <p className="font-mono text-sm text-zinc-400 dark:text-zinc-500">
+          {formatDate(article.publishedAt)}
+        </p>
+      </time>
+      <div className="-ml-48">
+        <AnimatedCard data={article} date={true} />
+      </div>
     </article>
   )
 }
@@ -47,7 +50,6 @@ export default function ArticlesIndex({ articles }) {
 }
 
 export async function getStaticProps() {
-  // It's important to default the slug so that it doesn't return "undefined"
   const articles = await getAllArticles()
   return {
     props: {
