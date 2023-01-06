@@ -1,15 +1,11 @@
 import Head from 'next/head'
-import { useMotionValue } from 'framer-motion'
-
 import { Card } from '@/components/Card'
 import { SimpleLayout } from '@/components/SimpleLayout'
 import { formatDate } from '@/lib/formatDate'
 import { getAllArticles } from '@/lib/getAllArticles'
-import AnimatedCard, { ResourcePattern } from '@/components/AnimatedCard'
+import AnimatedCard from '@/components/AnimatedCard'
 
 function Article({ article }) {
-  let mouseX = useMotionValue(0)
-  let mouseY = useMotionValue(0)
   return (
     <article className="md:grid md:grid-cols-4 md:items-baseline">
       <AnimatedCard data={article} date />
