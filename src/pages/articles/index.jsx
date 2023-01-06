@@ -10,13 +10,13 @@ function Article({ article }) {
     <article className="gap-x-0 md:grid md:grid-cols-2 md:items-baseline">
       <time
         dateTime={article.publishedAt}
-        className="my-auto mx-0 mt-1 hidden w-48 md:block"
+        className="my-auto mx-0 mt-1 -ml-6 hidden w-40 pl-4 md:block"
       >
         <p className="font-mono text-sm text-zinc-400 dark:text-zinc-500">
           {formatDate(article.publishedAt)}
         </p>
       </time>
-      <div className="-ml-48">
+      <div className="inset-0 sm:ml-10 md:-ml-36">
         <AnimatedCard data={article} date={true} />
       </div>
     </article>
