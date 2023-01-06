@@ -1,28 +1,18 @@
 import Head from 'next/head'
+import { useMotionValue } from 'framer-motion'
 
 import { Card } from '@/components/Card'
 import { SimpleLayout } from '@/components/SimpleLayout'
 import { formatDate } from '@/lib/formatDate'
 import { getAllArticles } from '@/lib/getAllArticles'
+import AnimatedCard, { ResourcePattern } from '@/components/AnimatedCard'
 
 function Article({ article }) {
+  let mouseX = useMotionValue(0)
+  let mouseY = useMotionValue(0)
   return (
     <article className="md:grid md:grid-cols-4 md:items-baseline">
-      <Card className="md:col-span-3">
-        <Card.Title href={`/articles/${article.slug.current}`}>
-          {article.title}
-        </Card.Title>
-        <Card.Eyebrow
-          as="time"
-          dateTime={article.publishedAt}
-          className="md:hidden"
-          decorate
-        >
-          {formatDate(article.date)}
-        </Card.Eyebrow>
-        <Card.Description>{article.description}</Card.Description>
-        <Card.Cta>Read article</Card.Cta>
-      </Card>
+      <AnimatedCard data={article} date />
       <Card.Eyebrow
         as="time"
         dateTime={article.publishedAt}

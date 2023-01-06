@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { Card } from './Card'
 import { formatDate } from '@/lib/formatDate'
 import { TopographyPattern } from './svgPatterns/TopographyPattern'
-import { GridPattern } from './svgPatterns/GridPattern'
 
 export function ResourcePattern({ mouseX, mouseY, faded }) {
   let maskImage = faded
@@ -40,7 +39,7 @@ export function ResourcePattern({ mouseX, mouseY, faded }) {
   )
 }
 
-export default function AnimatedCard({ data }) {
+export default function AnimatedCard({ data, date }) {
   let mouseX = useMotionValue(0)
   let mouseY = useMotionValue(0)
 
@@ -60,7 +59,7 @@ export default function AnimatedCard({ data }) {
         <ResourcePattern mouseX={mouseX} mouseY={mouseY} />
         <div className="absolute inset-0 rounded-2xl transition-all" />
         <div className="relative rounded-2xl p-6 px-6">
-          <div>
+          {date && (
             <time
               dateTime={data.publishedAt}
               className="order-first flex items-center font-mono text-base text-zinc-400 dark:text-zinc-500"
@@ -68,7 +67,7 @@ export default function AnimatedCard({ data }) {
               <span className="h-4 w-0.5 rounded-full bg-zinc-200 dark:bg-zinc-500" />
               <span className="ml-3">{formatDate(data.publishedAt)}</span>
             </time>
-          </div>
+          )}
           <span className="text-base font-semibold tracking-tight text-zinc-800 dark:text-zinc-100">
             {data.title}
           </span>

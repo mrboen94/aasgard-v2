@@ -3,10 +3,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Popover, Transition } from '@headlessui/react'
 import clsx from 'clsx'
-import { motion, useMotionTemplate, useMotionValue } from 'framer-motion'
-import { TopographyPattern } from './svgPatterns/TopographyPattern'
-
-import { HexagonPattern } from './svgPatterns/HexagonPattern'
+import { useMotionTemplate, useMotionValue } from 'framer-motion'
 
 import { Container } from '@/components/Container'
 import avatarImage from '@/images/avatar.jpg'

@@ -1,10 +1,26 @@
 import { useId } from 'react'
 
-export function TopographyPattern({ width, height, x, y, squares, ...props }) {
+interface ITopographyPattern {
+  width: number
+  height: number
+  x?: string
+  y?: string
+  squares?: any
+  className?: string
+}
+
+export function TopographyPattern({
+  width,
+  height,
+  x,
+  y,
+  squares,
+  className,
+}: ITopographyPattern): JSX.Element {
   let patternId = useId()
 
   return (
-    <svg aria-hidden="true" {...props}>
+    <svg aria-hidden="true" className={className}>
       <defs>
         <pattern
           id={patternId}
