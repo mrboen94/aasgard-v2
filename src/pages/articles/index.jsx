@@ -8,7 +8,7 @@ import AnimatedCard from '@/components/AnimatedCard'
 function Article({ article }) {
   return (
     <article className="md:grid md:grid-cols-4 md:items-baseline">
-      <AnimatedCard data={article} date />
+      <AnimatedCard data={article} date={true} />
       <Card.Eyebrow
         as="time"
         dateTime={article.publishedAt}

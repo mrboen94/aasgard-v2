@@ -1,11 +1,15 @@
-import { motion, useMotionTemplate, useMotionValue } from 'framer-motion'
+import { useMotionValue } from 'framer-motion'
 import Link from 'next/link'
 import { Card } from './Card'
 import { formatDate } from '@/lib/formatDate'
-import { TopographyPattern } from './svgPatterns/TopographyPattern'
 import { ResourcePattern } from './ResourcePattern'
 
-export default function AnimatedCard({ data, date }) {
+interface IAnimatedCard {
+  data: any
+  date: boolean
+}
+
+export default function AnimatedCard({ data, date }: IAnimatedCard) {
   let mouseX = useMotionValue(0)
   let mouseY = useMotionValue(0)
 
@@ -25,7 +29,7 @@ export default function AnimatedCard({ data, date }) {
         <ResourcePattern mouseX={mouseX} mouseY={mouseY} />
         <div className="absolute inset-0 rounded-2xl transition-all" />
         <div className="relative rounded-2xl p-6 px-6">
-          {date && (
+          {!date && (
             <time
               dateTime={data.publishedAt}
               className="order-first flex items-center font-mono text-base text-zinc-400 dark:text-zinc-500"
