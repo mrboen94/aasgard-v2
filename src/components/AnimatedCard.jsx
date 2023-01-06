@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { Card } from './Card'
 import { formatDate } from '@/lib/formatDate'
 import { TopographyPattern } from './svgPatterns/TopographyPattern'
+import { GridPattern } from './svgPatterns/GridPattern'
 
 export function ResourcePattern({ mouseX, mouseY, faded }) {
   let maskImage = faded
@@ -14,10 +15,10 @@ export function ResourcePattern({ mouseX, mouseY, faded }) {
     <div className="pointer-events-none">
       <div className="absolute inset-0 hidden rounded-2xl transition-all duration-500 [mask-image:linear-gradient(white,transparent)] hover:block group-hover:opacity-50">
         <TopographyPattern
-          width={28}
-          height={48}
+          width={50}
+          height={50}
           x="100%"
-          className="dark:fill-white/1 dark:stroke-white/2.5 absolute  w-full fill-black/[0.02] stroke-black/5 sm:-inset-x-6"
+          className="dark:fill-white/1 dark:stroke-white/2.5 absolute w-full fill-black/[0.02] stroke-black/5 sm:-inset-x-6"
         />
       </div>
       <motion.div
