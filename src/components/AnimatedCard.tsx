@@ -4,7 +4,13 @@ import { Card } from './Card'
 import { formatDate } from '@/lib/formatDate'
 import { TopographyPattern } from './svgPatterns/TopographyPattern'
 
-export function ResourcePattern({ mouseX, mouseY, faded }) {
+interface IResourcePattern {
+  mouseX: any
+  mouseY: any
+  faded?: boolean
+}
+
+export function ResourcePattern({ mouseX, mouseY, faded }: IResourcePattern) {
   let maskImage = faded
     ? useMotionTemplate`radial-gradient(150px at ${mouseX}px ${mouseY}px, rgba(0,0,0,0.3), transparent)`
     : useMotionTemplate`radial-gradient(300px at ${mouseX}px ${mouseY}px, white, transparent)`
