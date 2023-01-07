@@ -1,9 +1,8 @@
 import Head from 'next/head'
-import { Card } from '@/components/Card'
 import { SimpleLayout } from '@/components/SimpleLayout'
 import { formatDate } from '@/lib/formatDate'
 import { getAllArticles } from '@/lib/getAllArticles'
-import AnimatedCard from '@/components/AnimatedLinkCard'
+import { AnimatedLinkCard } from '@/components/AnimatedLinkCard'
 
 function Article({ article }) {
   return (
@@ -17,7 +16,7 @@ function Article({ article }) {
         </p>
       </time>
       <div className="inset-0 sm:ml-10 md:-ml-36">
-        <AnimatedCard data={article} date={true} />
+        <AnimatedLinkCard data={article} date={true} />
       </div>
     </article>
   )
