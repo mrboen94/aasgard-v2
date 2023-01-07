@@ -154,7 +154,7 @@ function Resume() {
           className="group mt-6 w-full duration-500 group-hover:ring-1 group-hover:ring-cyan-500 dark:group-hover:ring-teal-500"
         >
           Download CV (Norwegian)
-          <ArrowDownIcon className="h-4 w-4 animate-bounce stroke-zinc-400 transition group-hover:stroke-cyan-600 group-active:stroke-zinc-600 dark:group-hover:stroke-teal-300 first-letter:dark:group-active:stroke-zinc-50" />
+          <ArrowDownIcon className="h-4 w-4 stroke-zinc-400 transition group-hover:animate-bounce group-hover:stroke-cyan-600 group-active:stroke-zinc-600 dark:group-hover:stroke-teal-300 first-letter:dark:group-active:stroke-zinc-50" />
         </Button>
       </a>
     </div>
