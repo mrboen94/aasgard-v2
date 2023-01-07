@@ -3,7 +3,7 @@ import { Card } from '@/components/Card'
 import { SimpleLayout } from '@/components/SimpleLayout'
 import { formatDate } from '@/lib/formatDate'
 import { getAllArticles } from '@/lib/getAllArticles'
-import AnimatedCard from '@/components/AnimatedCard'
+import AnimatedCard from '@/components/AnimatedLinkCard'
 
 function Article({ article }) {
   return (

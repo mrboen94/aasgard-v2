@@ -1,6 +1,6 @@
-import { MailIcon } from './../components/icons/MailIcon'
-import { BriefcaseIcon } from './../components/icons/BriefcaseIcon'
-import { ArrowDownIcon } from './../components/icons/ArrowDownIcon'
+import { ArrowDownIcon } from '@/components/icons/ArrowDownIcon'
+import { BriefcaseIcon } from '@/components/icons/BriefcaseIcon'
+import { MailIcon } from '@/components/icons/MailIcon'
 import Image from 'next/future/image'
 import Head from 'next/head'
 import Link from 'next/link'
@@ -22,7 +22,11 @@ import { generateRssFeed } from '@/lib/generateRssFeed'
 import { getAllArticles } from '@/lib/getAllArticles'
 import client from 'client'
 import { urlFor } from '@/lib/urlFor'
-import AnimatedCard from '@/components/AnimatedCard'
+import { AnimatedLinkCard } from '@/components/AnimatedLinkCard'
+import ResourceIcon from '@/components/ResourceIcon'
+import { AnimatedCard } from '@/components/AnimatedCard'
+import { ResourcePattern } from '@/components/ResourcePattern'
+import { useMotionValue } from 'framer-motion'
 
 function SocialLink({ icon: Icon, ...props }) {
   return (
@@ -89,13 +93,28 @@ function Resume() {
     },
   ]
 
+  let mouseX = useMotionValue(0)
+  let mouseY = useMotionValue(0)
+  function onMouseMove({ currentTarget, clientX, clientY }) {
+    let { left, top } = currentTarget.getBoundingClientRect()
+    mouseX.set(clientX - left)
+    mouseY.set(clientY - top)
+  }
+
   return (
-    <div className="rounded-2xl border border-zinc-100 p-6 dark:border-zinc-700/40">
-      <h2 className="flex text-sm font-semibold text-zinc-900 dark:text-zinc-100">
-        <BriefcaseIcon className="h-6 w-6 flex-none" />
-        <span className="ml-3">Work</span>
+    <div
+      onMouseMove={onMouseMove}
+      className="group relative rounded-2xl border border-zinc-100 p-6 dark:border-zinc-700/40"
+    >
+      <ResourcePattern mouseX={mouseX} mouseY={mouseY} />
+      <h2 className="group relative flex text-sm font-semibold text-zinc-900 dark:text-zinc-100">
+        <ResourceIcon
+          icon={BriefcaseIcon}
+          className="relative h-6 w-6 flex-none"
+        />
+        <span className="relative ml-3">Work</span>
       </h2>
-      <ol className="mt-6 space-y-4">
+      <ol className="relative mt-6 space-y-4">
         {resume.map((role, roleIndex) => (
           <li key={roleIndex} className="flex gap-4">
             <div className="relative mt-1 flex h-10 w-10 flex-none items-center justify-center rounded-full shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:bg-zinc-800 dark:ring-0">
@@ -134,7 +153,7 @@ function Resume() {
           </li>
         ))}
       </ol>
-      <a href="./cv.pdf" download>
+      <a href="./cv.pdf" download className="relative">
         <Button variant="secondary" className="group mt-6 w-full">
           Download CV (Norwegian)
           <ArrowDownIcon className="h-4 w-4 stroke-zinc-400 transition group-active:stroke-zinc-600 dark:group-hover:stroke-zinc-50 dark:group-active:stroke-zinc-50" />
@@ -232,7 +251,7 @@ export default function Home({ articles, images }) {
           <div className="flex flex-col gap-8">
             {articles &&
               articles.map((article) => (
-                <AnimatedCard key={article.slug} data={article} />
+                <AnimatedLinkCard key={article.slug} data={article} />
               ))}
           </div>
           <div className="space-y-10 lg:pl-16 xl:pl-24">
