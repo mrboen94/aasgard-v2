@@ -53,6 +53,7 @@ function Newsletter() {
       <div className="mt-6 flex">
         <input
           type="email"
+          name="email"
           placeholder="Email address"
           aria-label="Email address"
           required
