@@ -39,6 +39,7 @@ function Newsletter() {
     <form
       name="newsletter"
       action="/thank-you"
+      method="POST"
       className="rounded-2xl border border-zinc-100 p-6 dark:border-zinc-700/40"
       data-netlify="true"
     >
@@ -52,6 +53,7 @@ function Newsletter() {
       <div className="mt-6 flex">
         <input
           type="email"
+          name="email"
           placeholder="Email address"
           aria-label="Email address"
           required
