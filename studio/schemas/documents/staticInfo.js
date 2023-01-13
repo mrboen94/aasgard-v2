@@ -7,7 +7,7 @@ export default {
       name: 'imageGrid',
       title: 'Image Grid',
       type: 'array',
-      of: [{ type: 'reference', to: { type: 'imageWithAlt' } }],
+      of: [{ type: 'imageWithAlt' }],
     },
   ],
   preview: {

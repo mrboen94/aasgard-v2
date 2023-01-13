@@ -36,12 +36,12 @@ export function Newsletter() {
           placeholder="Email address"
           aria-label="Email address"
           required
-          className="min-w-0 flex-auto appearance-none rounded-md border border-zinc-900/10 bg-white px-3 py-[calc(theme(spacing.2)-1px)] shadow-md shadow-zinc-800/5 placeholder:text-zinc-400 focus:border-teal-500 focus:outline-none focus:ring-4 focus:ring-teal-500/10 group-hover:ring-1 group-hover:ring-cyan-500 dark:border-zinc-700 dark:bg-zinc-700/[0.15] dark:text-zinc-200 dark:placeholder:text-zinc-500 dark:focus:border-teal-400 dark:focus:ring-teal-400/10 sm:text-sm"
+          className="transiation-all min-w-0 flex-auto appearance-none rounded-md border border-zinc-900/10 bg-white px-3 py-[calc(theme(spacing.2)-1px)] shadow-md shadow-zinc-800/5 duration-300 placeholder:text-zinc-400 focus:border-teal-500 focus:outline-none focus:ring-4 focus:ring-teal-500/10 group-hover:ring-1 group-hover:ring-cyan-500 dark:border-zinc-700 dark:bg-zinc-700/[0.15] dark:text-zinc-200 dark:placeholder:text-zinc-500 dark:focus:border-teal-400 dark:focus:ring-teal-400/10 dark:group-hover:ring-teal-500 sm:text-sm"
         />
         <Button
           type="submit"
           variant="secondary"
-          className="relative ml-4 flex-none group-hover:ring-1 group-hover:ring-cyan-500 dark:group-hover:ring-teal-500"
+          className="relative ml-4 flex-none transition-all duration-300 group-hover:ring-1 group-hover:ring-cyan-500 dark:group-hover:ring-teal-500"
         >
           Join
         </Button>
