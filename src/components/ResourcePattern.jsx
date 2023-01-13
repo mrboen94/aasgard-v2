@@ -1,7 +1,7 @@
 import { motion, useMotionTemplate } from 'framer-motion'
 import { TopographyPattern } from './svgPatterns/TopographyPattern'
 
-export function ResourcePattern({ mouseX, mouseY, faded }) {
+export function ResourcePattern({ mouseX, mouseY, faded = false }) {
   let maskImage = faded
     ? useMotionTemplate`radial-gradient(150px at ${mouseX}px ${mouseY}px, rgba(255,255,255 ,0.3), transparent)`
     : useMotionTemplate`radial-gradient(300px at ${mouseX}px ${mouseY}px, white, transparent)`
