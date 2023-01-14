@@ -1,6 +1,3 @@
-import createSchema from 'part:@sanity/base/schema-creator'
-import schemaTypes from 'all:part:@sanity/base/schema-type'
-
 import category from './documents/category'
 import post from './documents/post'
 import author from './documents/author'
@@ -11,17 +8,14 @@ import project from './documents/project'
 import technology from './documents/technology'
 import social from './objects/social'
 
-export default createSchema({
-  name: 'default',
-  types: schemaTypes.concat([
-    post,
-    author,
-    social,
-    technology,
-    project,
-    category,
-    imageGrid,
-    imageWithAlt,
-    videoContent,
-  ]),
-})
+export default [
+  post,
+  author,
+  social,
+  technology,
+  project,
+  category,
+  imageGrid,
+  imageWithAlt,
+  videoContent,
+]

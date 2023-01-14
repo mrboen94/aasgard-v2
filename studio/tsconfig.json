@@ -6,6 +6,8 @@
     "./node_modules/@sanity/base/types/**/*.ts",
     "./**/*.ts",
     "./**/*.tsx",
-    "deskStructure.js"
+    "deskStructure.js",
+    "sanity.config.js",
+    "plugins/aasgardLogo"
   ]
 }

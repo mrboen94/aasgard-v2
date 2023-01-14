@@ -1,8 +1,6 @@
-import S from '@sanity/desk-tool/structure-builder'
-
 const excludedIds = ['staticInfo']
 
-export default () =>
+export default (S) =>
   S.list()
     .title('Content')
     .items([
