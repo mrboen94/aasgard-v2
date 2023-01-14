@@ -9,12 +9,14 @@ import imageWithAlt from './objects/imageWithAlt'
 import videoContent from './objects/videoContent'
 import project from './documents/project'
 import technology from './documents/technology'
+import social from './objects/social'
 
 export default createSchema({
   name: 'default',
   types: schemaTypes.concat([
     post,
     author,
+    social,
     technology,
     project,
     category,

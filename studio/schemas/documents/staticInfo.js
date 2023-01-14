@@ -7,6 +7,22 @@ export default {
       name: 'home',
       title: 'Home',
     },
+    {
+      name: 'about',
+      title: 'About',
+    },
+    {
+      name: 'contact',
+      title: 'Contact',
+    },
+    {
+      name: 'projects',
+      title: 'Projects',
+    },
+    {
+      name: 'uses',
+      title: 'Uses',
+    },
   ],
   fields: [
     {
@@ -15,6 +31,54 @@ export default {
       type: 'array',
       group: 'home',
       of: [{ type: 'imageWithAlt' }],
+    },
+    {
+      name: 'bioTitle',
+      title: 'Bio Title',
+      type: 'string',
+      group: 'about',
+    },
+    {
+      name: 'bio',
+      title: 'Bio',
+      type: 'markdown',
+      group: 'about',
+    },
+    {
+      name: 'profileImage',
+      title: 'Profile Image',
+      type: 'imageWithAlt',
+      group: 'about',
+    },
+    {
+      name: 'contact',
+      title: 'Contact',
+      type: 'social',
+      group: 'contact',
+    },
+    {
+      name: 'projectsTitle',
+      title: 'Projects Title',
+      type: 'string',
+      group: 'projects',
+    },
+    {
+      name: 'projectsDescription',
+      title: 'Projects Description',
+      type: 'markdown',
+      group: 'projects',
+    },
+    {
+      name: 'usesTitle',
+      title: 'Uses Title',
+      type: 'string',
+      group: 'uses',
+    },
+    {
+      name: 'usesDescription',
+      title: 'Uses Description',
+      type: 'markdown',
+      group: 'uses',
     },
   ],
   preview: {
