@@ -2,11 +2,18 @@ export default {
   name: 'staticInfo',
   title: 'Static Info',
   type: 'document',
+  groups: [
+    {
+      name: 'home',
+      title: 'Home',
+    },
+  ],
   fields: [
     {
       name: 'imageGrid',
       title: 'Image Grid',
       type: 'array',
+      group: 'home',
       of: [{ type: 'imageWithAlt' }],
     },
   ],
