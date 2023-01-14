@@ -19,6 +19,12 @@
     "isolatedModules": true,
     "jsx": "preserve"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "studio/sanity.config.js",
+    "studio/plugins/aasgardLogo"
+  ],
   "exclude": ["node_modules"]
 }
