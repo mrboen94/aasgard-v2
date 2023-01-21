@@ -28,8 +28,8 @@ export default {
     prepare({ title, media, description }) {
       return {
         title,
-        subtitle: description,
-        media: media.image,
+        subtitle: description ? description : '',
+        media: media?.image ? media.image : null,
       }
     },
   },

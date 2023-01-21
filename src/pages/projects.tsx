@@ -8,6 +8,7 @@ import { urlFor } from '../lib/urlFor'
 import { ResourcePattern } from '@/components/ResourcePattern'
 import { useMotionValue } from 'framer-motion'
 import Link from 'next/link'
+import Tag from '@/components/Tag'
 
 function LinkIcon(props) {
   return (
@@ -53,6 +54,15 @@ function ProjectCard({ project }) {
             <LinkIcon className="h-6 w-6 flex-none" />
             <span className="ml-2">{project.title}</span>
           </p>
+          <div className="relative mt-4 grid grid-cols-5 items-center justify-center xl:grid-cols-7">
+            {project.technologies.map((technology) => (
+              <Tag
+                key={project.title + technology.title}
+                title={technology.title}
+                icon={technology.logo}
+              />
+            ))}
+          </div>
         </div>
       </Link>
     </li>
@@ -78,7 +88,7 @@ export default function Projects(projects: any) {
           className="grid grid-cols-1 gap-x-12 gap-y-16 sm:grid-cols-2 lg:grid-cols-3"
         >
           {projects.projects.map((project) => (
-            <ProjectCard project={project} />
+            <ProjectCard key={project.id} project={project} />
           ))}
         </ul>
       </SimpleLayout>

@@ -1,8 +1,6 @@
 import groq from 'groq'
 import client from '../../client'
 
-interface IProject {}
-
 export default async function getAllProjects() {
   let projects = await client.fetch(
     groq`*[_type == "project"] | order(_createdAt desc)
@@ -12,7 +10,13 @@ export default async function getAllProjects() {
                 description, 
                 logo
             },
-            ...
+            logo->,
+            github,
+            completed,
+            title,
+            description,
+            id,
+            link
         }`
   )
   return projects
