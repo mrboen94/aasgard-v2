@@ -9,7 +9,7 @@ interface ITag {
 export default function Tag({ icon, title }: ITag) {
   return (
     <div className="relative z-0 text-slate-800 dark:text-white">
-      <span className="group/tag translate-all m-2 flex h-8 w-8 flex-col items-center justify-center rounded-full bg-slate-100/75 ring-cyan-300 duration-500 hover:ring-1 dark:bg-slate-800 dark:ring-teal-300">
+      <span className="group/tag translate-all m-2 flex h-8 w-8 flex-col items-center justify-center rounded-full bg-slate-100/75 ring-cyan-300 duration-500 group-hover:ring-1 dark:bg-slate-800 dark:ring-teal-300">
         <div className="h-4 w-4">
           <Image src={urlFor(icon.image.asset)} width={16} height={16} />
         </div>

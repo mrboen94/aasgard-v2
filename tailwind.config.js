@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+const autoprefixer = require('autoprefixer')
 const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
@@ -134,7 +135,10 @@ module.exports = {
 
           // Images
           img: {
-            borderRadius: theme('borderRadius.3xl'),
+            borderRadius: theme('borderRadius.md'),
+            margin: theme('margin.auto'),
+            'margin-bottom': theme('spacing.5'),
+            'margin-top': theme('spacing.5'),
           },
 
           // Inline elements
