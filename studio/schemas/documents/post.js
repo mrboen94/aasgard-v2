@@ -57,6 +57,9 @@ export default {
       name: 'body',
       title: 'Body',
       type: 'markdown',
+      options: {
+        imageUrl: (imageAsset) => `${imageAsset.url}?w=650`,
+      },
     },
   ],
 
