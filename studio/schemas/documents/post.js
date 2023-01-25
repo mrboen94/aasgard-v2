@@ -9,6 +9,17 @@ export default {
       type: 'string',
     },
     {
+      name: 'language',
+      title: 'Language',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'English', value: 'en' },
+          { title: 'Norwegian', value: 'no' },
+        ],
+      },
+    },
+    {
       name: 'description',
       title: 'Description',
       type: 'text',

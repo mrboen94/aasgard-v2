@@ -14,6 +14,8 @@ export function AnimatedLinkCard({ data, date }) {
     mouseY.set(clientY - top)
   }
 
+  console.log(data)
+
   return (
     <Link href={`/articles/${data.slug.current}`}>
       <div
@@ -31,10 +33,13 @@ export function AnimatedLinkCard({ data, date }) {
             >
               <span className="h-4 w-0.5 rounded-full bg-zinc-200 dark:bg-zinc-500" />
               <span className="ml-3">{formatDate(data.publishedAt)}</span>
+              <span className="ml-2">
+                | {data.language === 'en' ? '🇬🇧 English' : '🇳🇴 Norwegian'}
+              </span>
             </time>
           )}
           <span className="text-base font-semibold tracking-tight text-zinc-800 dark:text-zinc-100">
-            {data.title}
+            <h2>{`${data.title}`}</h2>
           </span>
           <h3 className="mt-4 text-sm font-semibold leading-7 text-zinc-900 dark:text-white"></h3>
           <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
