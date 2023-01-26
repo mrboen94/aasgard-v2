@@ -153,7 +153,7 @@ function Photos({ images }) {
           >
             <Image
               src={urlFor(image.image)}
-              alt={image.alt}
+              alt={image.alt ? image.alt : ''}
               sizes="(min-width: 640px) 18rem, 11rem"
               className="absolute inset-0 h-full w-full object-cover transition-all duration-1000"
               width={image.meta.dimensions.width}

@@ -8,6 +8,7 @@ import { ChevronDownIcon } from './icons/ChevronDownIcon'
 import { CloseIcon } from './icons/CloseIcon'
 import { SunIcon } from './icons/SunIcon'
 import { MoonIcon } from './icons/MoonIcon'
+import { Logo } from './icons/Logo.tsx'
 
 import { Container } from '@/components/Container'
 import avatarImage from '@/images/avatar.jpg'
@@ -190,16 +191,15 @@ function Avatar({ large = false, className, ...props }) {
       className={clsx(className, 'pointer-events-auto')}
       {...props}
     >
-      <Image
-        src={avatarImage}
-        alt=""
+      <div
         sizes={large ? '4rem' : '2.25rem'}
         className={clsx(
           'rounded-full bg-zinc-100 object-cover dark:bg-zinc-800',
           large ? 'h-16 w-16' : 'h-9 w-9'
         )}
-        priority
-      />
+      >
+        <Logo className="fill-zinc-800 dark:fill-zinc-100" />
+      </div>
     </Link>
   )
 }

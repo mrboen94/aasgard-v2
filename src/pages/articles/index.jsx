@@ -56,11 +56,12 @@ export default function ArticlesIndex({ articles }) {
         </button>
       </span>
       <SimpleLayout
+        className="min-h-screen"
         title="Writing on software, design, photography and fun stuff that I want to write about."
         intro="All of my long-form thoughts on programming, design, photography, and more, collected in chronological order."
       >
         <div className="md:border-l md:border-zinc-100 md:pl-6 md:dark:border-zinc-700/40">
-          <span className="flex text-slate-50"></span>
+          <span className="flex text-slate-50" />
           <div className="flex max-w-3xl flex-col space-y-16">
             {articles
               .filter(
