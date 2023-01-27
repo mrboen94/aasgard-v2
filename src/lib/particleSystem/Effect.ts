@@ -1,10 +1,11 @@
-import { Particle } from './Particle'
+import { IParticleSystemOptions, Particle } from './Particle'
 
 export class Effect {
   canvas: HTMLCanvasElement
+  image: HTMLImageElement
+  particleOptions?: IParticleSystemOptions | null
   width: number
   height: number
-  image: HTMLImageElement
   centerX: number
   centerY: number
   x: number
@@ -15,10 +16,16 @@ export class Effect {
     x: number
     y: number
     radius: number
+    tmpRadius: number
   }
   box: DOMRect
   canvasOffset: { x: number; y: number }
-  constructor(canvas: HTMLCanvasElement, image: HTMLImageElement) {
+
+  constructor(
+    canvas: HTMLCanvasElement,
+    image: HTMLImageElement,
+    particleOptions?: IParticleSystemOptions | null
+  ) {
     this.canvas = canvas
     this.box = this.canvas.getBoundingClientRect()
     this.canvasOffset = { x: this.box.left, y: this.box.top }
@@ -30,12 +37,14 @@ export class Effect {
     this.x = this.centerX - this.image.width / 2
     this.y = this.centerY - this.image.height / 2
     this.particles = []
-    this.gap = 5
+    this.gap = particleOptions?.gap ? particleOptions.gap : 3
     this.mouse = {
-      radius: 6000,
       x: this.centerX,
       y: this.centerY,
+      radius: particleOptions?.mouseRadius ? particleOptions.mouseRadius : 100,
+      tmpRadius: 0,
     }
+    particleOptions && (this.particleOptions = particleOptions)
 
     window.addEventListener('scroll', (_) => {
       this.canvasOffset.y = this.canvas.getBoundingClientRect().top
@@ -47,9 +56,13 @@ export class Effect {
     })
 
     window.addEventListener('mousedown', (event) => {
-      console.log('mouse y ', this.mouse.y)
-      console.log('cenrer ', this.centerY)
-      console.log('offset ', event.offsetY)
+      this.mouse.tmpRadius = this.mouse.radius
+      this.mouse.radius = 0
+    })
+
+    window.addEventListener('mouseup', (event) => {
+      this.mouse.radius = this.mouse.tmpRadius
+      this.mouse.tmpRadius = 0
     })
 
     window.addEventListener(
@@ -96,7 +109,11 @@ export class Effect {
 
         const alpha = pixels[index + 3]
         if (alpha > 0) {
-          this.particles.push(new Particle(this, x, y, color))
+          this.particleOptions
+            ? this.particles.push(
+                new Particle(this, x, y, color, this.particleOptions)
+              )
+            : this.particles.push(new Particle(this, x, y, color))
         }
       }
     }

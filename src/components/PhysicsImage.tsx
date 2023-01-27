@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { Effect } from '../lib/particleSystem/Effect'
-import useMousePosition from '@/lib/useMousePosition'
+import { IParticleSystemOptions } from '@/lib/particleSystem/Particle'
 
 interface PhysicsImageProps {
   src: string
@@ -14,10 +14,17 @@ export default function PhysicsImage({ src }: PhysicsImageProps) {
   useEffect(() => {
     if (canvasRef.current && imageRef.current && !effect) {
       const ctx = canvasRef.current.getContext('2d')
+      const particleOptions: IParticleSystemOptions = {
+        randomFriction: { min: 0.8, max: 0.9 },
+        mouseRadius: 3000,
+        ease: 0.01,
+        size: 3,
+        gap: 3,
+      }
       canvasRef.current.width = window.innerWidth
       canvasRef.current.height = window.innerHeight
 
-      effect = new Effect(canvasRef.current, imageRef.current)
+      effect = new Effect(canvasRef.current, imageRef.current, particleOptions)
       effect.init(ctx)
     }
   }, [])
@@ -35,14 +42,13 @@ export default function PhysicsImage({ src }: PhysicsImageProps) {
   }, [])
 
   return (
-    <div className="h-fit-content flex max-h-96 w-full items-center justify-center px-0">
+    <div className="flex w-full items-center justify-center px-0">
       <canvas
         ref={canvasRef}
         style={{
           padding: 0,
           margin: 0,
           border: 0,
-          position: 'relative',
         }}
       />
       <img

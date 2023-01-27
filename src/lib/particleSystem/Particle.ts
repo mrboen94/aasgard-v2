@@ -1,5 +1,25 @@
 import { Effect } from './Effect'
 
+/**
+ * ParticleOptions
+ * @param force - The force of the particle (default 0), number between 0 and 1
+ * @param friction - The friction of the particle (default 0.9), number between 0 and 1
+ * @param ease - The ease of the particle (default 0.1)
+ * @param originX - The origin x of the particle (default 0)
+ * @param originY - The origin y of the particle (default 0)
+ * @param size - The size of the particle (default 1)
+ */
+export interface IParticleSystemOptions {
+  friction?: number
+  ease?: number
+  originX?: number
+  originY?: number
+  size?: number
+  gap?: number
+  mouseRadius?: number
+  randomFriction?: { min: number; max: number }
+}
+
 export class Particle {
   effect: Effect
   x: number
@@ -17,22 +37,31 @@ export class Particle {
   ease: number
   originX: number
   originY: number
-  constructor(effect, x, y, color) {
+  constructor(effect, x, y, color, particleOptions?: IParticleSystemOptions) {
     this.effect = effect
     this.x = this.originX = x
     this.y = this.originY = y
-    this.size = 2
     this.color = color
     this.dx = 0
     this.dy = 0
     this.vx = 0
     this.vy = 0
-    this.force = 0
-    this.angle = 0
     this.distance = 0
-    this.friction = 0.9
-    this.ease = 0.1
+    this.angle = 0
+    this.force = 0
+    this.friction = particleOptions?.friction
+      ? particleOptions.friction
+      : particleOptions?.randomFriction
+      ? Math.random() *
+          (particleOptions.randomFriction.max -
+            particleOptions.randomFriction.min) +
+        particleOptions.randomFriction.min
+      : 0.9
+
+    this.ease = particleOptions?.ease ? particleOptions.ease : 0.1
+    this.size = particleOptions?.size ? particleOptions.size : 1
   }
+
   update() {
     this.dx = this.effect.mouse.x - this.x
     this.dy = this.effect.mouse.y - this.y
