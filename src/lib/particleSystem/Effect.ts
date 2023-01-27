@@ -14,11 +14,14 @@ export class Effect {
   mouse: {
     x: number
     y: number
-    yOffset: number
     radius: number
   }
+  box: DOMRect
+  canvasOffset: { x: number; y: number }
   constructor(canvas: HTMLCanvasElement, image: HTMLImageElement) {
     this.canvas = canvas
+    this.box = this.canvas.getBoundingClientRect()
+    this.canvasOffset = { x: this.box.left, y: this.box.top }
     this.width = canvas.width
     this.height = canvas.height
     this.image = image
@@ -27,25 +30,26 @@ export class Effect {
     this.x = this.centerX - this.image.width / 2
     this.y = this.centerY - this.image.height / 2
     this.particles = []
-    this.gap = 10
+    this.gap = 5
     this.mouse = {
       radius: 6000,
       x: this.centerX,
       y: this.centerY,
-      yOffset: 0,
     }
 
+    window.addEventListener('scroll', (_) => {
+      this.canvasOffset.y = this.canvas.getBoundingClientRect().top
+    })
+
     window.addEventListener('mousemove', (event) => {
-      this.centerY = event.offsetY
-      this.mouse.x = event.clientX
-      this.mouse.y = event.clientY
+      this.mouse.x = event.clientX - this.canvasOffset.x
+      this.mouse.y = event.clientY - this.canvasOffset.y
     })
 
     window.addEventListener('mousedown', (event) => {
       console.log('mouse y ', this.mouse.y)
       console.log('cenrer ', this.centerY)
       console.log('offset ', event.offsetY)
-      console.log(this.mouse.y - event.offsetY)
     })
 
     window.addEventListener(
@@ -99,14 +103,14 @@ export class Effect {
     context.clearRect(0, 0, this.width, this.height)
   }
   public update() {
-    for (let i = 0; i < this.particles.length; i++) {
-      this.particles[i].update()
+    for (const element of this.particles) {
+      element.update()
     }
   }
   public render(context) {
     context.clearRect(0, 0, this.width, this.height)
-    for (let i = 0; i < this.particles.length; i++) {
-      let p = this.particles[i]
+    for (const element of this.particles) {
+      let p = element
       context.fillStyle = p.color
       context.fillRect(p.x, p.y, p.size, p.size)
     }

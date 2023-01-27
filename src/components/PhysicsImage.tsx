@@ -32,10 +32,10 @@ export default function PhysicsImage({ src }: PhysicsImageProps) {
     if (effect) {
       animate()
     }
-  }, [effect])
+  }, [])
 
   return (
-    <div className="h-fit-content absolute flex max-h-96 w-full items-center justify-center">
+    <div className="h-fit-content flex max-h-96 w-full items-center justify-center px-0">
       <canvas
         ref={canvasRef}
         style={{
