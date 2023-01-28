@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { Effect } from '../lib/particleSystem/Effect'
 import { IParticleSystemOptions } from '@/lib/particleSystem/Particle'
 
@@ -20,13 +20,13 @@ export default function PhysicsImage({
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const imageRef = useRef<HTMLImageElement>(null)
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (canvasRef.current && imageRef.current && !effect) {
       const ctx = canvasRef.current.getContext('2d')
       const particleOptions: IParticleSystemOptions = particleSystemOptions
         ? particleSystemOptions
         : {
-            randomFriction: { min: 0.8, max: 0.99 },
+            randomFriction: { min: 0.8, max: 0.9 },
             mouseRadius: 3000,
             ease: 0.01,
             size: 3,
@@ -47,10 +47,10 @@ export default function PhysicsImage({
   }
 
   useEffect(() => {
-    if (effect !== null) {
+    if (effect) {
       animate()
     }
-  }, [effect])
+  }, [])
 
   return (
     <div className="flex w-full items-center justify-center px-0">
