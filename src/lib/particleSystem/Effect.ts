@@ -3,7 +3,7 @@ import { IParticleSystemOptions, Particle } from './Particle'
 export class Effect {
   canvas: HTMLCanvasElement
   image: HTMLImageElement
-  particleOptions?: IParticleSystemOptions | null
+  particleSystemOptions?: IParticleSystemOptions | null
   width: number
   height: number
   centerX: number
@@ -39,12 +39,12 @@ export class Effect {
     this.particles = []
     this.gap = particleOptions?.gap ? particleOptions.gap : 3
     this.mouse = {
-      x: this.centerX,
-      y: this.centerY,
+      x: 0,
+      y: 0,
       radius: particleOptions?.mouseRadius ? particleOptions.mouseRadius : 100,
       tmpRadius: 0,
     }
-    particleOptions && (this.particleOptions = particleOptions)
+    particleOptions && (this.particleSystemOptions = particleOptions)
 
     window.addEventListener('scroll', (_) => {
       this.canvasOffset.y = this.canvas.getBoundingClientRect().top
@@ -95,6 +95,11 @@ export class Effect {
     )
   }
 
+  public updatePhysics(particleSystemOptions: IParticleSystemOptions) {
+    this.mouse.radius = particleSystemOptions.mouseRadius
+    this.gap = particleSystemOptions.gap
+  }
+
   public init(context) {
     context.drawImage(this.image, this.x, this.y)
     let pixels = context.getImageData(0, 0, this.width, this.height).data
@@ -109,9 +114,9 @@ export class Effect {
 
         const alpha = pixels[index + 3]
         if (alpha > 0) {
-          this.particleOptions
+          this.particleSystemOptions
             ? this.particles.push(
-                new Particle(this, x, y, color, this.particleOptions)
+                new Particle(this, x, y, color, this.particleSystemOptions)
               )
             : this.particles.push(new Particle(this, x, y, color))
         }
@@ -119,11 +124,13 @@ export class Effect {
     }
     context.clearRect(0, 0, this.width, this.height)
   }
+
   public update() {
     for (const element of this.particles) {
       element.update()
     }
   }
+
   public render(context) {
     context.clearRect(0, 0, this.width, this.height)
     for (const element of this.particles) {
