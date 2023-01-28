@@ -50,7 +50,7 @@ export default function PhysicsImage({
     if (effect !== null) {
       animate()
     }
-  }, [])
+  }, [effect])
 
   return (
     <div className="flex w-full items-center justify-center px-0">
