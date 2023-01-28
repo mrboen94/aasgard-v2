@@ -10,7 +10,7 @@ export default async function getAllProjects() {
                 description, 
                 logo
             },
-            logo->,
+            logo,
             github,
             completed,
             title,

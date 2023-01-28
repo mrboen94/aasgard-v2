@@ -14,8 +14,6 @@ export function AnimatedLinkCard({ data, date }) {
     mouseY.set(clientY - top)
   }
 
-  console.log(data)
-
   return (
     <Link href={`/articles/${data.slug.current}`}>
       <div

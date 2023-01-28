@@ -9,6 +9,7 @@ import { ResourcePattern } from '@/components/ResourcePattern'
 import { useMotionValue } from 'framer-motion'
 import Link from 'next/link'
 import Tag from '@/components/Tag'
+import { Logo } from '@/components/icons/Logo'
 
 function LinkIcon(props) {
   return (
@@ -31,11 +32,14 @@ function ProjectCard({ project }) {
     mouseY.set(clientY - top)
   }
   return (
-    <li>
+    <li className="">
       <Link href={project.github ? project.github : project.link}>
-        <div onMouseMove={onMouseMove} className="group relative p-6">
+        <div
+          onMouseMove={onMouseMove}
+          className="group relative rounded-2xl p-6 shadow-md"
+        >
           <ResourcePattern mouseX={mouseX} mouseY={mouseY} />
-          {project.logo?.image && (
+          {project.logo?.image ? (
             <div className="z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:bg-zinc-800 dark:ring-0">
               <Image
                 src={urlFor(project.logo.image)}
@@ -44,6 +48,10 @@ function ProjectCard({ project }) {
                 width={32}
                 height={32}
               />
+            </div>
+          ) : (
+            <div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white/50 p-1 shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:bg-zinc-900/50 dark:ring-0">
+              <Logo />
             </div>
           )}
           <h2 className="relative mt-6 text-base font-semibold text-zinc-800 dark:text-zinc-100">
@@ -54,7 +62,7 @@ function ProjectCard({ project }) {
             <LinkIcon className="h-6 w-6 flex-none" />
             <span className="ml-2">{project.title}</span>
           </p>
-          <div className="relative mt-4 grid grid-cols-5 items-center justify-center xl:grid-cols-7">
+          <div className="relative mt-4 grid grid-cols-5 items-center justify-center">
             {project.technologies.map((technology) => (
               <Tag
                 key={project.title + technology.title}

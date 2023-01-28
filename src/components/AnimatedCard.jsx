@@ -1,6 +1,4 @@
 import { useMotionValue } from 'framer-motion'
-import { Card } from './Card'
-import { formatDate } from '@/lib/formatDate'
 import { ResourcePattern } from './ResourcePattern'
 
 export function AnimatedCard({ children }) {

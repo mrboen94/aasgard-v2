@@ -8,7 +8,7 @@ import deskStructure from './deskStructure'
 import { Logo } from './plugins/aasgardLogo/Logo'
 
 export default defineConfig({
-  title: 'aadgard',
+  title: 'aasgard',
   projectId: 'j26i5482',
   dataset: 'production',
   plugins: [

@@ -5,10 +5,11 @@ import { ArticleLayout } from '@/components/ArticleLayout'
 import remarkGfm from 'remark-gfm'
 import rehypePrism from '@mapbox/rehype-prism'
 import Video from '@/components/Video'
+import PhysicsImage from '../../components/PhysicsImage'
 
 import client from '../../../client'
 
-const components = { Video }
+const components = { Video, PhysicsImage }
 
 const Article = ({ article, body }) => {
   return article ? (

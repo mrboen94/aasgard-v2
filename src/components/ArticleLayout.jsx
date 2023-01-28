@@ -60,6 +60,7 @@ export function ArticleLayout({
                   width={meta.metadata.dimensions.width}
                   height={meta.metadata.dimensions.height}
                   placeholder="blur"
+                  alt=""
                 />
               </div>
               <header className="flex flex-col">
