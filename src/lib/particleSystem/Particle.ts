@@ -2,7 +2,6 @@ import { Effect } from './Effect'
 
 /**
  * ParticleOptions
- * @param force - The force of the particle (default 0), number between 0 and 1
  * @param friction - The friction of the particle (default 0.9), number between 0 and 1
  * @param ease - The ease of the particle (default 0.1)
  * @param originX - The origin x of the particle (default 0)
@@ -12,8 +11,6 @@ import { Effect } from './Effect'
 export interface IParticleSystemOptions {
   friction?: number
   ease?: number
-  originX?: number
-  originY?: number
   size?: number
   gap?: number
   mouseRadius?: number
