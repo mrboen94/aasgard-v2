@@ -68,8 +68,8 @@ export class Effect {
     window.addEventListener(
       'touchstart',
       (event) => {
-        this.mouse.x = event.changedTouches[0].clientX
-        this.mouse.y = event.changedTouches[0].clientY
+        this.mouse.x = event.changedTouches[0].clientX - this.canvasOffset.x
+        this.mouse.y = event.changedTouches[0].clientY - this.canvasOffset.y
       },
       false
     )
