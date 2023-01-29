@@ -2,8 +2,6 @@ import groq from 'groq'
 import { MDXRemote } from 'next-mdx-remote'
 import { serialize } from 'next-mdx-remote/serialize'
 import { ArticleLayout } from '@/components/ArticleLayout'
-import remarkGfm from 'remark-gfm'
-import rehypePrism from '@mapbox/rehype-prism'
 import Video from '@/components/Video'
 import PhysicsImage from '../../components/PhysicsImage'
 import { CH } from '@code-hike/mdx/components'
@@ -11,6 +9,9 @@ import theme from 'shiki/themes/dracula-soft.json'
 import { remarkCodeHike } from '@code-hike/mdx'
 
 import client from '../../../client'
+export const config = {
+  unstable_includeFiles: ['node_modules/**/shiki/**/*.json'],
+}
 
 const Article = ({ article, body }) => {
   return article ? (
