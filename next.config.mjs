@@ -2,6 +2,7 @@
 
 const nextConfig = {
   pageExtensions: ['jsx', 'tsx', 'js', 'ts'],
+  unstable_includeFiles: ['node_modules/.pnpm/**/shiki/**/*.json'],
   reactStrictMode: true,
   swcMinify: true,
   experimental: {
