@@ -7,7 +7,7 @@ import groq from 'groq'
 import { serialize } from 'next-mdx-remote/serialize'
 import remarkGfm from 'remark-gfm'
 import rehypePrism from '@mapbox/rehype-prism'
-
+import { remarkCodeHike } from '@code-hike/mdx'
 import { Container } from '@/components/Container'
 import {
   TwitterIcon,

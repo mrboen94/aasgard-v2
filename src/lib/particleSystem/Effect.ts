@@ -95,11 +95,6 @@ export class Effect {
     )
   }
 
-  public updatePhysics(particleSystemOptions: IParticleSystemOptions) {
-    this.mouse.radius = particleSystemOptions.mouseRadius
-    this.gap = particleSystemOptions.gap
-  }
-
   public init(context) {
     context.drawImage(this.image, this.x, this.y)
     let pixels = context.getImageData(0, 0, this.width, this.height).data

@@ -1,5 +1,27 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
-@import './prism.css';
 @import 'tailwindcss/utilities';
 @import './fonts.css';
+/* @import './ch-styles.css'; */
+/* @import './prism.css'; */
+
+.ch-scrollycoding-code {
+}
+
+.ch-editor-frame {
+}
+
+/* SCROLLYCODING CONTAINER */
+.ch-scrollycoding {
+  @apply md:-mr-24 lg:w-[700px] xl:w-[800px];
+}
+
+/* SCROLLYCODING CONTAINER POSITION */
+.ch-scrollycoding-sticker {
+  @apply lg:-mr-24;
+}
+
+/* CONTENT CONTAINER */
+.ch-scrollycoding-content {
+  @apply lg:-ml-28 xl:-ml-48;
+}

@@ -4,9 +4,10 @@ import { Effect } from './Effect'
  * ParticleOptions
  * @param friction - The friction of the particle (default 0.9), number between 0 and 1
  * @param ease - The ease of the particle (default 0.1)
- * @param originX - The origin x of the particle (default 0)
- * @param originY - The origin y of the particle (default 0)
  * @param size - The size of the particle (default 1)
+ * @param gap - Gap between particles (default 3)
+ * @param mouseRadius - The radius of the mouse (default 6000)
+ * @param randomFriction - Random friction between min and max (default null)
  */
 export interface IParticleSystemOptions {
   friction?: number

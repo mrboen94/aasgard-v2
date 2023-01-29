@@ -6,16 +6,17 @@ import remarkGfm from 'remark-gfm'
 import rehypePrism from '@mapbox/rehype-prism'
 import Video from '@/components/Video'
 import PhysicsImage from '../../components/PhysicsImage'
+import { CH } from '@code-hike/mdx/components'
+import theme from 'shiki/themes/dracula-soft.json'
+import { remarkCodeHike } from '@code-hike/mdx'
 
 import client from '../../../client'
-
-const components = { Video, PhysicsImage }
 
 const Article = ({ article, body }) => {
   return article ? (
     <ArticleLayout meta={article}>
-      <div>
-        <MDXRemote {...body} components={components} lazy />
+      <div className="lg:max-w-7xl">
+        <MDXRemote {...body} components={{ Video, PhysicsImage, CH }} lazy />
       </div>
     </ArticleLayout>
   ) : (
@@ -34,6 +35,34 @@ const query = groq`*[_type == "post" && slug.current == $slug][0]{
   body
 }`
 
+export async function getStaticProps(context) {
+  const { slug = '' } = context.params
+  const article = await client.fetch(query, { slug })
+
+  const mdxSoruce = await serialize(article.body, {
+    mdxOptions: {
+      remarkPlugins: [
+        [
+          remarkCodeHike,
+          {
+            autoImport: false,
+            lineNumbers: true,
+            theme,
+            staticMediaQuery: 'not-screen, (max-width: 1070px)',
+          },
+        ],
+      ],
+      useDynamicImport: true,
+    },
+  })
+  return {
+    props: {
+      article,
+      body: mdxSoruce,
+    },
+  }
+}
+
 export async function getStaticPaths() {
   const paths = await client.fetch(
     groq`*[_type == "post" && defined(slug.current)][].slug.current`
@@ -45,20 +74,4 @@ export async function getStaticPaths() {
   }
 }
 
-export async function getStaticProps(context) {
-  const { slug = '' } = context.params
-  const article = await client.fetch(query, { slug })
-  const mdxSoruce = await serialize(article.body, {
-    mdxOptions: {
-      rehypePlugins: [rehypePrism],
-      remarkPlugins: [remarkGfm],
-    },
-  })
-  return {
-    props: {
-      article,
-      body: mdxSoruce,
-    },
-  }
-}
 export default Article
