@@ -9,9 +9,6 @@ import theme from 'shiki/themes/dracula-soft.json'
 import { remarkCodeHike } from '@code-hike/mdx'
 
 import client from '../../../client'
-export const config = {
-  unstable_includeFiles: ['node_modules/**/shiki/**/*.json'],
-}
 
 const Article = ({ article, body }) => {
   return article ? (
