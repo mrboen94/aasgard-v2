@@ -48,21 +48,25 @@ export class Effect {
 
     window.addEventListener('scroll', (_) => {
       this.canvasOffset.y = this.canvas.getBoundingClientRect().top
+      return
     })
 
     window.addEventListener('mousemove', (event) => {
       this.mouse.x = event.clientX - this.canvasOffset.x
       this.mouse.y = event.clientY - this.canvasOffset.y
+      return
     })
 
     window.addEventListener('mousedown', (event) => {
       this.mouse.tmpRadius = this.mouse.radius
       this.mouse.radius = 0
+      return
     })
 
     window.addEventListener('mouseup', (event) => {
       this.mouse.radius = this.mouse.tmpRadius
       this.mouse.tmpRadius = 0
+      return
     })
 
     window.addEventListener(
