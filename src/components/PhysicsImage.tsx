@@ -44,7 +44,7 @@ export default function PhysicsImage({
 
   function animate() {
     effect.update()
-    effect.render(canvasRef.current.getContext('2d'))
+    canvasRef.current && effect.render(canvasRef.current.getContext('2d'))
     requestAnimationFrame(animate)
   }
 
