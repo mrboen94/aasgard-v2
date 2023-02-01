@@ -25,6 +25,7 @@ import { AnimatedLinkCard } from '@/components/AnimatedLinkCard'
 import { ResourcePattern } from '@/components/ResourcePattern'
 import { useMotionValue } from 'framer-motion'
 import { Newsletter } from '../components/Newsletter'
+import { Logo } from '../components/icons/Logo'
 
 function SocialLink({ icon: Icon, ...props }) {
   return (
@@ -173,11 +174,12 @@ export default function Home({ articles, images }) {
     <>
       <Head>
         <title>
-          Mathias Bøe - Software designer, founder, and amateur astronaut
+          Mathias Bøe - Software developer, photographer and amateur designer.
         </title>
+        <Logo />
         <meta
           name="description"
-          content="I’m Mathias, a software designer and entrepreneur based in New York City. I’m the founder and CEO of Planetaria, where we develop technologies that empower regular people to explore space on their own terms."
+          content="I’m Mathias, a developer and funnyman based in Bergen. I have a passion for frontend (UI/UX) development and seek to create interesting experiences for everyone."
         />
       </Head>
       <Container className="mt-9">
