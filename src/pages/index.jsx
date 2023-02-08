@@ -5,7 +5,6 @@ import Head from 'next/head'
 import Link from 'next/link'
 import clsx from 'clsx'
 import groq from 'groq'
-
 import { Button } from '@/components/Button'
 import { Container } from '@/components/Container'
 import {
@@ -25,7 +24,6 @@ import { AnimatedLinkCard } from '@/components/AnimatedLinkCard'
 import { ResourcePattern } from '@/components/ResourcePattern'
 import { useMotionValue } from 'framer-motion'
 import { Newsletter } from '../components/Newsletter'
-import { Logo } from '../components/icons/Logo'
 
 function SocialLink({ icon: Icon, ...props }) {
   return (
@@ -146,7 +144,7 @@ function Photos({ images }) {
       <div className="-my-4 flex justify-center gap-5 overflow-hidden py-4 sm:gap-8">
         {images.map((image, imageIndex) => (
           <div
-            key={image.alt}
+            key={image.alt ? image.alt : imageIndex}
             className={clsx(
               'relative aspect-[9/10] w-44 flex-none overflow-hidden rounded-xl bg-zinc-100 transition-transform duration-500 dark:bg-zinc-800 sm:w-72 sm:rounded-2xl',
               rotations[imageIndex % rotations.length]
@@ -176,7 +174,6 @@ export default function Home({ articles, images }) {
         <title>
           Mathias Bøe - Software developer, photographer and amateur designer.
         </title>
-        <Logo />
         <meta
           name="description"
           content="I’m Mathias, a developer and funnyman based in Bergen. I have a passion for frontend (UI/UX) development and seek to create interesting experiences for everyone."
@@ -222,7 +219,7 @@ export default function Home({ articles, images }) {
           <div className="flex flex-col gap-8">
             {articles &&
               articles.map((article) => (
-                <AnimatedLinkCard key={article.slug} data={article} />
+                <AnimatedLinkCard key={article.slug.current} data={article} />
               ))}
           </div>
           <div className="space-y-10 lg:pl-16 xl:pl-24">
