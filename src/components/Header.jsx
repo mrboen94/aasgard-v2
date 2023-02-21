@@ -194,7 +194,7 @@ function Avatar({ large = false, className, ...props }) {
       <div
         sizes={large ? '4rem' : '2.25rem'}
         className={clsx(
-          'rounded-full bg-zinc-100 object-cover ring-offset-zinc-100 transition-all hover:ring-1 hover:ring-cyan-500 hover:ring-offset-4 dark:bg-zinc-800 dark:ring-teal-500 dark:ring-offset-zinc-800',
+          'rounded-full bg-white/90 object-cover ring-offset-zinc-100 transition-all hover:ring-1 hover:ring-cyan-500 hover:ring-offset-4 dark:bg-zinc-800 dark:ring-teal-500 dark:ring-offset-zinc-800',
           large ? 'h-16 w-16' : 'h-9 w-9'
         )}
       >
