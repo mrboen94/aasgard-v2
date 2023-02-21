@@ -33,6 +33,30 @@ export default {
       of: [{ type: 'imageWithAlt' }],
     },
     {
+      name: 'homeTitle',
+      title: 'Home Title',
+      type: 'string',
+      group: 'home',
+    },
+    {
+      name: 'homeDescription',
+      title: 'Home Description',
+      type: 'string',
+      group: 'home',
+    },
+    {
+      name: 'seoTitle',
+      title: 'SEO Title',
+      type: 'string',
+      group: 'home',
+    },
+    {
+      name: 'seoDescription',
+      title: 'SEO Description',
+      type: 'string',
+      group: 'home',
+    },
+    {
       name: 'bioTitle',
       title: 'Bio Title',
       type: 'string',

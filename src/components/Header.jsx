@@ -1,4 +1,3 @@
-import Image from 'next/future/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Popover, Transition } from '@headlessui/react'
@@ -11,7 +10,6 @@ import { MoonIcon } from './icons/MoonIcon'
 import { Logo } from './icons/Logo.tsx'
 
 import { Container } from '@/components/Container'
-import avatarImage from '@/images/avatar.jpg'
 import { Fragment, useEffect, useRef } from 'react'
 import { ResourcePattern } from './ResourcePattern'
 

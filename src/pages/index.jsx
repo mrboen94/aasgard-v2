@@ -167,27 +167,20 @@ function Photos({ images }) {
   )
 }
 
-export default function Home({ articles, images }) {
+export default function Home({ articles, images, text }) {
   return (
     <>
       <Head>
-        <title>
-          Mathias Bøe - Software developer, photographer and amateur designer.
-        </title>
-        <meta
-          name="description"
-          content="I’m Mathias, a developer and funnyman based in Bergen. I have a passion for frontend (UI/UX) development and seek to create interesting experiences for everyone."
-        />
+        <title>{text.seoTitle}</title>
+        <meta name="description" content={text.seoDescription} />
       </Head>
       <Container className="mt-9">
         <div className="max-w-2xl">
           <h1 className="font-display text-4xl tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl">
-            Developer, photographer, and amateur designer.
+            {text.homeTitle}
           </h1>
           <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
-            I’m Mathias, a developer and funnyman based in Bergen. I have a
-            passion for frontend (UI/UX) development and seek to create
-            interesting experiences for everyone.
+            {text.homeDescription}
           </p>
           <div className="mt-6 flex gap-6">
             <SocialLink
@@ -237,20 +230,27 @@ export async function getStaticProps() {
     await generateRssFeed()
   }
 
-  const imageArray = await client.fetch(groq`*[_type == "staticInfo"]
-    {"images":imageGrid[]
-    {
-    "image":image.asset, 
-    "meta":image.asset->metadata, 
-    title, 
-    alt, 
-    caption}}
-`)
+  const staticInfo = await client.fetch(groq`*[_type == "staticInfo"]{
+    "images":imageGrid[] {
+      "image":image.asset, 
+      "meta":image.asset->metadata, 
+      title, 
+      alt, 
+      caption
+    },
+    "text": {
+      homeTitle,
+      homeDescription,
+      seoTitle,
+      seoDescription
+    }
+  }`)
 
   return {
     props: {
       articles: (await getAllArticles()).slice(0, 4),
-      images: imageArray[0].images,
+      images: staticInfo[0].images,
+      text: staticInfo[0].text,
     },
   }
 }
