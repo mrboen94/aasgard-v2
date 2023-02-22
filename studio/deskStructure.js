@@ -1,4 +1,4 @@
-const excludedIds = ['staticInfo']
+const excludedIds = ['staticInfo', 'photography']
 
 export default (S) =>
   S.list()
@@ -10,4 +10,5 @@ export default (S) =>
       // Add a visual divider
       S.divider(),
       S.documentListItem().id('staticContent').schemaType('staticInfo'),
+      S.documentListItem().id('photography').schemaType('photography'),
     ])

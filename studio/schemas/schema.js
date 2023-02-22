@@ -7,6 +7,8 @@ import videoContent from './objects/videoContent'
 import project from './documents/project'
 import technology from './documents/technology'
 import social from './objects/social'
+import photography from './documents/photography'
+import imageCard from './objects/imageCard'
 
 export default [
   post,
@@ -18,4 +20,6 @@ export default [
   imageGrid,
   imageWithAlt,
   videoContent,
+  photography,
+  imageCard,
 ]
