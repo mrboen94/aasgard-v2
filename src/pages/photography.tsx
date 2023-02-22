@@ -11,10 +11,10 @@ import { useState } from 'react'
 import 'yet-another-react-lightbox/styles.css'
 import 'yet-another-react-lightbox/plugins/thumbnails.css'
 
-export default function Photography({ images, title, fullResponse }) {
+export default function Photography({ images, title, description }) {
   const [index, setIndex] = useState(-1)
   return (
-    <SimpleLayout title={title} intro="Some of my images">
+    <SimpleLayout title={title} intro={description}>
       <PhotoAlbum
         layout="rows"
         photos={images}
@@ -40,13 +40,15 @@ export async function getStaticProps() {
             "width": image.asset->metadata.dimensions.width,
             "height": image.asset->metadata.dimensions.height,
         },
-        title
+        title,
+        description
     }[0]`)
 
   return {
     props: {
       images: res.images ?? null,
       title: res.title ?? null,
+      description: res.description ?? null,
     },
   }
 }
