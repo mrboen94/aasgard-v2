@@ -7,7 +7,6 @@ import groq from 'groq'
 import { serialize } from 'next-mdx-remote/serialize'
 import remarkGfm from 'remark-gfm'
 import rehypePrism from '@mapbox/rehype-prism'
-import { remarkCodeHike } from '@code-hike/mdx'
 import { Container } from '@/components/Container'
 import {
   TwitterIcon,
@@ -70,7 +69,7 @@ export default function About({ about, bio }) {
               {about.bioTitle}
             </h1>
             <div className="prose mt-6 space-y-7 text-base text-zinc-600 dark:text-zinc-400">
-              <MDXRemote {...bio} lazy />
+              <MDXRemote {...bio} />
             </div>
           </div>
           <div className="lg:pl-20">
