@@ -3,6 +3,7 @@
   font-weight: 200 300;
   font-display: block;
   font-style: normal;
+  font-feature-settings: 'ss07', 'ss04', 'ss03';
   font-named-instance: 'Regular';
   src: url('/fonts/aasgard-fonts/Nure-VF.woff2') format('woff2');
 }
@@ -11,7 +12,16 @@
   font-weight: 100 300;
   font-display: block;
   font-style: normal;
-  font-feature-settings: 'ss07', 'ss03', 'ss05', 'ss04', 'ss02';
+  font-feature-settings: 'ss07', 'ss05', 'ss04', 'ss02';
+  font-named-instance: 'Regular';
+  src: url('/fonts/aasgard-fonts/Nure-VF.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Nure Serif';
+  font-weight: 100 300;
+  font-display: block;
+  font-style: normal;
+  font-feature-settings: 'ss07', 'ss05', 'ss04', 'ss02', 'ss03';
   font-named-instance: 'Regular';
   src: url('/fonts/aasgard-fonts/Nure-VF.woff2') format('woff2');
 }

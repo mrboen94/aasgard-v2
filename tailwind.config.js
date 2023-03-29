@@ -25,6 +25,7 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['Nure Text', ...defaultTheme.fontFamily.sans],
+        serif: ['Nure Serif', ...defaultTheme.fontFamily.serif],
         display: ['Nure Display', ...defaultTheme.fontFamily.sans],
         mono: ['PragmataPro Mono', ...defaultTheme.fontFamily.mono],
         stylistic: ['Nure Stylistic', ...defaultTheme.fontFamily.sans],
