@@ -1,42 +1,39 @@
-# Spotlight
+![Astro + Netlify CMS](https://raw.githubusercontent.com/delucis/astro-netlify-cms/HEAD/header.png)
 
-Spotlight is a [Tailwind UI](https://tailwindui.com) site template built using [Tailwind CSS](https://tailwindcss.com) and [Next.js](https://nextjs.org).
+<h1 align="center">Astro Blog Starter with Netlify CMS</h1>
 
-## Getting started
+This example is based on [the basic Astro blog starter kit][starter], and
+adds [the Astro Netlify CMS integration][integration].
 
-To get started with this template, first install the npm dependencies:
+## Quick deploy
 
-```bash
-npm install
-```
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)][deploy]
 
-Next, create a `.env.local` file in the root of your project and set the `NEXT_PUBLIC_SITE_URL` variable to your site's public URL:
+☝️ Click this button to copy this project to your own GitHub (or GitLab)
+account and set up continuous deployment with Netlify as if by magic. ✨
 
-```
-NEXT_PUBLIC_SITE_URL=https://example.com
-```
+Once you’ve got the project set up, you do need to
+[activate Netlify Identity in the Netlify UI][identity] and then enable
+[“Git Gateway”][gateway] to allow e-mail/password authentication.
 
-Next, run the development server:
+## Commands
 
-```bash
-npm run dev
-```
+All commands are run from the root of the project, from a terminal:
 
-Finally, open [http://localhost:3000](http://localhost:3000) in your browser to view the website.
+| Command            | Action                                             |
+| :----------------- | :------------------------------------------------- |
+| `pnpm install`     | Installs dependencies                              |
+| `pnpm run dev`     | Starts local dev & Netlify CMS proxy servers       |
+| `pnpm run build`   | Build your production site to `./dist/`            |
+| `pnpm run preview` | Serve `./dist/` & run the Netlify CMS proxy server |
 
-## Customizing
+> **Note**
+> These commands are using [`pnpm`][pnpm], a fast and efficient package manager.
+> You can choose to use `npm` or `yarn` instead if you prefer, but remember to update the config in [`netlify.toml`](netlify.toml) to match.
 
-You can start editing this template by modifying the files in the `/src` folder. The site will auto-update as you edit these files.
-
-## License
-
-This site template is a commercial product and is licensed under the [Tailwind UI license](https://tailwindui.com/license).
-
-## Learn more
-
-To learn more about the technologies used in this site template, see the following resources:
-
-- [Tailwind CSS](https://tailwindcss.com/docs) - the official Tailwind CSS documentation
-- [Next.js](https://nextjs.org/docs) - the official Next.js documentation
-- [Headless UI](https://headlessui.dev) - the official Headless UI documentation
-- [MDX](https://mdxjs.com) - the MDX documentation
+[starter]: https://astro.new/blog?on=github
+[integration]: https://github.com/delucis/astro-netlify-cms
+[deploy]: https://app.netlify.com/start/deploy?repository=https://github.com/delucis/astro-netlify-cms-starter
+[identity]: https://docs.netlify.com/visitor-access/identity/
+[gateway]: https://docs.netlify.com/visitor-access/git-gateway/
+[pnpm]: https://pnpm.io/
