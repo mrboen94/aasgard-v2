@@ -1,0 +1,29 @@
+---
+import { processArticleDate } from "../lib/utils";
+import Anchor from "./common/Anchor.astro";
+
+export type Props = {
+  title: string;
+  description: string;
+  url: string;
+  duration?: string;
+  timestamp?: string;
+};
+
+const { title, description, url, duration, timestamp } = Astro.props;
+---
+
+<div class="theme-text theme-transition flex flex-col gap-3 pb-8">
+  <Anchor url={url} class="text-xl">
+    {title}
+  </Anchor>
+  <p class="">
+    {description}
+  </p>
+  <div
+    class="theme-muted theme-transition flex justify-between items-center"
+  >
+    {timestamp ? <p>{processArticleDate(timestamp)}</p> : null}
+    {duration ? <p>{duration}</p> : null}
+  </div>
+</div>

@@ -1,0 +1,129 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@variant dark (&:where(.dark, .dark *));
+
+@font-face {
+  font-family: "Literata Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 900;
+  src: url(https://cdn.jsdelivr.net/fontsource/fonts/literata:vf@latest/latin-opsz-normal.woff2)
+    format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191,
+    U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "press-start-2p";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(https://cdn.jsdelivr.net/fontsource/fonts/press-start-2p@latest/latin-400-normal.woff2)
+      format("woff2"),
+    url(https://cdn.jsdelivr.net/fontsource/fonts/press-start-2p@latest/latin-400-normal.woff)
+      format("woff");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191,
+    U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@theme {
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --font-display: "press-start-2p", ui-monospace, monospace;
+  --font-serif: "Literata Variable", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --color-theme-dark: var(--color-neutral-900);
+  --color-theme-light: var(--color-neutral-100);
+  --color-theme-dark-muted: var(--color-neutral-600);
+  --color-theme-light-muted: var(--color-neutral-400);
+  --color-theme-accent-light: var(--color-emerald-400);
+  --color-theme-accent-light-muted: var(--color-emerald-300);
+  --color-theme-accent-dark: var(--color-emerald-600);
+  --color-theme-accent-dark-muted: var(--color-emerald-800);
+}
+
+@layer base {
+  :root {
+    --theme-stroke: 2px;
+    --theme-offset: 6px;
+    --theme-transition-duration: 0.15s;
+    --theme-transition-timing-function: ease-in-out;
+  }
+
+  .theme-transition {
+    @media (prefers-reduced-motion: no-preference) {
+      transition:
+        background-color var(--theme-transition-duration) var(--theme-transition-timing-function),
+        color var(--theme-transition-duration) var(--theme-transition-timing-function),
+        fill var(--theme-transition-duration) var(--theme-transition-timing-function),
+        border-color var(--theme-transition-duration) var(--theme-transition-timing-function),
+        transform var(--theme-transition-duration) var(--theme-transition-timing-function);
+    }
+  }
+
+  .theme-bg {
+    background-color: var(--color-theme-light);
+    :where(.dark, .dark *) & {
+      background-color: var(--color-theme-dark);
+    }
+  }
+
+  .-theme-bg {
+    background-color: var(--color-theme-dark);
+    :where(.dark, .dark *) & {
+      background-color: var(--color-theme-light);
+    }
+  }
+  
+  .theme-text {
+    color: var(--color-theme-dark);
+    :where(.dark, .dark *) & {
+      color: var(--color-theme-light);
+    }
+  }
+
+  .-theme-text {
+    color: var(--color-theme-light);
+    :where(.dark, .dark *) & {
+      color: var(--color-theme-dark);
+    }
+  }
+
+  .theme-muted {
+    color: var(--color-theme-dark-muted);
+    :where(.dark, .dark *) & {
+      color: var(--color-theme-light-muted);
+    }
+  }
+
+  .theme-fill {
+    fill: var(--color-theme-dark);
+    &:where(.dark, .dark *) {
+      fill: var(--color-theme-light);
+    }
+  }
+
+  .theme-text-muted {
+    color: var(--color-theme-dark-muted);
+    &:where(.dark, .dark *) {
+      color: var(--color-theme-light-muted);
+    }
+  }
+
+  .theme-border-b {
+    border-bottom: var(--theme-stroke) solid;
+    border-color: var(--color-theme-dark);
+    &:where(.dark, .dark *) {
+      border-color: var(--color-theme-light);
+    }
+  }
+
+  .theme-offset {
+    text-underline-offset: var(--theme-offset);
+  }
+
+  .opsz {
+    font-variation-settings: "opsz" 72;
+  }
+}
