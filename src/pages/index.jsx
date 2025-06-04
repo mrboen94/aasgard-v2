@@ -16,6 +16,7 @@ import {
 import logoIslandgarden from '@/images/logos/islandgarden.svg'
 import logoSbanken from '@/images/logos/sbanken.png'
 import logoBouvet from '@/images/logos/bouvet.png'
+import logoUC from '@/images/logos/logoUC.png'
 import { generateRssFeed } from '@/lib/generateRssFeed'
 import { getAllArticles } from '@/lib/getAllArticles'
 import client from 'client'
@@ -36,14 +37,21 @@ function SocialLink({ icon: Icon, ...props }) {
 function Resume() {
   let resume = [
     {
-      company: 'Bouvet',
-      title: 'Frontend Developer',
-      logo: logoBouvet,
-      start: '2022',
+      company: 'Ulriken Consulting',
+      title: 'Senior developer',
+      logo: logoUC,
+      start: '2023',
       end: {
         label: 'Present',
         dateTime: new Date().getFullYear(),
       },
+    },
+    {
+      company: 'Bouvet',
+      title: 'Frontend Developer',
+      logo: logoBouvet,
+      start: '2022',
+      end: '2023',
     },
     {
       company: 'IslandGarden',
