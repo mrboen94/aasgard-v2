@@ -1,0 +1,233 @@
+---
+title: "Glittertind"
+slug: "glittertind"
+description: "A project writeup about building an app for echo's hiking competition."
+date: 2024-01-01
+template: "technical"
+tags: ["project", "mobile", "hiking"]
+technologies: ["flutter", "dart", "firebase", "figma"]
+---
+
+import VideoEmbed from "../../../components/media/VideoEmbed.astro";
+
+<VideoEmbed provider="vimeo" id="booen/glittertind" title="Glittertind project video" />
+
+Every semester, Gnist, a subgroup of echo, organizes a competition where you earn points for hiking and working out outdoors. The main point of the competition is to activate the students as we move into the exam period, and the threshold for participation should be very low. Different scores are given for the different mountain peaks, depending on the height, length, and the terrain you have to walk through. Even if there are only two winners in the competition, one in the men's class and one in the women's class, it is still possible to win a number of prizes that are raffled off when the competition is over, and each point earned is converted into a lottery ticket. This helps the motivation of everyone, even those who do not have time to go extreme amounts of hiking.
+
+## Motivation
+
+Currently, the entire competition is run through a Facebook group where you have to upload tracking maps with time stamps and an overview of where you have hiked, in addition to a photo you have taken on the mountain top to get the most points. Countless different apps have been used to track this information, ranging from Strava to Fitbit or Samsung Health, and the quality of tracking and the information you get from the various apps varies greatly. Therefore we will create one app for everything from tracking to scoring and taking photos, to gather everything in one place. We also want the points to be awarded automatically based on what has been tracked, so that the points earned are the same for everyone. In the Facebook group, some have tried to circumvent the rules to get as many points as possible for the shortest possible hike, and sometimes they have even succeeded because of a vague set of rules. Therefore, it is important that the points earned are the same for all participants, and that the rules are set by the organizers of the competition.
+
+## How
+
+### Technologies
+
+**Flutter**
+We have decided to use Flutter to be able to build the application for both Android and iOS at the same time. Our user base is the students already participating in the challenge and they have a variety of devices and it’s important that we cover the main ones.
+
+**Firebase**
+We use firebase for our database as it has a good free option to start with and offers excellent scalability if we want to go further with the application in the future.
+
+**Github**
+We decided to use Github as our version control and issue tracker. We are both familiar with github and will provide us with the easiest workflow. We have tried other issue trackers on other projects, but these pages often get neglected in favour of actually working on the project, having both version control and issue tracking on the same website is something we do to try to mitigate that problem.
+
+**Figma**
+We use figma for our design documents to make sure we are on the same page when it comes to the design of the app.
+
+## Methodology
+
+Figuring out what technologies we wanted to use was not an easy task. There are many different ways of developing apps today. Some are cross platform, others are native. In our app we need as much performance as we can get as we are rendering maps and collecting user position. Especially collecting user position can be power hungry, but so far in our tests the app isn't very power hungry compared to other apps such as the Norwegian Institute of Public Health's "Smittestopp" app. To get a real metric on this further testing is needed as our tests are just done on our iPhones so far.
+
+We ended up with going for Flutter as it builds down to C/C++ and will in theory be more performant than other cross platform solutions such as React Native. Coding in Flutter also leads to cleaner code as we don't need to mix `html` and `javascript` in the same file.
+
+### React Native vs. Flutter
+
+Example of hello world in react native:
+
+```js
+import React from "react";
+import { Text, View } from "react-native";
+
+const HelloWorldApp = () => {
+  return (
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Text>Hello, world!</Text>
+    </View>
+  );
+};
+export default HelloWorldApp;
+```
+
+As you can see it looks like react code, which is nice when developing websites, but working with both react native and react at the same time is really confusing and leads to language confusion. In general its more a question of taste as both frameworks offer much of the same capabilities.
+
+```dart
+import 'package:flutter/material.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Welcome to Flutter',
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Welcome to Flutter'),
+        ),
+        body: const Center(
+          child: Text('Hello World'),
+        ),
+      ),
+    );
+  }
+}
+```
+
+As you can see the code for flutter (dart) is pretty similar, so the difference is mostly based on taste and what you are most familiar with. You either go the route of developing the app as a `html` app. Or you go the route of flutter where you have different components with properties. It works the same and looks the same, but using components such as `card` which can have children as a prop, makes more sense to us than using `div` tags with the `className="card"` property just makes more sense to us. We can also just use googles material-ui to a develop fast and working app with app-bars (header) and layouts that makes sense.
+
+We landed on flutter as having a strongly typed language and the ability to have null safety will lead to easier testing and hopefully more stability since it gives us compile errors if things are going wrong.
+
+### Choosing the map provider
+
+At first we used open street maps for our maps as it has community maps that are constantly being updated. But implementing them and customizing the visual elements are really hard compared to mapbox. Especially when adding support for multiple map tiles such as performance maps and dark mode.
+
+So we ended with mapbox as our provider for maps as the ease of use made for a smoother and faster development cycle.
+
+This also makes it easy to implement visualizations to these maps in the future. Mapbox is supported by a big company as well, so scalability has already been tested making our app able to scale well into the future.
+
+### Choosing the database
+
+Choosing the correct database for the data gathered can be hard, but for this project it was pretty self explanatory. Firebase excells in speed and the ability to scale it up as much as you want/can afford in an easy way. You could do this with a PostgreSQL database, but setting up volumes, managing the database and ensuring scalability quickly leads to increased development time for a team of two. Firebase also gives you crash reports in their console which is really helpful for diagnosing crashes or issues that the users experience without them having to actually report the issue. With all these features there aren't many good arguments for going with something else. There is an open source version of firebase available, but it is important for projects like this to have long time support, and that is not always the case with open source solutions.
+
+## MVP
+
+The current MVP for us is that we want an app to be working on both iOS and Android. The users should also be able to score points and see themselves on the leaderboard. This in turn requires map integration.
+
+- App runs on Android.
+- App runs on iOS.
+- Firebase integration allows points to be earned.
+- Simple leaderboard.
+- Map integration.
+- Allowing admins to administer bonus points to certain geofenced areas.
+
+## Roadmap
+
+[view roadmap here.](https://app.startinfinity.com/b/JtAkLMWyUct)
+
+#### Echo
+
+Need to keep track of points from participants ➡️ Solved by Leaderboard.
+
+Need a way to give points to users for hiking ➡️ Solved with an interactive map with points system for different hikes and elevations.
+
+#### Participants
+
+I need a way to show echo proof of my hike ➡️ Solved with smart visualization of current hike.
+
+I want to know how much further I have to go to get more points ➡️ Solved with an interactive map
+
+#### TODO Features
+
+These are some of the features that we want to implement or have thought about implementing. Some of these features are far into the future, while others we deem to be feasible to do within the course timeframe.
+
+- ~~**Leaderboard**: A leaderboard with a points system, where users can get bonus points for certain hikes and regular points for hikes. Normal hikes should give points based on distance and elevation.~~
+  **Leaderboard**: Implemented.
+  - **Anonymity**: Allow users to display their score but be anonymous to the rest of the participants.
+- **Interactive map**: The map should be interactive in a way that lets you zoom around the map to find different mountaintops to hike to.
+  - **Geofencing**: Geofencing certain mountaintops to give bonus points.
+  - **Search**: Being able to search for specific hikes.
+  - **Route calculation**: Being able to look up routes and calculate an aproximation of the hike distance as well as time to complete.
+- **Adding pictures of hike**: Allow users to post pictures of their hike that will expire over time.
+- **This year in hiking**: Create a spotify style this year in hiking where we display some information about your hiking habits over the last year.
+- **Some simple visualizations**: We want to display some information of the hike you just performed, maybe with some highscores etc. As well as displaying different graphs containing information about how far you hiked, elevation, speed etc.
+
+##### Features status
+
+- iOS app ✅
+- android app ✅
+- Zoom and panning on map ✅
+- Geofencing ✅
+- Leaderboard ✅
+- Distance calculation ✅
+- Simple visualizations ✅
+- Search ⛔
+- Route calculation ⛔
+- Adding pictures of hike ⛔
+- Year overview ⛔
+
+## Design
+
+First we designed our app with figma sketches, this early design is not representative for what the app looks like at the moment, but it's nice to look back at it for future refrence.
+
+![figma](https://cdn.sanity.io/images/j26i5482/production/1473d9d17b35c5a515ba0b682228d998d05cdd85-1248x876.png?w=450)
+
+After meetings with our supervisor Eric, we came to the conclusion that we want the map to be the main view of our application. This means that when you open the app now you will be greeted with a login screen if you are not signed in, and if you are signed in you get straight into the map view, allowing you to start the hike as fast as possible without much hassle.
+
+We have also opted for the simple solution of hikes, you just start the tracking and points get calculated after finishing a hike. There are no routes being drawn as of now (this is a plan for the future, but not relevant as of now), this is because we are not aiming to be a "find places to hike app" but rather a "get points for hiking" app. This might change sometime in the future, but as of now there is no point to change it.
+
+We looked further into creating colors for our app and have used the Echo color palette as the app is aimed towards UiB and the hiking challenge that Echo organizes.
+Therefore our app consists of these colors:
+
+![image](https://cdn.sanity.io/images/j26i5482/production/1e1d9b946fefe0506fde153645d13b39fb0dbb0b-119x120.png?w=30)
+EchoYellow: `#F9C002`
+
+![image](https://cdn.sanity.io/images/j26i5482/production/9842b7b532e74fc2cc47a721c594c570c91d3e0b-119x119.png?w=30)
+EchoBlue: `#238194`
+
+![image](https://cdn.sanity.io/images/j26i5482/production/a1970e2ce71a9ecd02ec3c62f3a6a2222735e52a-119x119.png?w=30)
+EchoLightBlue: `#55AEC2`
+
+### Logo
+
+Getting a logo right is always a hard task. Here are some of the logos we explored while trying to find something we were satisfied with. In the image below you can see some of the process involved when it came to figure out the basic shapes and colors to convey the message we wanted to. As well as making it as modern looking as possible.
+
+![image](https://cdn.sanity.io/images/j26i5482/production/692571e590fa0dbc23b66e07f4daaf9b8fe44d25-2481x3508.png?w=450)
+
+Further here are some examples on how it looks in icon form. The further down you go the closer you get to the final logo.
+
+![image](https://cdn.sanity.io/images/j26i5482/production/55324da800cb496c2e81b56ff42b5a4c828b4e28-3000x1274.png?w=450)
+
+The image below is how the icon could have looked in dark mode, but it doesn't have enough contrast to be a viable option as of now.
+
+![image](https://cdn.sanity.io/images/j26i5482/production/7526f6ea5c0c116da423046465a89547253b41d5-3000x1274.png?w=450)
+
+### Current design
+
+![image](https://cdn.sanity.io/images/j26i5482/production/2d3d2c05c2e226c04e5ebb80fd5205f09dc0d18b-6500x4500.png?w=450)
+
+With the current implementation our app looks like this:
+
+![image](https://cdn.sanity.io/images/j26i5482/production/22e44c82f03ba0ed2ba78c2d3c3fb0c422e50169-1200x900.png?w=450)
+
+We switched from dark mode to light mode since viewing dark maps and UI elements when hiking out in the sun is suboptimal. Darkmode might be nice on the eyes during night time, but in daylight it makes the app unusable, at least on displays with low brightness or contrast ratio. It is not a problem for higher end phones, but not everyone can afford such devices and accessibility is something we have to think about when developing an app.
+
+### Data gathering and user information
+
+We don't want this app to gather all user information in the world. Currently we gather some data from the user such as the name and email. Only the username defined in your google account will be saved for use on the leaderboard. You can read more about the plans for the leaderboard above in the features section.
+
+Email is not stored in our firebase, same goes for all other information that we do not generate ourselves for the user.
+
+A users data is saved like this:
+
+```
+UID "PasdgPWE23MFnmaSDOgpo2j6gNA51SD"
+admin true
+displaytruename true
+hikes array[hikes/OUTtQK3yPWLf1bW72Wiw]
+points 15.5
+randomname Synlig Joggesko
+registered true
+username "Ola Nordmann"
+```
+
+And this is all the data we save in the database. We currently do not track current total distance, but it is something we are looking into doing as it might be fun to look back at after the challenge is over for the semester.
+
+Also notice how the hikes are stored, they are only stored one way, so if you delete your user we can keep the hike data (maybe add a checkbox to delete this data as well) for visualizations without infringing on GDPR issues.
+
+None of the data we gather is shared to any third parties. But due to the login format we can not guarantee or say what google tracks in this app. They do not get any information from us, but we have no way of telling if google has access any of the data due to the google sign in.
