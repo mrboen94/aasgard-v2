@@ -1,0 +1,30 @@
+<div class="photo-grid">
+  <slot>
+    <div class="photo-grid__placeholder"></div>
+    <div class="photo-grid__placeholder"></div>
+    <div class="photo-grid__placeholder"></div>
+  </slot>
+</div>
+
+<style>
+  .photo-grid {
+    display: grid;
+    gap: var(--space-3);
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .photo-grid__placeholder {
+    aspect-ratio: 4 / 5;
+    background:
+      linear-gradient(135deg, transparent 0 48%, var(--color-border) 48% 52%, transparent 52%),
+      var(--color-code-bg);
+    border: var(--border);
+    border-radius: var(--radius);
+  }
+
+  @media (max-width: 44rem) {
+    .photo-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

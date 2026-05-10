@@ -1,0 +1,44 @@
+---
+import BaseLayout from "../../components/layout/BaseLayout.astro";
+import PhotoProjectCard from "../../components/media/PhotoProjectCard.astro";
+import { getPhotoProjects } from "../../lib/content/collections";
+
+const entries = await getPhotoProjects();
+---
+
+<BaseLayout title="Photography" description="Photography projects and image essays.">
+  <section class="container page-section">
+    <header class="page-header">
+      <p class="eyebrow">Images</p>
+      <h1>Photography</h1>
+      <p>Local project folders leave room for image imports, captions, and later gallery behavior.</p>
+    </header>
+    <div class="grid">
+      {entries.map((entry) => <PhotoProjectCard entry={entry} />)}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-section {
+    display: grid;
+    gap: var(--space-6);
+    padding-block: var(--space-7);
+  }
+
+  .page-header {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .page-header p {
+    color: var(--color-muted);
+    margin: 0;
+    max-width: 44rem;
+  }
+
+  .page-header .eyebrow {
+    color: var(--color-accent);
+    text-transform: uppercase;
+  }
+</style>

@@ -1,0 +1,50 @@
+---
+import type { PhotoProjectEntry } from "../../lib/content/collections";
+import { photoProjectUrl } from "../../lib/content/urls";
+
+interface Props {
+  entry: PhotoProjectEntry;
+}
+
+const { entry } = Astro.props;
+---
+
+<article class="photo-card surface">
+  <a href={photoProjectUrl(entry.data.slug)}>
+    <span class="photo-card__media" aria-hidden="true"></span>
+    <span class="photo-card__text">
+      <h3>{entry.data.title}</h3>
+      <p>{entry.data.description}</p>
+    </span>
+  </a>
+</article>
+
+<style>
+  .photo-card {
+    overflow: hidden;
+  }
+
+  .photo-card a {
+    color: inherit;
+    display: grid;
+    text-decoration: none;
+  }
+
+  .photo-card__media {
+    aspect-ratio: 4 / 3;
+    background:
+      linear-gradient(135deg, transparent 0 48%, var(--color-border) 48% 52%, transparent 52%),
+      var(--color-code-bg);
+  }
+
+  .photo-card__text {
+    display: grid;
+    gap: var(--space-2);
+    padding: var(--space-4);
+  }
+
+  .photo-card p {
+    color: var(--color-muted);
+    margin: 0;
+  }
+</style>

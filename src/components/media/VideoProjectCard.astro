@@ -1,0 +1,50 @@
+---
+import type { VideoProjectEntry } from "../../lib/content/collections";
+import { videoProjectUrl } from "../../lib/content/urls";
+
+interface Props {
+  entry: VideoProjectEntry;
+}
+
+const { entry } = Astro.props;
+---
+
+<article class="video-card surface">
+  <a href={videoProjectUrl(entry.data.slug)}>
+    <span class="video-card__poster" aria-hidden="true"></span>
+    <span class="video-card__text">
+      <h3>{entry.data.title}</h3>
+      <p>{entry.data.description}</p>
+    </span>
+  </a>
+</article>
+
+<style>
+  .video-card {
+    overflow: hidden;
+  }
+
+  .video-card a {
+    color: inherit;
+    display: grid;
+    text-decoration: none;
+  }
+
+  .video-card__poster {
+    aspect-ratio: 16 / 9;
+    background:
+      linear-gradient(135deg, transparent 0 48%, var(--color-border) 48% 52%, transparent 52%),
+      var(--color-code-bg);
+  }
+
+  .video-card__text {
+    display: grid;
+    gap: var(--space-2);
+    padding: var(--space-4);
+  }
+
+  .video-card p {
+    color: var(--color-muted);
+    margin: 0;
+  }
+</style>

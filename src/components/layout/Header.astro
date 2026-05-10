@@ -1,0 +1,66 @@
+---
+const links = [
+  { href: "/articles/", label: "Articles" },
+  { href: "/lab/", label: "Lab" },
+  { href: "/work/", label: "Work" },
+  { href: "/photography/", label: "Photography" },
+  { href: "/video/", label: "Video" },
+  { href: "/search/", label: "Search" }
+];
+---
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="site-header__brand" href="/">Aasgard</a>
+    <nav aria-label="Primary navigation">
+      <ul class="site-header__nav">
+        {links.map((link) => (
+          <li><a href={link.href}>{link.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    border-bottom: var(--border);
+  }
+
+  .site-header__inner {
+    align-items: center;
+    display: flex;
+    gap: var(--space-5);
+    justify-content: space-between;
+    padding-block: var(--space-4);
+  }
+
+  .site-header__brand {
+    color: var(--color-text);
+    font-family: var(--font-accent);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .site-header__nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-4);
+    justify-content: flex-end;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .site-header__nav a {
+    color: var(--color-muted);
+    font-family: var(--font-accent);
+    font-size: 0.875rem;
+    text-decoration: none;
+  }
+
+  .site-header__nav a:hover,
+  .site-header__nav a:focus {
+    color: var(--color-text);
+  }
+</style>

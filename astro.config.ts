@@ -1,0 +1,16 @@
+import mdx from "@astrojs/mdx";
+import expressiveCode from "astro-expressive-code";
+import icon from "astro-icon";
+import { defineConfig } from "astro/config";
+
+export default defineConfig({
+  site: "https://aasgard.dev",
+  output: "static",
+  integrations: [
+    expressiveCode({
+      themes: ["github-light", "github-dark"]
+    }),
+    mdx(),
+    icon()
+  ]
+});

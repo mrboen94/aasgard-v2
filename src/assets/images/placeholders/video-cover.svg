@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Video cover placeholder</title>
+  <desc id="desc">A simple video placeholder with a play triangle.</desc>
+  <rect width="1200" height="675" fill="#181713"/>
+  <rect x="120" y="90" width="960" height="495" rx="18" fill="#2a2924" stroke="#d8d0c4" stroke-width="6"/>
+  <path d="M540 248v180l150-90-150-90Z" fill="#ff876c"/>
+</svg>

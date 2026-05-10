@@ -1,0 +1,27 @@
+---
+interface Props {
+  title?: string;
+}
+
+const { title } = Astro.props;
+---
+
+<section class="demo-frame">
+  {title && <h2>{title}</h2>}
+  <slot />
+</section>
+
+<style>
+  .demo-frame {
+    border: var(--border);
+    border-radius: var(--radius);
+    margin-block: var(--space-6);
+    overflow: hidden;
+    padding: var(--space-4);
+  }
+
+  .demo-frame h2 {
+    font-size: 1rem;
+    margin-bottom: var(--space-3);
+  }
+</style>

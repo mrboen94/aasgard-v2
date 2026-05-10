@@ -1,0 +1,52 @@
+---
+interface Props {
+  date: Date;
+  updated?: Date;
+  tags?: string[];
+  section?: string;
+}
+
+const { date, updated, tags = [], section } = Astro.props;
+const dateLabel = date.toLocaleDateString("en", {
+  year: "numeric",
+  month: "short",
+  day: "numeric"
+});
+---
+
+<div class="article-meta meta">
+  {section && <span data-pagefind-meta="section">{section}</span>}
+  <time datetime={date.toISOString()} data-pagefind-meta="date">{dateLabel}</time>
+  {updated && <span>Updated {updated.toLocaleDateString("en")}</span>}
+  {tags.length > 0 && (
+    <ul aria-label="Tags">
+      {tags.map((tag) => <li data-pagefind-meta="tags">{tag}</li>)}
+    </ul>
+  )}
+</div>
+
+<style>
+  .article-meta {
+    align-items: center;
+    color: var(--color-muted);
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 0.85rem;
+    gap: var(--space-2) var(--space-3);
+  }
+
+  .article-meta ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .article-meta li {
+    border: var(--border);
+    border-radius: 999px;
+    padding: 0 var(--space-2);
+  }
+</style>

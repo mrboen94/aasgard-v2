@@ -1,0 +1,39 @@
+.container {
+  margin-inline: auto;
+  max-width: var(--container);
+  padding-inline: var(--space-5);
+}
+
+.stack {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.cluster {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-5);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+}
+
+.surface {
+  background: var(--color-surface);
+  border: var(--border);
+  border-radius: var(--radius);
+}
+
+.visually-hidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}

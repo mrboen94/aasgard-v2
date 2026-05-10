@@ -1,0 +1,15 @@
+---
+import CanvasShell from "../../../../components/lab/CanvasShell.astro";
+---
+
+<CanvasShell title="Prototype canvas">
+  <canvas data-prototype-canvas aria-label="Animated prototype canvas"></canvas>
+</CanvasShell>
+
+<script>
+  import { mountPrototype } from "../sketches/prototype";
+
+  document.querySelectorAll<HTMLCanvasElement>("[data-prototype-canvas]").forEach((canvas) => {
+    mountPrototype(canvas);
+  });
+</script>

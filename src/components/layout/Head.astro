@@ -1,0 +1,36 @@
+---
+import { site } from "../../data/site";
+import { canonicalUrl, pageTitle } from "../../lib/seo/metadata";
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+}
+
+const {
+  title = site.title,
+  description = site.description,
+  canonical = Astro.url.pathname
+} = Astro.props;
+
+const resolvedCanonical = canonical.startsWith("http") ? canonical : canonicalUrl(canonical);
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{pageTitle(title)}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={resolvedCanonical} />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link
+  rel="preload"
+  href="/fonts/aasgard-fonts/Nure-VF.woff2"
+  as="font"
+  type="font/woff2"
+  crossorigin
+/>
+<meta property="og:title" content={pageTitle(title)} />
+<meta property="og:description" content={description} />
+<meta property="og:type" content="website" />

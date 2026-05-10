@@ -1,0 +1,14 @@
+---
+import type { ArticleEntry } from "../../lib/content/collections";
+import ArticleCard from "./ArticleCard.astro";
+
+interface Props {
+  entries: ArticleEntry[];
+}
+
+const { entries } = Astro.props;
+---
+
+<div class="grid">
+  {entries.map((entry) => <ArticleCard entry={entry} />)}
+</div>

@@ -1,0 +1,31 @@
+---
+interface Props {
+  wide?: boolean;
+}
+
+const { wide = false } = Astro.props;
+---
+
+<div class:list={["article-prose", wide && "article-prose--wide"]}>
+  <slot />
+</div>
+
+<style>
+  .article-prose {
+    max-width: var(--prose);
+  }
+
+  .article-prose--wide {
+    max-width: var(--prose-wide);
+  }
+
+  .article-prose :global(h2),
+  .article-prose :global(h3) {
+    margin-block: 2rem 1rem;
+  }
+
+  .article-prose :global(img),
+  .article-prose :global(canvas) {
+    border-radius: var(--radius);
+  }
+</style>

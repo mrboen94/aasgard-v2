@@ -1,0 +1,15 @@
+---
+import CanvasShell from "../../../../components/lab/CanvasShell.astro";
+---
+
+<CanvasShell title="Particle canvas">
+  <canvas data-particle-canvas aria-label="Animated particle canvas"></canvas>
+</CanvasShell>
+
+<script>
+  import { mountParticles } from "../sketches/particles";
+
+  document.querySelectorAll<HTMLCanvasElement>("[data-particle-canvas]").forEach((canvas) => {
+    mountParticles(canvas);
+  });
+</script>

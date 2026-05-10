@@ -1,0 +1,42 @@
+---
+import ArticleList from "../../components/article/ArticleList.astro";
+import BaseLayout from "../../components/layout/BaseLayout.astro";
+import { getArticles } from "../../lib/content/collections";
+
+const articles = await getArticles();
+---
+
+<BaseLayout title="Articles" description="Writing, notes, and technical articles.">
+  <section class="container page-section">
+    <header class="page-header">
+      <p class="eyebrow">Writing</p>
+      <h1>Articles</h1>
+      <p>Standard prose, technical posts, and interactive notes all use the same content source.</p>
+    </header>
+    <ArticleList entries={articles} />
+  </section>
+</BaseLayout>
+
+<style>
+  .page-section {
+    display: grid;
+    gap: var(--space-6);
+    padding-block: var(--space-7);
+  }
+
+  .page-header {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .page-header p {
+    color: var(--color-muted);
+    margin: 0;
+    max-width: 44rem;
+  }
+
+  .page-header .eyebrow {
+    color: var(--color-accent);
+    text-transform: uppercase;
+  }
+</style>

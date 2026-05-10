@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Article cover placeholder</title>
+  <desc id="desc">A simple geometric placeholder for article cover images.</desc>
+  <rect width="1200" height="675" fill="#efebe2"/>
+  <path d="M120 520 420 190l190 210 140-160 330 280H120Z" fill="#d8d0c4"/>
+  <circle cx="900" cy="180" r="72" fill="#d75f3f"/>
+</svg>

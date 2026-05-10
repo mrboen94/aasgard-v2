@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Photo cover placeholder</title>
+  <desc id="desc">A simple geometric placeholder for photography projects.</desc>
+  <rect width="1200" height="800" fill="#20201c"/>
+  <rect x="120" y="100" width="960" height="600" rx="24" fill="#f8f6f0"/>
+  <circle cx="600" cy="400" r="170" fill="#176b87"/>
+  <circle cx="600" cy="400" r="96" fill="#171714"/>
+</svg>

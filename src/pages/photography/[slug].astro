@@ -1,0 +1,80 @@
+---
+import { render } from "astro:content";
+import ArticleMeta from "../../components/article/ArticleMeta.astro";
+import ArticleProse from "../../components/article/ArticleProse.astro";
+import BaseLayout from "../../components/layout/BaseLayout.astro";
+import PhotoGrid from "../../components/media/PhotoGrid.astro";
+import { getPhotoProjects } from "../../lib/content/collections";
+
+export async function getStaticPaths() {
+  const entries = await getPhotoProjects();
+
+  return entries.map((entry) => ({
+    params: { slug: entry.data.slug },
+    props: { entry }
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<BaseLayout title={entry.data.title} description={entry.data.description} canonical={`/photography/${entry.data.slug}/`}>
+  <article class="container detail-page" data-pagefind-body>
+    <header class="detail-page__header">
+      <p class="eyebrow">Photography</p>
+      <h1 data-pagefind-meta="title">{entry.data.title}</h1>
+      <p>{entry.data.description}</p>
+      <ArticleMeta date={entry.data.date} section="photography" />
+      <dl class="photo-details">
+        {entry.data.camera && <><dt>Camera</dt><dd>{entry.data.camera}</dd></>}
+        {entry.data.location && <><dt>Location</dt><dd>{entry.data.location}</dd></>}
+      </dl>
+    </header>
+    <PhotoGrid />
+    <ArticleProse>
+      <Content />
+    </ArticleProse>
+  </article>
+</BaseLayout>
+
+<style>
+  .detail-page {
+    display: grid;
+    gap: var(--space-5);
+    padding-block: var(--space-7);
+  }
+
+  .detail-page__header {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .detail-page__header p {
+    color: var(--color-muted);
+    margin: 0;
+    max-width: 44rem;
+  }
+
+  .detail-page__header .eyebrow {
+    color: var(--color-accent);
+    text-transform: uppercase;
+  }
+
+  .photo-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin: 0;
+  }
+
+  .photo-details dt,
+  .photo-details dd {
+    margin: 0;
+  }
+
+  .photo-details dt {
+    color: var(--color-muted);
+    font-family: var(--font-accent);
+  }
+</style>

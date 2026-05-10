@@ -1,0 +1,45 @@
+---
+import type { ArticleEntry } from "../../lib/content/collections";
+import ArticleMeta from "./ArticleMeta.astro";
+
+interface Props {
+  entry: ArticleEntry;
+  eyebrow?: string;
+}
+
+const { entry, eyebrow = "Article" } = Astro.props;
+---
+
+<header class="article-header">
+  <p class="eyebrow article-header__eyebrow">{eyebrow}</p>
+  <h1 data-pagefind-meta="title">{entry.data.title}</h1>
+  <p class="article-header__description">{entry.data.description}</p>
+  <ArticleMeta
+    date={entry.data.date}
+    updated={entry.data.updated}
+    tags={entry.data.tags}
+    section="articles"
+  />
+</header>
+
+<style>
+  .article-header {
+    display: grid;
+    gap: var(--space-4);
+    padding-block: var(--space-7) var(--space-5);
+  }
+
+  .article-header__eyebrow {
+    color: var(--color-accent);
+    font-size: 0.8rem;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  .article-header__description {
+    color: var(--color-muted);
+    font-size: 1.15rem;
+    margin: 0;
+    max-width: 44rem;
+  }
+</style>

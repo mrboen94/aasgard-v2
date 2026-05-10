@@ -1,0 +1,62 @@
+@import "./tokens.css";
+@import "./typography.css";
+@import "./utilities.css";
+
+@font-face {
+  font-family: "Nure";
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("/fonts/aasgard-fonts/Nure-VF.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Departure Mono";
+  font-display: swap;
+  font-weight: 400;
+  src: url("/fonts/aasgard-fonts/DepartureMono-1.346/DepartureMono-Regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Pragmata Pro";
+  font-display: swap;
+  font-weight: 400;
+  src: url("/fonts/aasgard-fonts/PragmataProRLiga.woff2") format("woff2");
+}
+
+:root {
+  --font-nure: "Nure";
+  --font-departure-mono: "Departure Mono";
+  --font-pragmata-pro: "Pragmata Pro";
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--color-bg);
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  margin: 0;
+  min-height: 100vh;
+}
+
+img,
+svg,
+canvas,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+main {
+  min-height: 60vh;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: #fff;
+}
