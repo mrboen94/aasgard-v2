@@ -22,7 +22,7 @@ const { Content } = await render(entry);
 <BaseLayout title={entry.data.title} description={entry.data.description} canonical={`/lab/${entry.data.slug}/`}>
   <article class="container detail-page" data-pagefind-body>
     <header class="detail-page__header">
-      <p class="eyebrow">Lab</p>
+      <a class="detail-page__back" href="/lab/">Back to Lab</a>
       <h1 data-pagefind-meta="title">{entry.data.title}</h1>
       <p>{entry.data.description}</p>
       <ArticleMeta date={entry.data.date} section="lab" />
@@ -52,8 +52,25 @@ const { Content } = await render(entry);
     max-width: 44rem;
   }
 
-  .detail-page__header .eyebrow {
-    color: var(--color-accent-2);
-    text-transform: uppercase;
+  .detail-page__back {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    color: var(--color-link);
+    font-family: var(--font-accent);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
+
+  .detail-page__back:focus-visible {
+    clip: auto;
+    clip-path: none;
+    height: auto;
+    overflow: visible;
+    position: static;
+    white-space: normal;
+    width: fit-content;
   }
 </style>

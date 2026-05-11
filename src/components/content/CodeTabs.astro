@@ -1,0 +1,117 @@
+---
+type Tab = {
+  id: string;
+  label: string;
+};
+
+interface Props {
+  tabs: Tab[];
+}
+
+const { tabs } = Astro.props;
+const renderedTabs = await Promise.all(
+  tabs.map(async (tab, index) => ({
+    ...tab,
+    active: index === 0,
+    html: await Astro.slots.render(tab.id)
+  }))
+);
+const groupId = `code-tabs-${Math.random().toString(36).slice(2)}`;
+---
+
+<div class="code-tabs" data-code-tabs>
+  {renderedTabs.map((tab) => (
+    <section
+      aria-label={tab.label}
+      class="code-tabs__panel"
+      data-code-tab-label={tab.label}
+      hidden={!tab.active}
+      id={`${groupId}-${tab.id}-panel`}
+      role="tabpanel"
+      set:html={tab.html}
+    />
+  ))}
+</div>
+
+<script>
+  function mountCodeTabs() {
+    document.querySelectorAll<HTMLElement>("[data-code-tabs]").forEach((root) => {
+      if (root.dataset.mounted === "true") return;
+      root.dataset.mounted = "true";
+
+      const panels = Array.from(root.querySelectorAll<HTMLElement>('[role="tabpanel"]'));
+
+      function activate(nextPanelId: string) {
+        panels.forEach((panel) => {
+          panel.hidden = panel.id !== nextPanelId;
+        });
+
+        root.querySelectorAll<HTMLButtonElement>('[role="tab"]').forEach((tab) => {
+          tab.setAttribute("aria-selected", tab.getAttribute("aria-controls") === nextPanelId ? "true" : "false");
+        });
+      }
+
+      panels.forEach((panel) => {
+        const header = panel.querySelector<HTMLElement>(".expressive-code figure.frame.has-title > figcaption.header");
+
+        if (!header) return;
+
+        header.replaceChildren();
+        header.setAttribute("role", "tablist");
+        header.setAttribute("aria-label", "Code files");
+
+        panels.forEach((targetPanel) => {
+          const tab = document.createElement("button");
+          tab.type = "button";
+          tab.className = "code-tabs__tab";
+          tab.id = `${targetPanel.id}-tab`;
+          tab.setAttribute("aria-controls", targetPanel.id);
+          tab.setAttribute("aria-selected", targetPanel === panel ? "true" : "false");
+          tab.setAttribute("role", "tab");
+          tab.textContent = targetPanel.dataset.codeTabLabel || "";
+          tab.addEventListener("click", () => activate(targetPanel.id));
+          header.append(tab);
+        });
+      });
+    });
+  }
+
+  mountCodeTabs();
+  document.addEventListener("astro:page-load", mountCodeTabs);
+</script>
+
+<style>
+  .code-tabs {
+    margin-block: var(--space-5);
+    max-width: 100%;
+  }
+
+  .code-tabs__tab {
+    appearance: none;
+    background: transparent;
+    border: 0;
+    border-top: 0.15rem solid transparent !important;
+    color: var(--color-muted);
+    cursor: pointer;
+    flex: 0 0 auto;
+    font: inherit;
+    font-family: var(--font-accent);
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .code-tabs__tab[aria-selected="true"] {
+    background: var(--color-surface) !important;
+    border-top-color: var(--color-accent);
+    color: var(--color-text);
+  }
+
+  .code-tabs__panel {
+    overflow-x: auto;
+  }
+
+  .code-tabs__panel :global(figcaption.header[role="tablist"]) {
+    align-items: stretch;
+    display: flex;
+    overflow-x: auto;
+  }
+</style>

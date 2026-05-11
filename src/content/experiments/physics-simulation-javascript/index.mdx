@@ -9,6 +9,8 @@ interactive: true
 ---
 
 import PhysicsImage from "./components/PhysicsImage.astro";
+import physicsImage from "./images/image.png";
+import CodeTabs from "../../../components/content/CodeTabs.astro";
 
 ## Welcome to the world of physics simulation with Javascript
 
@@ -20,7 +22,7 @@ You can view the full code below the result of this experiment.
 
 ## Final result
 
-<PhysicsImage src="https://cdn.sanity.io/images/j26i5482/production/6a6020ccdb46b0a2b2be20b0713930b10cc7f19d-2048x1186.png?w=650" />
+<PhysicsImage src={physicsImage.src} canvasMargin />
 
 ## The code
 
@@ -488,6 +490,13 @@ It was therefore necessary to find the offset from the top of the website. This 
 
 ## Final code
 
+<CodeTabs tabs={[
+  { id: "physics-image", label: "PhysicsImage.tsx" },
+  { id: "particle", label: "Particle.ts" },
+  { id: "effect", label: "Effect.ts" }
+]}>
+<div slot="physics-image">
+
 ```ts title="PhysicsImage.tsx"
 import { useEffect, useRef, useState } from 'react'
 import { Effect } from '../lib/particleSystem/Effect'
@@ -556,6 +565,9 @@ export default function PhysicsImage({
   )
 }
 ```
+
+</div>
+<div slot="particle">
 
 ```ts title="Particle.ts"
 import { Effect } from './Effect'
@@ -635,6 +647,9 @@ export class Particle {
   }
 }
 ```
+
+</div>
+<div slot="effect">
 
 ```ts title="Effect.ts"
 import { IParticleSystemOptions, Particle } from './Particle'
@@ -775,6 +790,9 @@ export class Effect {
   }
 }
 ```
+
+</div>
+</CodeTabs>
 
 ## Future
 

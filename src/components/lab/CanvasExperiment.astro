@@ -1,0 +1,333 @@
+---
+import type { CanvasControl, CanvasSettings } from "./canvasExperiment";
+
+interface Props {
+  ariaLabel?: string;
+  canvasMargin?: number;
+  imageSrc?: string;
+  script: string;
+  settings?: CanvasControl[];
+}
+
+const {
+  ariaLabel = "Interactive canvas experiment",
+  canvasMargin = 0,
+  imageSrc,
+  script,
+  settings = []
+} = Astro.props;
+
+const initialSettings = Object.fromEntries(
+  settings.map((setting) => [setting.id, setting.value])
+) satisfies CanvasSettings;
+const instanceId = `canvas-experiment-${Math.random().toString(36).slice(2)}`;
+---
+
+<figure
+  class:list={["canvas-experiment", imageSrc && "canvas-experiment--with-image"]}
+  data-canvas-experiment
+  data-image-src={imageSrc}
+  data-script={script}
+  data-settings={JSON.stringify(initialSettings)}
+  style={`--canvas-experiment-margin: ${canvasMargin}px;`}
+>
+  <canvas aria-label={ariaLabel}></canvas>
+  {imageSrc && <img class="canvas-experiment__fallback" src={imageSrc} alt="" loading="lazy" />}
+  {
+    settings.length > 0 && (
+      <figcaption class="canvas-experiment__controls" aria-label="Canvas controls">
+        {settings.map((setting) => {
+          if (setting.type === "checkbox") {
+            return (
+              <label>
+                <span>{setting.label}</span>
+                <input
+                  checked={setting.value}
+                  data-canvas-control={setting.id}
+                  type="checkbox"
+                />
+              </label>
+            );
+          }
+
+          if (setting.type === "radio") {
+            return (
+              <fieldset>
+                <legend>{setting.label}</legend>
+                <div class="canvas-experiment__radio-group">
+                  {setting.options.map((option) => (
+                    <label>
+                      <input
+                        checked={option.value === setting.value}
+                        data-canvas-control={setting.id}
+                        name={`${instanceId}-${setting.id}`}
+                        type="radio"
+                        value={option.value}
+                      />
+                      <span>{option.label}</span>
+                    </label>
+                  ))}
+                </div>
+              </fieldset>
+            );
+          }
+
+          if (setting.type === "select") {
+            return (
+              <label>
+                <span>{setting.label}</span>
+                <select data-canvas-control={setting.id}>
+                  {setting.options.map((option) => (
+                    <option selected={option.value === setting.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            );
+          }
+
+          return (
+            <label>
+              <span>{setting.label}</span>
+              <input
+                data-canvas-control={setting.id}
+                max={setting.max}
+                min={setting.min}
+                step={setting.step}
+                type={setting.type}
+                value={setting.value}
+              />
+            </label>
+          );
+        })}
+      </figcaption>
+    )
+  }
+</figure>
+
+<script>
+  import type {
+    CanvasExperimentCleanup,
+    CanvasExperimentContext,
+    CanvasExperimentMount,
+    CanvasSettingValue,
+    CanvasSettings,
+    CanvasSettingsChangeHandler
+  } from "./canvasExperiment";
+
+  type CanvasExperimentModule = {
+    default?: CanvasExperimentMount;
+    mount?: CanvasExperimentMount;
+  };
+
+  const sketchModules = import.meta.glob<CanvasExperimentModule>(
+    "/src/content/experiments/**/sketches/*.ts"
+  );
+
+  function readControlValue(control: HTMLInputElement | HTMLSelectElement): CanvasSettingValue {
+    if (control instanceof HTMLInputElement && control.type === "checkbox") {
+      return control.checked;
+    }
+
+    if (control instanceof HTMLInputElement && control.type === "number") {
+      return Number.parseFloat(control.value);
+    }
+
+    if (control instanceof HTMLInputElement && control.type === "range") {
+      return Number.parseFloat(control.value);
+    }
+
+    return control.value;
+  }
+
+  function mountCanvasExperiments() {
+    const cleanups: CanvasExperimentCleanup[] = [];
+
+    document.querySelectorAll<HTMLElement>("[data-canvas-experiment]").forEach((root) => {
+      if (root.dataset.mounted === "true") return;
+
+      const canvas = root.querySelector<HTMLCanvasElement>("canvas");
+      const script = root.dataset.script;
+
+      if (!canvas || !script) return;
+
+      const loadSketch = sketchModules[script];
+
+      if (!loadSketch) {
+        console.error(`Canvas experiment script was not found: ${script}`);
+        return;
+      }
+
+      root.dataset.mounted = "true";
+
+      const controls = Array.from(
+        root.querySelectorAll<HTMLInputElement | HTMLSelectElement>("[data-canvas-control]")
+      );
+      const settings = JSON.parse(root.dataset.settings || "{}") as CanvasSettings;
+      const settingsSubscribers = new Set<CanvasSettingsChangeHandler>();
+      let sketchCleanup: CanvasExperimentCleanup | void;
+
+      const notifySettingsChanged = (changedKey: string) => {
+        settingsSubscribers.forEach((handler) => handler(settings, changedKey));
+      };
+
+      const controlCleanups = controls.map((control) => {
+        const handler = () => {
+          const key = control.dataset.canvasControl;
+          if (!key) return;
+
+          settings[key] = readControlValue(control);
+          notifySettingsChanged(key);
+        };
+
+        control.addEventListener("input", handler);
+        control.addEventListener("change", handler);
+
+        return () => {
+          control.removeEventListener("input", handler);
+          control.removeEventListener("change", handler);
+        };
+      });
+
+      const context: CanvasExperimentContext = {
+        canvas,
+        getSetting: (key) => settings[key],
+        imageSrc: root.dataset.imageSrc,
+        onSettingsChange: (handler) => {
+          settingsSubscribers.add(handler);
+          return () => settingsSubscribers.delete(handler);
+        },
+        root,
+        setReady: (ready = true) => {
+          root.dataset.ready = ready ? "true" : "false";
+        },
+        settings
+      };
+
+      loadSketch()
+        .then(async (module) => {
+          const mount = module.mount ?? module.default;
+
+          if (!mount) {
+            console.error(`Canvas experiment script has no mount export: ${script}`);
+            return;
+          }
+
+          sketchCleanup = await mount(context);
+        })
+        .catch((error: unknown) => {
+          console.error(`Canvas experiment failed to load: ${script}`, error);
+        });
+
+      cleanups.push(() => {
+        controlCleanups.forEach((cleanup) => cleanup());
+        settingsSubscribers.clear();
+        sketchCleanup?.();
+        root.dataset.mounted = "false";
+      });
+    });
+
+    document.addEventListener(
+      "astro:before-swap",
+      () => {
+        cleanups.forEach((cleanup) => cleanup());
+      },
+      { once: true }
+    );
+  }
+
+  mountCanvasExperiments();
+  document.addEventListener("astro:page-load", mountCanvasExperiments);
+</script>
+
+<style>
+  .canvas-experiment {
+    --canvas-experiment-margin: 0px;
+    background: var(--color-code-bg);
+    border: var(--border);
+    border-radius: var(--radius);
+    inline-size: 100%;
+    margin: var(--space-6) 0;
+    max-width: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .canvas-experiment canvas {
+    aspect-ratio: 16 / 9;
+    background: transparent;
+    display: block;
+    inline-size: 100%;
+    max-width: 100%;
+  }
+
+  .canvas-experiment--with-image canvas {
+    aspect-ratio: auto;
+    opacity: 0;
+    transition: opacity 160ms ease;
+  }
+
+  .canvas-experiment__fallback {
+    border-radius: var(--radius);
+    display: block;
+    block-size: auto;
+    inline-size: 100%;
+    max-inline-size: 100%;
+  }
+
+  .canvas-experiment[data-ready="true"] canvas {
+    opacity: 1;
+  }
+
+  .canvas-experiment[data-ready="true"] .canvas-experiment__fallback {
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+  }
+
+  .canvas-experiment__controls {
+    align-items: end;
+    border-top: var(--border);
+    display: grid;
+    gap: var(--space-3);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 8rem), 1fr));
+    padding: var(--space-4);
+  }
+
+  .canvas-experiment__controls label,
+  .canvas-experiment__controls fieldset {
+    border: 0;
+    color: var(--color-muted);
+    display: grid;
+    font-family: var(--font-accent);
+    font-size: 0.78rem;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+  }
+
+  .canvas-experiment__controls input,
+  .canvas-experiment__controls select {
+    accent-color: var(--color-accent-2);
+    inline-size: 100%;
+  }
+
+  .canvas-experiment__controls input[type="checkbox"],
+  .canvas-experiment__controls input[type="radio"] {
+    block-size: 1rem;
+    inline-size: 1rem;
+  }
+
+  .canvas-experiment__radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .canvas-experiment__radio-group label {
+    align-items: center;
+    display: flex;
+    gap: var(--space-1);
+  }
+</style>

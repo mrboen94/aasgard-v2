@@ -7,6 +7,8 @@ const links = [
   { href: "/video/", label: "Video" },
   { href: "/search/", label: "Search" }
 ];
+
+const pathname = Astro.url.pathname;
 ---
 
 <header class="site-header">
@@ -14,9 +16,13 @@ const links = [
     <a class="site-header__brand" href="/">Aasgard</a>
     <nav aria-label="Primary navigation">
       <ul class="site-header__nav">
-        {links.map((link) => (
-          <li><a href={link.href}>{link.label}</a></li>
-        ))}
+        {links.map((link) => {
+          const isActive = pathname === link.href || pathname.startsWith(link.href);
+
+          return (
+            <li><a href={link.href} aria-current={isActive ? "page" : undefined}>{link.label}</a></li>
+          );
+        })}
       </ul>
     </nav>
   </div>
@@ -62,5 +68,16 @@ const links = [
   .site-header__nav a:hover,
   .site-header__nav a:focus {
     color: var(--color-text);
+  }
+
+  .site-header__nav a[aria-current="page"] {
+    color: var(--color-accent-2);
+  }
+
+  .site-header__nav a[aria-current="page"] {
+    text-decoration: underline;
+    text-decoration-color: var(--color-accent-2);
+    text-decoration-thickness: 0.12em;
+    text-underline-offset: 0.3em;
   }
 </style>

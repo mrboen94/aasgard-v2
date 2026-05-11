@@ -1,4 +1,12 @@
-export function mountPrototype(canvas: HTMLCanvasElement) {
+import type {
+  CanvasExperimentCleanup,
+  CanvasExperimentContext
+} from "../../../../components/lab/canvasExperiment";
+
+export function mount({
+  canvas,
+  setReady
+}: CanvasExperimentContext): CanvasExperimentCleanup | void {
   const context = canvas.getContext("2d");
 
   if (!context) {
@@ -39,11 +47,13 @@ export function mountPrototype(canvas: HTMLCanvasElement) {
   }
 
   resize();
+  setReady(true);
   draw();
-  window.addEventListener("resize", resize);
+  const observer = new ResizeObserver(resize);
+  observer.observe(canvas);
 
   return () => {
     window.cancelAnimationFrame(frame);
-    window.removeEventListener("resize", resize);
+    observer.disconnect();
   };
 }

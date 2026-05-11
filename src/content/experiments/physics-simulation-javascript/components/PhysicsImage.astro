@@ -1,188 +1,78 @@
 ---
+import CanvasExperiment from "../../../../components/lab/CanvasExperiment.astro";
+import type { CanvasControl } from "../../../../components/lab/canvasExperiment";
+
 interface Props {
+  canvasMargin?: boolean;
   src: string;
 }
 
-const { src } = Astro.props;
+const { canvasMargin = false, src } = Astro.props;
+const settings = [
+  {
+    id: "resolution",
+    label: "Resolution",
+    max: 10,
+    min: 2,
+    step: 1,
+    type: "range",
+    value: 9
+  },
+  {
+    id: "size",
+    label: "Size",
+    max: 6,
+    min: 1,
+    step: 1,
+    type: "range",
+    value: 3
+  },
+  {
+    id: "mouseRadius",
+    label: "Force",
+    max: 6000,
+    min: 500,
+    step: 100,
+    type: "range",
+    value: 3000
+  },
+  {
+    id: "ease",
+    label: "Ease",
+    max: 0.06,
+    min: 0.005,
+    step: 0.005,
+    type: "range",
+    value: 0.01
+  },
+  {
+    id: "friction",
+    label: "Friction",
+    max: 0.98,
+    min: 0.75,
+    step: 0.01,
+    type: "range",
+    value: 0.86
+  },
+  {
+    id: "gravity",
+    label: "Gravity",
+    type: "checkbox",
+    value: false
+  },
+  {
+    id: "collisions",
+    label: "Collisions",
+    type: "checkbox",
+    value: false
+  }
+] satisfies CanvasControl[];
 ---
 
-<figure class="physics-image" data-physics-image data-src={src}>
-  <canvas aria-label="Interactive particle image"></canvas>
-</figure>
-
-<script>
-  // @ts-nocheck
-  class Particle {
-    constructor(effect, x, y, color, options) {
-      this.effect = effect;
-      this.x = this.originX = x;
-      this.y = this.originY = y;
-      this.color = color;
-      this.dx = 0;
-      this.dy = 0;
-      this.vx = 0;
-      this.vy = 0;
-      this.distance = 0;
-      this.angle = 0;
-      this.force = 0;
-      this.friction = options.randomFriction
-        ? Math.random() * (options.randomFriction.max - options.randomFriction.min) + options.randomFriction.min
-        : options.friction;
-      this.ease = options.ease;
-      this.size = options.size;
-    }
-
-    update() {
-      this.dx = this.effect.mouse.x - this.x;
-      this.dy = this.effect.mouse.y - this.y;
-      this.distance = this.dx * this.dx + this.dy * this.dy;
-      this.force = -this.effect.mouse.radius / this.distance;
-
-      if (this.distance < this.effect.mouse.radius) {
-        this.angle = Math.atan2(this.dy, this.dx);
-        this.vx += this.force * Math.cos(this.angle);
-        this.vy += this.force * Math.sin(this.angle);
-      }
-
-      this.x += (this.vx *= this.friction) + (this.originX - this.x) * this.ease;
-      this.y += (this.vy *= this.friction) + (this.originY - this.y) * this.ease;
-    }
-  }
-
-  class Effect {
-    constructor(canvas, image, options) {
-      this.canvas = canvas;
-      this.context = canvas.getContext("2d");
-      this.image = image;
-      this.options = options;
-      this.particles = [];
-      this.mouse = {
-        x: -10000,
-        y: -10000,
-        radius: options.mouseRadius
-      };
-    }
-
-    resize(width, height) {
-      this.width = width;
-      this.height = height;
-      this.canvas.width = width;
-      this.canvas.height = height;
-      this.canvas.style.width = `${width}px`;
-      this.canvas.style.height = `${height}px`;
-      this.init();
-    }
-
-    init() {
-      this.particles = [];
-      this.context.clearRect(0, 0, this.width, this.height);
-      this.context.drawImage(this.image, 0, 0, this.width, this.height);
-      const pixels = this.context.getImageData(0, 0, this.width, this.height).data;
-
-      for (let y = 0; y < this.height; y += this.options.gap) {
-        for (let x = 0; x < this.width; x += this.options.gap) {
-          const index = (y * this.width + x) * 4;
-          const alpha = pixels[index + 3];
-
-          if (alpha > 0) {
-            const red = pixels[index];
-            const green = pixels[index + 1];
-            const blue = pixels[index + 2];
-            this.particles.push(new Particle(this, x, y, `rgb(${red},${green},${blue})`, this.options));
-          }
-        }
-      }
-
-      this.context.clearRect(0, 0, this.width, this.height);
-    }
-
-    update() {
-      for (const particle of this.particles) {
-        particle.update();
-      }
-    }
-
-    render() {
-      this.context.clearRect(0, 0, this.width, this.height);
-
-      for (const particle of this.particles) {
-        this.context.fillStyle = particle.color;
-        this.context.fillRect(particle.x, particle.y, particle.size, particle.size);
-      }
-    }
-  }
-
-  const options = {
-    randomFriction: { min: 0.8, max: 0.9 },
-    mouseRadius: 3000,
-    ease: 0.01,
-    size: 3,
-    gap: 3,
-    friction: 0.9
-  };
-
-  document.querySelectorAll("[data-physics-image]").forEach((root) => {
-    if (root.dataset.initialized === "true") return;
-    root.dataset.initialized = "true";
-
-    const canvas = root.querySelector("canvas");
-    const image = new Image();
-    let effect;
-    let frame;
-
-    function sizeCanvas() {
-      if (!effect) return;
-      const width = Math.max(280, Math.floor(root.clientWidth));
-      const height = Math.round(width * (image.naturalHeight / image.naturalWidth));
-      effect.resize(width, height);
-    }
-
-    function animate() {
-      effect.update();
-      effect.render();
-      frame = requestAnimationFrame(animate);
-    }
-
-    image.crossOrigin = "anonymous";
-    image.onload = () => {
-      effect = new Effect(canvas, image, options);
-      sizeCanvas();
-      animate();
-    };
-    image.src = root.dataset.src;
-
-    root.addEventListener("pointermove", (event) => {
-      if (!effect) return;
-      const box = canvas.getBoundingClientRect();
-      effect.mouse.x = event.clientX - box.left;
-      effect.mouse.y = event.clientY - box.top;
-    });
-
-    root.addEventListener("pointerleave", () => {
-      if (!effect) return;
-      effect.mouse.x = -10000;
-      effect.mouse.y = -10000;
-    });
-
-    window.addEventListener("resize", sizeCanvas);
-    document.addEventListener("astro:before-swap", () => {
-      cancelAnimationFrame(frame);
-      window.removeEventListener("resize", sizeCanvas);
-    }, { once: true });
-  });
-</script>
-
-<style>
-  .physics-image {
-    margin: var(--space-6) 0;
-    max-width: 100%;
-  }
-
-  .physics-image canvas {
-    background: var(--color-code-bg);
-    border: var(--border);
-    border-radius: var(--radius);
-    display: block;
-    max-width: 100%;
-  }
-</style>
+<CanvasExperiment
+  ariaLabel="Interactive particle image"
+  canvasMargin={canvasMargin ? 64 : 0}
+  imageSrc={src}
+  script="/src/content/experiments/physics-simulation-javascript/sketches/physics.ts"
+  settings={settings}
+/>
