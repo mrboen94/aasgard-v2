@@ -19,13 +19,24 @@
 .grid {
   display: grid;
   gap: var(--space-5);
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--grid-min)), 1fr));
 }
 
 .surface {
   background: var(--color-surface);
   border: var(--border);
   border-radius: var(--radius);
+  transition:
+    background-color var(--motion-duration) var(--motion-ease),
+    border-color var(--motion-duration) var(--motion-ease),
+    box-shadow var(--motion-duration) var(--motion-ease),
+    transform var(--motion-duration) var(--motion-ease);
+}
+
+.surface:has(a:hover),
+.surface:has(a:focus-visible) {
+  border-color: color-mix(in srgb, var(--color-border) 55%, var(--color-link));
+  transform: translateY(var(--motion-hover-lift));
 }
 
 .visually-hidden {
@@ -36,4 +47,85 @@
   position: absolute;
   white-space: nowrap;
   width: 1px;
+}
+
+.page-section {
+  display: grid;
+  gap: var(--page-section-gap);
+  padding-block: var(--page-section-padding-block);
+}
+
+.page-header {
+  --section-accent: var(--color-accent);
+  display: grid;
+  gap: var(--page-header-gap);
+}
+
+.page-header--secondary {
+  --section-accent: var(--color-accent-2);
+}
+
+.page-header p {
+  color: var(--color-muted);
+  margin: 0;
+  max-width: var(--measure-section-copy);
+}
+
+.page-header .eyebrow {
+  color: var(--section-accent);
+  text-transform: uppercase;
+  transition: color var(--motion-duration) var(--motion-ease);
+}
+
+.detail-page {
+  display: grid;
+  gap: var(--detail-page-gap);
+  padding-block: var(--detail-page-padding-block);
+}
+
+.detail-page__header {
+  --section-accent: var(--color-accent);
+  display: grid;
+  gap: var(--detail-header-gap);
+}
+
+.detail-page__header--secondary {
+  --section-accent: var(--color-accent-2);
+}
+
+.detail-page__header p {
+  color: var(--color-muted);
+  margin: 0;
+  max-width: var(--measure-section-copy);
+}
+
+.detail-page__header .eyebrow {
+  color: var(--section-accent);
+  text-transform: uppercase;
+  transition: color var(--motion-duration) var(--motion-ease);
+}
+
+.detail-page__back {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  color: var(--color-link);
+  font-family: var(--font-accent);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+  transition:
+    color var(--motion-duration-fast) var(--motion-ease),
+    opacity var(--motion-duration-fast) var(--motion-ease);
+}
+
+.detail-page__back:focus-visible {
+  clip: auto;
+  clip-path: none;
+  height: auto;
+  overflow: visible;
+  position: static;
+  white-space: normal;
+  width: fit-content;
 }

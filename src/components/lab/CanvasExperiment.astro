@@ -252,6 +252,9 @@ const instanceId = `canvas-experiment-${Math.random().toString(36).slice(2)}`;
     max-width: 100%;
     overflow: hidden;
     position: relative;
+    transition:
+      background-color var(--motion-duration) var(--motion-ease),
+      border-color var(--motion-duration) var(--motion-ease);
   }
 
   .canvas-experiment canvas {
@@ -260,12 +263,12 @@ const instanceId = `canvas-experiment-${Math.random().toString(36).slice(2)}`;
     display: block;
     inline-size: 100%;
     max-width: 100%;
+    transition: opacity var(--motion-duration) var(--motion-ease);
   }
 
   .canvas-experiment--with-image canvas {
     aspect-ratio: auto;
     opacity: 0;
-    transition: opacity 160ms ease;
   }
 
   .canvas-experiment__fallback {
@@ -274,6 +277,7 @@ const instanceId = `canvas-experiment-${Math.random().toString(36).slice(2)}`;
     block-size: auto;
     inline-size: 100%;
     max-inline-size: 100%;
+    transition: opacity var(--motion-duration) var(--motion-ease);
   }
 
   .canvas-experiment[data-ready="true"] canvas {
@@ -291,7 +295,7 @@ const instanceId = `canvas-experiment-${Math.random().toString(36).slice(2)}`;
     border-top: var(--border);
     display: grid;
     gap: var(--space-3);
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 8rem), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--control-min)), 1fr));
     padding: var(--space-4);
   }
 
@@ -301,7 +305,7 @@ const instanceId = `canvas-experiment-${Math.random().toString(36).slice(2)}`;
     color: var(--color-muted);
     display: grid;
     font-family: var(--font-accent);
-    font-size: 0.78rem;
+    font-size: var(--text-xs);
     gap: var(--space-2);
     margin: 0;
     padding: 0;

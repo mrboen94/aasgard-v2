@@ -21,7 +21,7 @@ const { Content } = await render(entry);
 
 <BaseLayout title={entry.data.title} description={entry.data.description} canonical={`/video/${entry.data.slug}/`}>
   <article class="container detail-page" data-pagefind-body>
-    <header class="detail-page__header">
+    <header class="detail-page__header detail-page__header--secondary">
       <p class="eyebrow">Video</p>
       <h1 data-pagefind-meta="title">{entry.data.title}</h1>
       <p>{entry.data.description}</p>
@@ -38,27 +38,3 @@ const { Content } = await render(entry);
     </ArticleProse>
   </article>
 </BaseLayout>
-
-<style>
-  .detail-page {
-    display: grid;
-    gap: var(--space-5);
-    padding-block: var(--space-7);
-  }
-
-  .detail-page__header {
-    display: grid;
-    gap: var(--space-4);
-  }
-
-  .detail-page__header p {
-    color: var(--color-muted);
-    margin: 0;
-    max-width: 44rem;
-  }
-
-  .detail-page__header .eyebrow {
-    color: var(--color-accent-2);
-    text-transform: uppercase;
-  }
-</style>

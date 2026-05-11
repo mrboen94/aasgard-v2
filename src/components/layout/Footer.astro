@@ -2,7 +2,12 @@
 import { site } from "../../data/site";
 ---
 
-<footer class="site-footer">
+<footer
+  class="site-footer"
+  transition:name="site-footer"
+  transition:persist="site-footer"
+  transition:animate="none"
+>
   <div class="container site-footer__inner">
     <p>&copy; {new Date().getFullYear()} {site.author}</p>
     <a href="/rss.xml">RSS</a>
@@ -14,6 +19,9 @@ import { site } from "../../data/site";
     border-top: var(--border);
     color: var(--color-muted);
     margin-top: var(--space-8);
+    transition:
+      border-color var(--motion-duration) var(--motion-ease),
+      color var(--motion-duration) var(--motion-ease);
   }
 
   .site-footer__inner {

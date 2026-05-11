@@ -32,19 +32,25 @@ const { entry } = Astro.props;
 
   .photo-card__media {
     aspect-ratio: 4 / 3;
-    background:
-      linear-gradient(135deg, transparent 0 48%, var(--color-border) 48% 52%, transparent 52%),
-      var(--color-code-bg);
+    background: var(--media-placeholder-background);
+    transition:
+      background-color var(--motion-duration) var(--motion-ease),
+      transform var(--motion-duration) var(--motion-ease);
   }
 
   .photo-card__text {
     display: grid;
-    gap: var(--space-2);
+    gap: var(--card-text-gap);
     padding: var(--space-4);
   }
 
   .photo-card p {
     color: var(--color-muted);
     margin: 0;
+  }
+
+  .photo-card:has(a:hover) .photo-card__media,
+  .photo-card:has(a:focus-visible) .photo-card__media {
+    transform: scale(1.015);
   }
 </style>

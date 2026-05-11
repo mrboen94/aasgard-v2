@@ -90,13 +90,17 @@ const groupId = `code-tabs-${Math.random().toString(36).slice(2)}`;
     appearance: none;
     background: transparent;
     border: 0;
-    border-top: 0.15rem solid transparent !important;
+    border-top: var(--border-tab-width) solid transparent !important;
     color: var(--color-muted);
     cursor: pointer;
     flex: 0 0 auto;
     font: inherit;
     font-family: var(--font-accent);
     padding: var(--space-3) var(--space-4);
+    transition:
+      background-color var(--motion-duration-fast) var(--motion-ease),
+      border-color var(--motion-duration-fast) var(--motion-ease),
+      color var(--motion-duration-fast) var(--motion-ease);
   }
 
   .code-tabs__tab[aria-selected="true"] {

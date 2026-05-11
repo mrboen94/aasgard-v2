@@ -11,7 +11,12 @@ const links = [
 const pathname = Astro.url.pathname;
 ---
 
-<header class="site-header">
+<header
+  class="site-header"
+  transition:name="site-header"
+  transition:persist="site-header"
+  transition:animate="none"
+>
   <div class="container site-header__inner">
     <a class="site-header__brand" href="/">Aasgard</a>
     <nav aria-label="Primary navigation">
@@ -31,6 +36,9 @@ const pathname = Astro.url.pathname;
 <style>
   .site-header {
     border-bottom: var(--border);
+    transition:
+      background-color var(--motion-duration) var(--motion-ease),
+      border-color var(--motion-duration) var(--motion-ease);
   }
 
   .site-header__inner {
@@ -46,6 +54,14 @@ const pathname = Astro.url.pathname;
     font-family: var(--font-accent);
     font-weight: 700;
     text-decoration: none;
+    transition:
+      color var(--motion-duration-fast) var(--motion-ease),
+      opacity var(--motion-duration-fast) var(--motion-ease);
+  }
+
+  .site-header__brand:hover,
+  .site-header__brand:focus-visible {
+    opacity: 0.72;
   }
 
   .site-header__nav {
@@ -61,8 +77,11 @@ const pathname = Astro.url.pathname;
   .site-header__nav a {
     color: var(--color-muted);
     font-family: var(--font-accent);
-    font-size: 0.875rem;
+    font-size: var(--text-nav);
     text-decoration: none;
+    transition:
+      color var(--motion-duration-fast) var(--motion-ease),
+      text-decoration-color var(--motion-duration-fast) var(--motion-ease);
   }
 
   .site-header__nav a:hover,

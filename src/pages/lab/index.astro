@@ -8,7 +8,7 @@ const experiments = await getExperiments();
 
 <BaseLayout title="Lab" description="Experiments, games, and prototypes.">
   <section class="container page-section">
-    <header class="page-header">
+    <header class="page-header page-header--secondary">
       <p class="eyebrow">Experiments</p>
       <h1>Lab</h1>
       <p>Lab entries show prototypes directly. Articles can explain them later.</p>
@@ -18,27 +18,3 @@ const experiments = await getExperiments();
     </div>
   </section>
 </BaseLayout>
-
-<style>
-  .page-section {
-    display: grid;
-    gap: var(--space-6);
-    padding-block: var(--space-7);
-  }
-
-  .page-header {
-    display: grid;
-    gap: var(--space-3);
-  }
-
-  .page-header p {
-    color: var(--color-muted);
-    margin: 0;
-    max-width: 44rem;
-  }
-
-  .page-header .eyebrow {
-    color: var(--color-accent-2);
-    text-transform: uppercase;
-  }
-</style>

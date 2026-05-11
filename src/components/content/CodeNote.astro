@@ -18,6 +18,9 @@ const { title = "Code note" } = Astro.props;
     font-family: var(--font-code);
     margin-block: var(--space-4);
     padding: var(--space-4);
+    transition:
+      background-color var(--motion-duration) var(--motion-ease),
+      color var(--motion-duration) var(--motion-ease);
   }
 
   .code-note p:first-child {

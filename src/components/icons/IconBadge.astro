@@ -21,12 +21,17 @@ const { name, label } = Astro.props;
     border: var(--border);
     border-radius: var(--radius);
     display: inline-grid;
-    inline-size: 2.5rem;
+    inline-size: var(--icon-badge-size);
     justify-items: center;
+    transition:
+      border-color var(--motion-duration-fast) var(--motion-ease),
+      color var(--motion-duration-fast) var(--motion-ease),
+      transform var(--motion-duration-fast) var(--motion-ease);
   }
 
   .icon-badge :global(svg) {
-    block-size: 1.4rem;
-    inline-size: 1.4rem;
+    block-size: var(--icon-badge-glyph-size);
+    inline-size: var(--icon-badge-glyph-size);
+    transition: transform var(--motion-duration-fast) var(--motion-ease);
   }
 </style>

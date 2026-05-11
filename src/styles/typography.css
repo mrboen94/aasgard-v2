@@ -18,11 +18,11 @@ h1 {
 }
 
 h2 {
-  font-size: 1.75rem;
+  font-size: var(--text-heading-2);
 }
 
 h3 {
-  font-size: 1.25rem;
+  font-size: var(--text-heading-3);
 }
 
 p,
@@ -37,6 +37,14 @@ a {
   color: var(--color-link);
   text-decoration-thickness: 0.08em;
   text-underline-offset: 0.18em;
+  transition:
+    color var(--motion-duration-fast) var(--motion-ease),
+    text-decoration-color var(--motion-duration-fast) var(--motion-ease);
+}
+
+a:hover,
+a:focus-visible {
+  text-decoration-color: currentColor;
 }
 
 code,
@@ -49,12 +57,15 @@ samp {
 
 :not(pre) > code {
   background: var(--color-code-bg);
-  border-radius: 0.25rem;
+  border-radius: var(--radius-small);
   padding: 0.08rem 0.28rem;
+  transition:
+    background-color var(--motion-duration) var(--motion-ease),
+    color var(--motion-duration) var(--motion-ease);
 }
 
 blockquote {
-  border-left: 0.2rem solid var(--color-accent);
+  border-left: var(--border-emphasis-width) solid var(--color-accent);
   color: var(--color-muted);
   padding-left: var(--space-4);
 }

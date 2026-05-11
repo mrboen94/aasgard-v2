@@ -57,11 +57,11 @@ const tocHeadings = headings.filter((heading) => heading.depth === 2 || heading.
     align-items: start;
     display: grid;
     gap: var(--space-6);
-    grid-template-columns: minmax(12rem, 16rem) minmax(0, 1fr);
+    grid-template-columns: minmax(var(--technical-aside-min), var(--technical-aside-max)) minmax(0, 1fr);
   }
 
   .technical-layout__aside {
-    border-left: 0.2rem solid var(--color-accent-2);
+    border-left: var(--border-emphasis-width) solid var(--color-accent-2);
     color: var(--color-muted);
     display: grid;
     gap: var(--space-4);

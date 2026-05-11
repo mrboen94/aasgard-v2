@@ -35,7 +35,7 @@ const logo = entry.data.logo ?? "custom/placeholder";
     --project-accent: var(--color-link);
     display: grid;
     gap: var(--space-5);
-    padding: var(--space-5);
+    padding: var(--card-padding);
   }
 
   .project-card--featured {
@@ -58,18 +58,28 @@ const logo = entry.data.logo ?? "custom/placeholder";
     border-radius: var(--radius);
     color: var(--project-accent);
     display: grid;
-    inline-size: 3rem;
+    inline-size: var(--project-logo-size);
     justify-items: center;
+    transition:
+      background-color var(--motion-duration) var(--motion-ease),
+      color var(--motion-duration-fast) var(--motion-ease),
+      transform var(--motion-duration) var(--motion-ease);
   }
 
   .project-card__logo :global(svg) {
-    block-size: 1.75rem;
-    inline-size: 1.75rem;
+    block-size: var(--project-logo-glyph-size);
+    inline-size: var(--project-logo-glyph-size);
+    transition: transform var(--motion-duration) var(--motion-ease);
+  }
+
+  .project-card:has(a:hover) .project-card__logo,
+  .project-card:has(a:focus-visible) .project-card__logo {
+    transform: scale(1.04);
   }
 
   .project-card__flag {
     color: var(--color-muted);
-    font-size: 0.78rem;
+    font-size: var(--text-xs);
   }
 
   .project-card__body {

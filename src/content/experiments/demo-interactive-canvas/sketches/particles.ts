@@ -44,9 +44,10 @@ export function mount({
   function draw() {
     const width = canvas.clientWidth;
     const height = canvas.clientHeight;
+    const styles = getComputedStyle(canvas);
 
     ctx.clearRect(0, 0, width, height);
-    ctx.fillStyle = "#176b87";
+    ctx.fillStyle = styles.getPropertyValue("--color-link").trim();
 
     for (const particle of particles) {
       particle.x += particle.vx;

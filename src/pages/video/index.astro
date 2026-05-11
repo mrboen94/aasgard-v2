@@ -8,7 +8,7 @@ const entries = await getVideoProjects();
 
 <BaseLayout title="Video" description="Video projects and embeds.">
   <section class="container page-section">
-    <header class="page-header">
+    <header class="page-header page-header--secondary">
       <p class="eyebrow">Motion</p>
       <h1>Video</h1>
       <p>Index pages stay lightweight. Detail pages can opt into provider links or embeds later.</p>
@@ -18,27 +18,3 @@ const entries = await getVideoProjects();
     </div>
   </section>
 </BaseLayout>
-
-<style>
-  .page-section {
-    display: grid;
-    gap: var(--space-6);
-    padding-block: var(--space-7);
-  }
-
-  .page-header {
-    display: grid;
-    gap: var(--space-3);
-  }
-
-  .page-header p {
-    color: var(--color-muted);
-    margin: 0;
-    max-width: 44rem;
-  }
-
-  .page-header .eyebrow {
-    color: var(--color-accent-2);
-    text-transform: uppercase;
-  }
-</style>

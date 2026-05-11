@@ -31,10 +31,11 @@ export function mount({
     const height = canvas.clientHeight;
     const centerX = width / 2;
     const centerY = height / 2;
+    const styles = getComputedStyle(canvas);
 
     time += 0.015;
     ctx.clearRect(0, 0, width, height);
-    ctx.strokeStyle = "#d75f3f";
+    ctx.strokeStyle = styles.getPropertyValue("--color-accent").trim();
     ctx.lineWidth = 3;
 
     for (let ring = 0; ring < 6; ring += 1) {

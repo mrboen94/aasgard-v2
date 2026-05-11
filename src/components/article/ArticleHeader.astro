@@ -30,16 +30,16 @@ const { entry, eyebrow = "Article" } = Astro.props;
   }
 
   .article-header__eyebrow {
-    color: var(--color-accent);
-    font-size: 0.8rem;
+    color: var(--section-accent, var(--color-accent));
+    font-size: var(--text-eyebrow);
     margin: 0;
     text-transform: uppercase;
   }
 
   .article-header__description {
     color: var(--color-muted);
-    font-size: 1.15rem;
+    font-size: var(--text-lead);
     margin: 0;
-    max-width: 44rem;
+    max-width: var(--measure-section-copy);
   }
 </style>

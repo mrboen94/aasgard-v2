@@ -9,6 +9,10 @@
     position: fixed;
     top: var(--space-4);
     transform: translateY(-150%);
+    transition:
+      background-color var(--motion-duration-fast) var(--motion-ease),
+      color var(--motion-duration-fast) var(--motion-ease),
+      transform var(--motion-duration) var(--motion-ease-emphasized);
     z-index: 10;
   }
 

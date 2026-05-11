@@ -15,11 +15,12 @@
 
   .photo-grid__placeholder {
     aspect-ratio: 4 / 5;
-    background:
-      linear-gradient(135deg, transparent 0 48%, var(--color-border) 48% 52%, transparent 52%),
-      var(--color-code-bg);
+    background: var(--media-placeholder-background);
     border: var(--border);
     border-radius: var(--radius);
+    transition:
+      background-color var(--motion-duration) var(--motion-ease),
+      border-color var(--motion-duration) var(--motion-ease);
   }
 
   @media (max-width: 44rem) {

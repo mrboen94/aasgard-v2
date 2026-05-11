@@ -18,6 +18,9 @@ const { title } = Astro.props;
     margin-block: var(--space-6);
     overflow: hidden;
     padding: var(--space-4);
+    transition:
+      background-color var(--motion-duration) var(--motion-ease),
+      border-color var(--motion-duration) var(--motion-ease);
   }
 
   .demo-frame h2 {

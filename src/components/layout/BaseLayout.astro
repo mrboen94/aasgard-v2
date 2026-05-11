@@ -1,4 +1,6 @@
 ---
+import type { TransitionDirectionalAnimations } from "astro";
+import { ClientRouter } from "astro:transitions";
 import "../../styles/global.css";
 import Footer from "./Footer.astro";
 import Head from "./Head.astro";
@@ -12,19 +14,105 @@ interface Props {
 }
 
 const { title, description, canonical } = Astro.props;
+
+const pageTransition = {
+  forwards: {
+    old: {
+      name: "aasgard-slide-out-forward",
+      duration: "var(--motion-duration-page)",
+      easing: "var(--motion-ease-emphasized)",
+      fillMode: "both"
+    },
+    new: {
+      name: "aasgard-slide-in-forward",
+      duration: "var(--motion-duration-page)",
+      easing: "var(--motion-ease-emphasized)",
+      fillMode: "both"
+    }
+  },
+  backwards: {
+    old: {
+      name: "aasgard-slide-out-back",
+      duration: "var(--motion-duration-page)",
+      easing: "var(--motion-ease-emphasized)",
+      fillMode: "both"
+    },
+    new: {
+      name: "aasgard-slide-in-back",
+      duration: "var(--motion-duration-page)",
+      easing: "var(--motion-ease-emphasized)",
+      fillMode: "both"
+    }
+  }
+} satisfies TransitionDirectionalAnimations;
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
     <Head title={title} description={description} canonical={canonical} />
+    <ClientRouter fallback="swap" />
   </head>
   <body>
     <SkipLink />
     <Header />
-    <main id="main-content">
+    <main id="main-content" transition:name="main-content" transition:animate={pageTransition}>
       <slot />
     </main>
     <Footer />
+    <script>
+      const routeSections = ["/", "/articles/", "/lab/", "/work/", "/photography/", "/video/", "/search/"];
+
+      function updateActiveNavigation(pathname = window.location.pathname) {
+        document.querySelectorAll<HTMLAnchorElement>(".site-header__nav a").forEach((link) => {
+          const href = link.getAttribute("href");
+          const isActive = href === "/" ? pathname === href : Boolean(href && pathname.startsWith(href));
+
+          if (isActive) {
+            link.setAttribute("aria-current", "page");
+          } else {
+            link.removeAttribute("aria-current");
+          }
+        });
+      }
+
+      function routeIndex(pathname: string) {
+        if (pathname === "/") {
+          return 0;
+        }
+
+        const index = routeSections.findIndex((section) => section !== "/" && pathname.startsWith(section));
+        return index === -1 ? 0 : index;
+      }
+
+      function syncNavigationForTransition(event: Event) {
+        const transition = event as Event & {
+          direction: string;
+          from: URL;
+          navigationType: string;
+          to: URL;
+        };
+        const fromIndex = routeIndex(transition.from.pathname);
+        const toIndex = routeIndex(transition.to.pathname);
+
+        updateActiveNavigation(transition.to.pathname);
+
+        if (toIndex > fromIndex) {
+          transition.direction = "forward";
+        } else if (toIndex < fromIndex) {
+          transition.direction = "back";
+        } else if (transition.navigationType !== "traverse") {
+          transition.direction = "forward";
+        }
+      }
+
+      updateActiveNavigation();
+
+      if (document.documentElement.dataset.navigationMounted !== "true") {
+        document.documentElement.dataset.navigationMounted = "true";
+        document.addEventListener("astro:page-load", () => updateActiveNavigation());
+        document.addEventListener("astro:before-preparation", syncNavigationForTransition);
+      }
+    </script>
   </body>
 </html>

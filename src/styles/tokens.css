@@ -14,6 +14,7 @@
   --color-accent: #d75f3f;
   --color-accent-2: #3a7d44;
   --color-code-bg: #efebe2;
+  --color-selection-text: #fff;
 
   --space-1: 0.25rem;
   --space-2: 0.5rem;
@@ -27,8 +28,62 @@
   --container: 72rem;
   --prose: 44rem;
   --prose-wide: 58rem;
+  --measure-section-copy: var(--prose);
+  --measure-section-wide: 48rem;
+  --grid-min: 18rem;
+  --breakpoint-prose: 44rem;
+  --breakpoint-layout: 56rem;
+
   --radius: 0.5rem;
+  --radius-small: 0.25rem;
+  --radius-pill: 999px;
+
   --border: 1px solid var(--color-border);
+  --border-emphasis-width: 0.2rem;
+  --border-wide-width: 0.25rem;
+  --border-tab-width: 0.15rem;
+
+  --text-xs: 0.78rem;
+  --text-sm: 0.85rem;
+  --text-nav: 0.875rem;
+  --text-caption: 0.95rem;
+  --text-eyebrow: 0.8rem;
+  --text-heading-2: 1.75rem;
+  --text-heading-3: 1.25rem;
+  --text-lead: 1.15rem;
+  --text-home-lead: 1.2rem;
+
+  --page-section-gap: var(--space-6);
+  --page-section-padding-block: var(--space-7);
+  --page-header-gap: var(--space-3);
+  --detail-page-gap: var(--space-5);
+  --detail-page-padding-block: var(--space-7);
+  --detail-header-gap: var(--space-4);
+
+  --card-padding: var(--space-5);
+  --card-gap: var(--space-4);
+  --card-text-gap: var(--space-2);
+  --media-placeholder-background:
+    linear-gradient(135deg, transparent 0 48%, var(--color-border) 48% 52%, transparent 52%),
+    var(--color-code-bg);
+
+  --control-min: 8rem;
+  --icon-badge-size: 2.5rem;
+  --icon-badge-glyph-size: 1.4rem;
+  --tech-icon-size: 1.15rem;
+  --tech-icon-min-height: 1.75rem;
+  --project-logo-size: 3rem;
+  --project-logo-glyph-size: 1.75rem;
+  --technical-aside-min: 12rem;
+  --technical-aside-max: 16rem;
+
+  --motion-duration-fast: 120ms;
+  --motion-duration: 180ms;
+  --motion-duration-page: 220ms;
+  --motion-ease: cubic-bezier(0.2, 0, 0, 1);
+  --motion-ease-emphasized: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-hover-lift: -0.125rem;
+  --shadow-focus: 0 0 0 0.18rem color-mix(in srgb, var(--color-link) 28%, transparent);
 }
 
 @media (prefers-color-scheme: dark) {

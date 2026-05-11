@@ -39,12 +39,12 @@ const { eyebrow, title, description, href, linkLabel = "View all" } = Astro.prop
   .section__header p {
     color: var(--color-muted);
     margin-block: var(--space-2) 0;
-    max-width: 48rem;
+    max-width: var(--measure-section-wide);
   }
 
   .section__eyebrow {
     color: var(--color-accent);
-    font-size: 0.8rem;
+    font-size: var(--text-eyebrow);
     margin-block: 0 var(--space-2);
     text-transform: uppercase;
   }

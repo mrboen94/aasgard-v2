@@ -22,13 +22,17 @@ const shouldShowLabel = showLabel || (technology.unknown && import.meta.env.DEV)
     align-items: center;
     display: inline-flex;
     gap: var(--space-2);
-    min-height: 1.75rem;
+    min-height: var(--tech-icon-min-height);
+    transition:
+      color var(--motion-duration-fast) var(--motion-ease),
+      opacity var(--motion-duration-fast) var(--motion-ease);
   }
 
   .tech-icon :global(svg) {
-    block-size: 1.15rem;
+    block-size: var(--tech-icon-size);
     flex: 0 0 auto;
-    inline-size: 1.15rem;
+    inline-size: var(--tech-icon-size);
+    transition: transform var(--motion-duration-fast) var(--motion-ease);
   }
 
   .tech-icon--unknown {
@@ -36,6 +40,6 @@ const shouldShowLabel = showLabel || (technology.unknown && import.meta.env.DEV)
   }
 
   .tech-label {
-    font-size: 0.78rem;
+    font-size: var(--text-xs);
   }
 </style>
