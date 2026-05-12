@@ -22,6 +22,7 @@ const settings = [
               contain: false,
               density: 48,
               force: 170,
+              friction: 0.12,
               gravity: false,
               mode: "repel",
               particleGap: 0,
@@ -39,6 +40,7 @@ const settings = [
               cohesion: 0.55,
               density: 64,
               force: 130,
+              friction: 0.06,
               mode: "orbit",
               particleGap: 0,
               particleSize: 1.5,
@@ -56,6 +58,7 @@ const settings = [
               contain: true,
               density: 24,
               force: 220,
+              friction: 0.03,
               mode: "wind",
               particleGap: 8,
               particleSize: 3,
@@ -184,6 +187,16 @@ const settings = [
         step: 0.05,
         type: "range",
         value: 0.8
+      },
+      {
+        id: "friction",
+        label: "Friction",
+        max: 0.3,
+        min: 0,
+        showValue: true,
+        step: 0.01,
+        type: "range",
+        value: 0.12
       }
     ],
     id: "particles",

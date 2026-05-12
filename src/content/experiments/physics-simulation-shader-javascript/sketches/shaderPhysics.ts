@@ -12,6 +12,7 @@ type ShaderOptions = {
   contain: boolean;
   density: number;
   force: number;
+  friction: number;
   gravity: boolean;
   sizeJitter: number;
   particleGap: number;
@@ -60,7 +61,7 @@ type GpuResources = {
 };
 
 const PARTICLE_STRIDE = 12;
-const UNIFORM_FLOATS = 24;
+const UNIFORM_FLOATS = 28;
 const WORKGROUP_SIZE = 64;
 const MAX_CELL_PARTICLES = 96;
 const GPU_BUFFER_USAGE = {
@@ -82,6 +83,7 @@ struct Uniforms {
   motion: vec4f,
   physics: vec4f,
   grid: vec4f,
+  material: vec4f,
 }
 
 @group(0) @binding(0) var<storage, read_write> gridCounters: array<atomic<u32>>;
@@ -113,6 +115,7 @@ struct Uniforms {
   motion: vec4f,
   physics: vec4f,
   grid: vec4f,
+  material: vec4f,
 }
 
 @group(0) @binding(0) var<storage, read> particles: array<Particle>;
@@ -159,6 +162,7 @@ struct Uniforms {
   motion: vec4f,
   physics: vec4f,
   grid: vec4f,
+  material: vec4f,
 }
 
 @group(0) @binding(0) var<storage, read> particlesIn: array<Particle>;
@@ -229,6 +233,7 @@ fn simulate(@builtin(global_invocation_id) globalId: vec3u) {
   let force = max(1.0, uniforms.pointer.z);
   let cohesion = uniforms.motion.z;
   let turbulence = uniforms.motion.w;
+  let friction = clamp(uniforms.material.x, 0.0, 0.3);
   let gravityEnabled = uniforms.physics.x > 0.5;
   let collisionsEnabled = uniforms.physics.y > 0.5;
   let mode = uniforms.grid.x;
@@ -257,12 +262,12 @@ fn simulate(@builtin(global_invocation_id) globalId: vec3u) {
   let waveX = sin(time * 1.4 + seed * 0.17 + position.y * 0.018);
   let waveY = cos(time * 1.2 + seed * 0.11 + position.x * 0.014);
   var originStrength = cohesion * 0.035;
-  var damping = 0.88;
+  var damping = 1.0 - friction;
   var gravity = 0.0;
 
   if (gravityEnabled) {
     originStrength = 0.0;
-    damping = 0.992;
+    damping = max(damping, 0.992);
     gravity = 0.18;
   }
 
@@ -382,6 +387,7 @@ struct Uniforms {
   motion: vec4f,
   physics: vec4f,
   grid: vec4f,
+  material: vec4f,
 }
 
 struct VertexOut {
@@ -470,6 +476,7 @@ struct Uniforms {
   motion: vec4f,
   physics: vec4f,
   grid: vec4f,
+  material: vec4f,
 }
 
 struct VertexOut {
@@ -604,6 +611,7 @@ function settingsToOptions(settings: CanvasSettings): ShaderOptions {
     contain: readBoolean(settings, "contain", false),
     density: readNumber(settings, "density", 9),
     force: readNumber(settings, "force", 170),
+    friction: readNumber(settings, "friction", 0.12),
     sizeJitter: readNumber(settings, "sizeJitter", 0.05),
     particleGap: readNumber(settings, "particleGap", 0),
     viewportPadding: readNumber(settings, "viewportPadding", 0),
@@ -1028,6 +1036,11 @@ export function mount({
     uniformData[21] = resources.particleBuffers.count;
     uniformData[22] = resources.particleBuffers.columns;
     uniformData[23] = resources.particleBuffers.rows;
+    // material vec4 friction, reserved, reserved, reserved
+    uniformData[24] = options.friction;
+    uniformData[25] = 0;
+    uniformData[26] = 0;
+    uniformData[27] = 0;
 
     resources.device.queue.writeBuffer(resources.uniformBuffer, 0, uniformData);
   }
