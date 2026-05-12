@@ -22,14 +22,14 @@ const { entry } = Astro.props;
 <style>
   .experiment-card {
     display: grid;
-    gap: var(--card-gap);
-    padding: var(--card-padding);
+    gap: var(--experiment-card-gap);
+    padding: var(--experiment-card-padding);
   }
 
   .experiment-card a {
     color: inherit;
     display: grid;
-    gap: var(--card-text-gap);
+    gap: var(--experiment-card-text-gap);
     text-decoration: none;
   }
 
@@ -39,7 +39,7 @@ const { entry } = Astro.props;
   }
 
   .experiment-card .eyebrow {
-    color: var(--color-accent-2);
+    color: var(--experiment-card-status-color);
     font-size: var(--text-xs);
     text-transform: uppercase;
   }
