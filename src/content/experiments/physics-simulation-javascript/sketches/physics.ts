@@ -3,6 +3,12 @@ import type {
   CanvasExperimentContext,
   CanvasSettings
 } from "../../../../components/lab/canvasExperiment";
+import { observeResize } from "../../../../lib/canvas/resize";
+import {
+  readBooleanSetting,
+  readNumberSetting
+} from "../../../../lib/canvasExperiment/settings";
+import { loadImage } from "../../../../lib/dom/loadImage";
 
 type Rect = {
   height: number;
@@ -275,29 +281,19 @@ class Effect {
   }
 }
 
-function readNumber(settings: CanvasSettings, key: string, fallback: number) {
-  const value = settings[key];
-  return typeof value === "number" ? value : fallback;
-}
-
-function readBoolean(settings: CanvasSettings, key: string, fallback: boolean) {
-  const value = settings[key];
-  return typeof value === "boolean" ? value : fallback;
-}
-
 function settingsToOptions(settings: CanvasSettings): PhysicsOptions {
   return {
     bounce: 0.45,
-    collisions: readBoolean(settings, "collisions", false),
-    ease: readNumber(settings, "ease", 0.01),
+    collisions: readBooleanSetting(settings, "collisions", false),
+    ease: readNumberSetting(settings, "ease", 0.01),
     floorFriction: 0.985,
-    friction: readNumber(settings, "friction", 0.86),
-    gap: Math.max(2, 12 - readNumber(settings, "resolution", 9)),
-    gravity: readBoolean(settings, "gravity", false),
+    friction: readNumberSetting(settings, "friction", 0.86),
+    gap: Math.max(2, 12 - readNumberSetting(settings, "resolution", 9)),
+    gravity: readBooleanSetting(settings, "gravity", false),
     gravityStrength: 0.16,
-    mouseRadius: readNumber(settings, "mouseRadius", 3000),
+    mouseRadius: readNumberSetting(settings, "mouseRadius", 3000),
     particleBounce: 0.18,
-    size: readNumber(settings, "size", 3)
+    size: readNumberSetting(settings, "size", 3)
   };
 }
 
@@ -309,15 +305,15 @@ export function mount({
   setReady,
   settings
 }: CanvasExperimentContext): CanvasExperimentCleanup {
-  const image = new Image();
+  let image: HTMLImageElement | undefined;
   let effect: Effect | undefined;
   let frame = 0;
-  let observer: ResizeObserver | undefined;
+  let disconnectResize: CanvasExperimentCleanup | undefined;
   let options = settingsToOptions(settings);
   let cancelled = false;
 
   function sizeCanvas() {
-    if (!effect) return;
+    if (!effect || !image) return;
 
     const width = Math.max(280, Math.floor(root.clientWidth));
     const margin =
@@ -378,23 +374,22 @@ export function mount({
   canvas.addEventListener("pointermove", handlePointerMove);
   canvas.addEventListener("pointerleave", handlePointerLeave);
 
-  image.crossOrigin = "anonymous";
-  image.onerror = () => setReady(false);
-  image.onload = () => {
-    if (cancelled) return;
+  loadImage(imageSrc)
+    .then((loadedImage) => {
+      if (cancelled) return;
 
-    effect = new Effect(canvas, image, options);
-    sizeCanvas();
-    observer = new ResizeObserver(sizeCanvas);
-    observer.observe(root);
-    animate();
-  };
-  image.src = imageSrc ?? "";
+      image = loadedImage;
+      effect = new Effect(canvas, loadedImage, options);
+      sizeCanvas();
+      disconnectResize = observeResize(root, sizeCanvas);
+      animate();
+    })
+    .catch(() => setReady(false));
 
   return () => {
     cancelled = true;
     window.cancelAnimationFrame(frame);
-    observer?.disconnect();
+    disconnectResize?.();
     unsubscribeSettings();
     canvas.removeEventListener("pointermove", handlePointerMove);
     canvas.removeEventListener("pointerleave", handlePointerLeave);

@@ -2,6 +2,10 @@ import type {
   CanvasExperimentCleanup,
   CanvasExperimentContext
 } from "../../../../components/lab/canvasExperiment";
+import {
+  observeResize,
+  resizeCanvasToDisplaySize
+} from "../../../../lib/canvas/resize";
 
 type Particle = {
   x: number;
@@ -34,11 +38,7 @@ export function mount({
   let frame = 0;
 
   function resize() {
-    const rect = canvas.getBoundingClientRect();
-    const scale = window.devicePixelRatio || 1;
-    canvas.width = Math.max(1, Math.floor(rect.width * scale));
-    canvas.height = Math.max(1, Math.floor(rect.height * scale));
-    ctx.setTransform(scale, 0, 0, scale, 0, 0);
+    resizeCanvasToDisplaySize(canvas, ctx);
   }
 
   function draw() {
@@ -72,11 +72,10 @@ export function mount({
   resize();
   setReady(true);
   draw();
-  const observer = new ResizeObserver(resize);
-  observer.observe(canvas);
+  const disconnectResize = observeResize(canvas, resize);
 
   return () => {
     window.cancelAnimationFrame(frame);
-    observer.disconnect();
+    disconnectResize();
   };
 }
