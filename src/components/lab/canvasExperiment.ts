@@ -3,6 +3,8 @@ export type CanvasSettingValue = boolean | number | string;
 type BaseCanvasControl = {
   id: string;
   label: string;
+  groupId?: string;
+  groupLabel?: string;
 };
 
 export type CanvasRangeControl = BaseCanvasControl & {

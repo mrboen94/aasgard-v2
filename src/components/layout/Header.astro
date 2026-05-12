@@ -1,12 +1,5 @@
 ---
-const links = [
-  { href: "/articles/", label: "Articles" },
-  { href: "/lab/", label: "Lab" },
-  { href: "/work/", label: "Work" },
-  { href: "/photography/", label: "Photography" },
-  { href: "/video/", label: "Video" },
-  { href: "/search/", label: "Search" }
-];
+import { NAV_LINKS, isLinkActive } from "../../lib/navigation/links";
 
 const pathname = Astro.url.pathname;
 ---
@@ -15,20 +8,16 @@ const pathname = Astro.url.pathname;
   class="site-header"
   transition:name="site-header"
   transition:persist="site-header"
-  transition:animate="none"
 >
   <div class="container site-header__inner">
     <a class="site-header__brand" href="/">Aasgard</a>
-    <nav aria-label="Primary navigation">
-      <ul class="site-header__nav">
-        {links.map((link) => {
-          const isActive = pathname === link.href || pathname.startsWith(link.href);
-
-          return (
-            <li><a href={link.href} aria-current={isActive ? "page" : undefined}>{link.label}</a></li>
-          );
-        })}
+    <nav class="site-header__nav" aria-label="Primary navigation">
+      <ul class="site-header__nav-list">
+        {NAV_LINKS.map((link) => (
+          <li><a href={link.href} aria-current={isLinkActive(link.href, pathname) ? "page" : undefined}>{link.label}</a></li>
+        ))}
       </ul>
+      <span class="site-header__nav-indicator" aria-hidden="true"></span>
     </nav>
   </div>
 </header>
@@ -65,6 +54,10 @@ const pathname = Astro.url.pathname;
   }
 
   .site-header__nav {
+    position: relative;
+  }
+
+  .site-header__nav-list {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-3) var(--space-4);
@@ -79,9 +72,7 @@ const pathname = Astro.url.pathname;
     font-family: var(--font-accent);
     font-size: var(--text-nav);
     text-decoration: none;
-    transition:
-      color var(--motion-duration-fast) var(--motion-ease),
-      text-decoration-color var(--motion-duration-fast) var(--motion-ease);
+    transition: color var(--motion-duration-page) var(--motion-ease-emphasized);
   }
 
   .site-header__nav a:hover,
@@ -93,10 +84,28 @@ const pathname = Astro.url.pathname;
     color: var(--color-accent-2);
   }
 
-  .site-header__nav a[aria-current="page"] {
-    text-decoration: underline;
-    text-decoration-color: var(--color-accent-2);
-    text-decoration-thickness: 0.12em;
-    text-underline-offset: 0.3em;
+  .site-header__nav-indicator {
+    background: var(--color-accent-2);
+    height: 0.12em;
+    left: 0;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    transform: translate(var(--nav-indicator-x, 0), var(--nav-indicator-y, 0));
+    transition: none;
+    width: var(--nav-indicator-w, 0);
+  }
+
+  .site-header__nav[data-ready="true"] .site-header__nav-indicator {
+    transition:
+      background-color var(--motion-duration) var(--motion-ease),
+      opacity var(--motion-duration) var(--motion-ease),
+      transform var(--motion-duration-page) var(--motion-ease-emphasized),
+      width var(--motion-duration-page) var(--motion-ease-emphasized);
+  }
+
+  .site-header__nav[data-active="true"] .site-header__nav-indicator {
+    opacity: 1;
   }
 </style>

@@ -1,5 +1,4 @@
 ---
-import type { TransitionDirectionalAnimations } from "astro";
 import { ClientRouter } from "astro:transitions";
 import "../../styles/global.css";
 import Footer from "./Footer.astro";
@@ -14,37 +13,6 @@ interface Props {
 }
 
 const { title, description, canonical } = Astro.props;
-
-const pageTransition = {
-  forwards: {
-    old: {
-      name: "aasgard-slide-out-forward",
-      duration: "var(--motion-duration-page)",
-      easing: "var(--motion-ease-emphasized)",
-      fillMode: "both"
-    },
-    new: {
-      name: "aasgard-slide-in-forward",
-      duration: "var(--motion-duration-page)",
-      easing: "var(--motion-ease-emphasized)",
-      fillMode: "both"
-    }
-  },
-  backwards: {
-    old: {
-      name: "aasgard-slide-out-back",
-      duration: "var(--motion-duration-page)",
-      easing: "var(--motion-ease-emphasized)",
-      fillMode: "both"
-    },
-    new: {
-      name: "aasgard-slide-in-back",
-      duration: "var(--motion-duration-page)",
-      easing: "var(--motion-ease-emphasized)",
-      fillMode: "both"
-    }
-  }
-} satisfies TransitionDirectionalAnimations;
 ---
 
 <!doctype html>
@@ -56,33 +24,67 @@ const pageTransition = {
   <body>
     <SkipLink />
     <Header />
-    <main id="main-content" transition:name="main-content" transition:animate={pageTransition}>
+    <main id="main-content" transition:name="main-content">
       <slot />
     </main>
     <Footer />
     <script>
-      const routeSections = ["/", "/articles/", "/lab/", "/work/", "/photography/", "/video/", "/search/"];
+      import { isLinkActive, routeSectionIndex } from "../../lib/navigation/links";
 
       function updateActiveNavigation(pathname = window.location.pathname) {
         document.querySelectorAll<HTMLAnchorElement>(".site-header__nav a").forEach((link) => {
           const href = link.getAttribute("href");
-          const isActive = href === "/" ? pathname === href : Boolean(href && pathname.startsWith(href));
-
-          if (isActive) {
+          if (href && isLinkActive(href, pathname)) {
             link.setAttribute("aria-current", "page");
           } else {
             link.removeAttribute("aria-current");
           }
         });
+
+        syncNavIndicator();
       }
 
-      function routeIndex(pathname: string) {
-        if (pathname === "/") {
-          return 0;
+      function syncNavIndicator() {
+        const nav = document.querySelector<HTMLElement>(".site-header__nav");
+        if (!nav) return;
+
+        const active = nav.querySelector<HTMLAnchorElement>('a[aria-current="page"]');
+        if (!active) {
+          nav.dataset.active = "false";
+          return;
         }
 
-        const index = routeSections.findIndex((section) => section !== "/" && pathname.startsWith(section));
-        return index === -1 ? 0 : index;
+        const linkRect = active.getBoundingClientRect();
+        const navRect = nav.getBoundingClientRect();
+        nav.style.setProperty("--nav-indicator-x", `${linkRect.left - navRect.left}px`);
+        nav.style.setProperty("--nav-indicator-y", `${linkRect.bottom - navRect.top}px`);
+        nav.style.setProperty("--nav-indicator-w", `${linkRect.width}px`);
+        nav.dataset.active = "true";
+
+        if (nav.dataset.ready !== "true") {
+          requestAnimationFrame(() => {
+            nav.dataset.ready = "true";
+          });
+        }
+      }
+
+      function resolveTransitionDirection(fromPath: string, toPath: string) {
+        const fromIndex = routeSectionIndex(fromPath);
+        const toIndex = routeSectionIndex(toPath);
+
+        if (toIndex !== fromIndex) {
+          return toIndex > fromIndex ? "forward" : "back";
+        }
+
+        if (toPath.length > fromPath.length && toPath.startsWith(fromPath)) {
+          return "descend";
+        }
+
+        if (fromPath.length > toPath.length && fromPath.startsWith(toPath)) {
+          return "ascend";
+        }
+
+        return "descend";
       }
 
       function syncNavigationForTransition(event: Event) {
@@ -91,19 +93,16 @@ const pageTransition = {
           from: URL;
           navigationType: string;
           to: URL;
+          preventDefault?: () => void;
         };
-        const fromIndex = routeIndex(transition.from.pathname);
-        const toIndex = routeIndex(transition.to.pathname);
+
+        if (transition.from.href === transition.to.href) {
+          transition.preventDefault?.();
+          return;
+        }
 
         updateActiveNavigation(transition.to.pathname);
-
-        if (toIndex > fromIndex) {
-          transition.direction = "forward";
-        } else if (toIndex < fromIndex) {
-          transition.direction = "back";
-        } else if (transition.navigationType !== "traverse") {
-          transition.direction = "forward";
-        }
+        transition.direction = resolveTransitionDirection(transition.from.pathname, transition.to.pathname);
       }
 
       updateActiveNavigation();
@@ -112,6 +111,17 @@ const pageTransition = {
         document.documentElement.dataset.navigationMounted = "true";
         document.addEventListener("astro:page-load", () => updateActiveNavigation());
         document.addEventListener("astro:before-preparation", syncNavigationForTransition);
+
+        let resizeFrame = 0;
+        window.addEventListener("resize", () => {
+          const nav = document.querySelector<HTMLElement>(".site-header__nav");
+          if (!nav) return;
+          nav.dataset.ready = "false";
+          cancelAnimationFrame(resizeFrame);
+          resizeFrame = requestAnimationFrame(() => {
+            syncNavIndicator();
+          });
+        });
       }
     </script>
   </body>

@@ -92,47 +92,140 @@ main {
 
 @keyframes aasgard-slide-out-forward {
   from {
+    opacity: 1;
     transform: translateX(0);
   }
 
   to {
-    transform: translateX(-100%);
+    opacity: 0;
+    transform: translateX(-12%);
   }
 }
 
 @keyframes aasgard-slide-in-forward {
   from {
-    transform: translateX(100%);
+    opacity: 0;
+    transform: translateX(12%);
   }
 
   to {
+    opacity: 1;
     transform: translateX(0);
   }
 }
 
 @keyframes aasgard-slide-out-back {
   from {
+    opacity: 1;
     transform: translateX(0);
   }
 
   to {
-    transform: translateX(100%);
+    opacity: 0;
+    transform: translateX(12%);
   }
 }
 
 @keyframes aasgard-slide-in-back {
   from {
-    transform: translateX(-100%);
+    opacity: 0;
+    transform: translateX(-12%);
   }
 
   to {
+    opacity: 1;
     transform: translateX(0);
+  }
+}
+
+@keyframes aasgard-slide-up-in {
+  from {
+    opacity: 0;
+    transform: translateY(8%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes aasgard-slide-down-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(8%);
+  }
+}
+
+@keyframes aasgard-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes aasgard-fade-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
   }
 }
 
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation: none;
+}
+
+::view-transition-old(main-content),
+::view-transition-new(main-content) {
+  animation-duration: var(--motion-duration-page);
+  animation-fill-mode: both;
+  animation-timing-function: var(--motion-ease-emphasized);
+}
+
+::view-transition-old(main-content) {
+  animation-name: aasgard-slide-out-forward;
+}
+
+::view-transition-new(main-content) {
+  animation-name: aasgard-slide-in-forward;
+}
+
+[data-astro-transition="back"] ::view-transition-old(main-content) {
+  animation-name: aasgard-slide-out-back;
+}
+
+[data-astro-transition="back"] ::view-transition-new(main-content) {
+  animation-name: aasgard-slide-in-back;
+}
+
+[data-astro-transition="descend"] ::view-transition-old(main-content) {
+  animation-name: aasgard-fade-out;
+}
+
+[data-astro-transition="descend"] ::view-transition-new(main-content) {
+  animation-name: aasgard-slide-up-in;
+}
+
+[data-astro-transition="ascend"] ::view-transition-old(main-content) {
+  animation-name: aasgard-slide-down-out;
+  z-index: 2;
+}
+
+[data-astro-transition="ascend"] ::view-transition-new(main-content) {
+  animation-name: aasgard-fade-in;
+  z-index: 1;
 }
 
 @media (prefers-reduced-motion: reduce) {

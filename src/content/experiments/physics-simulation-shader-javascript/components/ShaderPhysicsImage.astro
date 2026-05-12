@@ -1,0 +1,152 @@
+---
+import CanvasExperiment from "../../../../components/lab/CanvasExperiment.astro";
+import type { CanvasControl } from "../../../../components/lab/canvasExperiment";
+
+interface Props {
+  src: string;
+}
+
+const { src } = Astro.props;
+const settings = [
+  {
+    id: "density",
+    label: "Density",
+    groupId: "simulation",
+    groupLabel: "Simulation settings",
+    max: 128,
+    min: 1,
+    step: 1,
+    type: "range",
+    value: 48
+  },
+  {
+    id: "particleSize",
+    label: "Particle size",
+    groupId: "simulation",
+    groupLabel: "Simulation settings",
+    max: 15,
+    min: 1,
+    step: 0.25,
+    type: "range",
+    value: 1
+  },
+  {
+    id: "particleGap",
+    label: "Particle gap",
+    groupId: "simulation",
+    groupLabel: "Simulation settings",
+    max: 128,
+    min: 0,
+    step: 1,
+    type: "range",
+    value: 0
+  },
+  {
+    id: "viewportPadding",
+    label: "Viewport padding",
+    groupId: "viewport",
+    groupLabel: "Viewport settings",
+    max: 120,
+    min: 0,
+    step: 2,
+    type: "range",
+    value: 40
+  },
+  {
+    id: "force",
+    label: "Force",
+    groupId: "interaction",
+    groupLabel: "Interaction settings",
+    max: 260,
+    min: 40,
+    step: 10,
+    type: "range",
+    value: 170
+  },
+  {
+    id: "cohesion",
+    label: "Cohesion",
+    groupId: "simulation",
+    groupLabel: "Simulation settings",
+    max: 1,
+    min: 0,
+    step: 0.05,
+    type: "range",
+    value: 0.8
+  },
+  {
+    id: "turbulence",
+    label: "Turbulence",
+    groupId: "simulation",
+    groupLabel: "Simulation settings",
+    max: 1,
+    min: 0,
+    step: 0.05,
+    type: "range",
+    value: 0.00
+  },
+  {
+		id: "sizeJitter",
+		label: "Size jitter",
+    groupId: "simulation",
+    groupLabel: "Simulation settings",
+		max: 1.0,
+		min: 0.0,
+		step: 0.05,
+		type: "range",
+		value: 0.00
+  },
+  {
+    id: "trails",
+    label: "Trails",
+    groupId: "visual",
+    groupLabel: "Visual settings",
+    type: "checkbox",
+    value: false
+  },
+  {
+    id: "gravity",
+    label: "Gravity",
+    groupId: "simulation",
+    groupLabel: "Simulation settings",
+    type: "checkbox",
+    value: false
+  },
+  {
+    id: "collisions",
+    label: "Collisions",
+    groupId: "simulation",
+    groupLabel: "Simulation settings",
+    type: "checkbox",
+    value: false
+  },
+  {
+    id: "contain",
+    label: "Contain in viewport",
+    groupId: "viewport",
+    groupLabel: "Viewport settings",
+    type: "checkbox",
+    value: false
+  },
+  {
+    id: "mode",
+    label: "Field",
+    options: [
+      { label: "Repel", value: "repel" },
+      { label: "Orbit", value: "orbit" },
+      { label: "Wind", value: "wind" }
+    ],
+    groupId: "interaction",
+    groupLabel: "Interaction settings",
+    type: "radio",
+    value: "repel"
+		}
+] satisfies CanvasControl[];
+---
+
+<CanvasExperiment
+  ariaLabel="Shader driven particle image"
+  imageSrc={src}
+  script="/src/content/experiments/physics-simulation-shader-javascript/sketches/shaderPhysics.ts"
+  settings={settings}
+/>

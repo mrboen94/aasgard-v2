@@ -27,6 +27,16 @@ export const technologies = {
     label: "HTML5",
     icon: "devicon:html5"
   },
+  webgl: {
+    id: "webgl",
+    label: "WebGL",
+    icon: "simple-icons:webgl"
+  },
+  webgpu: {
+    id: "webgpu",
+    label: "WebGPU",
+    icon: "simple-icons:webgpu"
+  },
   css3: {
     id: "css3",
     label: "CSS3",
