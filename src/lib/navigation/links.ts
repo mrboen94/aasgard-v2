@@ -3,6 +3,9 @@ export interface NavLink {
   label: string;
 }
 
+export type RouteTransitionDirection = "forward" | "back" | "descend" | "ascend";
+export type RouteTransitionSource = "header" | "content";
+
 export const NAV_LINKS: readonly NavLink[] = [
   { href: "/articles/", label: "Articles" },
   { href: "/lab/", label: "Lab" },
@@ -35,4 +38,37 @@ export function routeSectionIndex(pathname: string): number {
   }
   const index = NAV_SECTION_ORDER.findIndex((section) => section !== "/" && normalized.startsWith(section));
   return index === -1 ? 0 : index;
+}
+
+export function routeDepth(pathname: string): number {
+  return pathname.split("/").filter(Boolean).length;
+}
+
+export function isDetailRoute(pathname: string): boolean {
+  return routeDepth(pathname) > 1;
+}
+
+export function resolveRouteTransitionDirection(
+  fromPath: string,
+  toPath: string,
+  source: RouteTransitionSource = "content"
+): RouteTransitionDirection {
+  const fromIndex = routeSectionIndex(fromPath);
+  const toIndex = routeSectionIndex(toPath);
+  const fromDetail = isDetailRoute(fromPath);
+  const toDetail = isDetailRoute(toPath);
+
+  if (fromDetail && !toDetail) {
+    return "ascend";
+  }
+
+  if (source !== "header" && !fromDetail && toDetail) {
+    return "descend";
+  }
+
+  if (toIndex !== fromIndex) {
+    return toIndex > fromIndex ? "forward" : "back";
+  }
+
+  return "forward";
 }

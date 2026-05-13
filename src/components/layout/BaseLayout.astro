@@ -29,7 +29,7 @@ const { title, description, canonical } = Astro.props;
     </main>
     <Footer />
     <script>
-      import { isLinkActive, routeSectionIndex } from "../../lib/navigation/links";
+      import { isLinkActive, resolveRouteTransitionDirection } from "../../lib/navigation/links";
 
       function updateActiveNavigation(pathname = window.location.pathname) {
         document.querySelectorAll<HTMLAnchorElement>(".site-header__nav a").forEach((link) => {
@@ -40,70 +40,42 @@ const { title, description, canonical } = Astro.props;
             link.removeAttribute("aria-current");
           }
         });
-
-        syncNavIndicator();
-      }
-
-      function syncNavIndicator() {
-        const nav = document.querySelector<HTMLElement>(".site-header__nav");
-        if (!nav) return;
-
-        const active = nav.querySelector<HTMLAnchorElement>('a[aria-current="page"]');
-        if (!active) {
-          nav.dataset.active = "false";
-          return;
-        }
-
-        const linkRect = active.getBoundingClientRect();
-        const navRect = nav.getBoundingClientRect();
-        nav.style.setProperty("--nav-indicator-x", `${linkRect.left - navRect.left}px`);
-        nav.style.setProperty("--nav-indicator-y", `${linkRect.bottom - navRect.top}px`);
-        nav.style.setProperty("--nav-indicator-w", `${linkRect.width}px`);
-        nav.dataset.active = "true";
-
-        if (nav.dataset.ready !== "true") {
-          requestAnimationFrame(() => {
-            nav.dataset.ready = "true";
-          });
-        }
-      }
-
-      function routeDepth(pathname: string) {
-        return pathname.split("/").filter(Boolean).length;
       }
 
       function isHeaderNavigation(sourceElement: Element | null | undefined) {
         return sourceElement instanceof Element && Boolean(sourceElement.closest(".site-header"));
       }
 
-      function resolveTransitionDirection(fromPath: string, toPath: string, sourceElement?: Element | null) {
-        const fromIndex = routeSectionIndex(fromPath);
-        const toIndex = routeSectionIndex(toPath);
-        const fromDepth = routeDepth(fromPath);
-        const toDepth = routeDepth(toPath);
-        const headerNavigation = isHeaderNavigation(sourceElement);
-
-        if (fromDepth > toDepth) {
-          return "ascend";
+      function getHeaderNavigationPath(event: MouseEvent) {
+        if (
+          event.defaultPrevented ||
+          event.button !== 0 ||
+          event.metaKey ||
+          event.ctrlKey ||
+          event.altKey ||
+          event.shiftKey
+        ) {
+          return;
         }
 
-        if (!headerNavigation && toDepth > fromDepth) {
-          return "descend";
-        }
+        const target = event.target;
+        if (!(target instanceof Element)) return;
 
-        if (toIndex !== fromIndex) {
-          return toIndex > fromIndex ? "forward" : "back";
-        }
+        const link = target.closest<HTMLAnchorElement>(".site-header__nav a[href]");
+        if (!link || link.hasAttribute("download")) return;
+        if (link.target && link.target !== "_self") return;
 
-        if (toPath.length > fromPath.length && toPath.startsWith(fromPath)) {
-          return "descend";
-        }
+        const url = new URL(link.href, window.location.href);
+        if (url.origin !== window.location.origin) return;
 
-        if (fromPath.length > toPath.length && fromPath.startsWith(toPath)) {
-          return "ascend";
-        }
+        return url.pathname;
+      }
 
-        return "forward";
+      function syncHeaderNavigationOnClick(event: MouseEvent) {
+        const pathname = getHeaderNavigationPath(event);
+        if (pathname) {
+          updateActiveNavigation(pathname);
+        }
       }
 
       function syncNavigationForTransition(event: Event) {
@@ -122,31 +94,28 @@ const { title, description, canonical } = Astro.props;
         }
 
         updateActiveNavigation(transition.to.pathname);
-        transition.direction = resolveTransitionDirection(
+        transition.direction = resolveRouteTransitionDirection(
           transition.from.pathname,
           transition.to.pathname,
-          transition.sourceElement
+          isHeaderNavigation(transition.sourceElement) ? "header" : "content"
         );
       }
 
       updateActiveNavigation();
 
-      if (document.documentElement.dataset.navigationMounted !== "true") {
-        document.documentElement.dataset.navigationMounted = "true";
-        document.addEventListener("astro:page-load", () => updateActiveNavigation());
-        document.addEventListener("astro:before-preparation", syncNavigationForTransition);
+      const navigationWindow = window as Window & { __aasgardNavigationCleanup?: () => void };
+      navigationWindow.__aasgardNavigationCleanup?.();
 
-        let resizeFrame = 0;
-        window.addEventListener("resize", () => {
-          const nav = document.querySelector<HTMLElement>(".site-header__nav");
-          if (!nav) return;
-          nav.dataset.ready = "false";
-          cancelAnimationFrame(resizeFrame);
-          resizeFrame = requestAnimationFrame(() => {
-            syncNavIndicator();
-          });
-        });
-      }
+      const navigationController = new AbortController();
+      const { signal } = navigationController;
+
+      document.addEventListener("click", syncHeaderNavigationOnClick, { capture: true, signal });
+      document.addEventListener("astro:page-load", () => updateActiveNavigation(), { signal });
+      document.addEventListener("astro:before-preparation", syncNavigationForTransition, { signal });
+
+      navigationWindow.__aasgardNavigationCleanup = () => {
+        navigationController.abort();
+      };
     </script>
   </body>
 </html>

@@ -17,7 +17,6 @@ const pathname = Astro.url.pathname;
           <li><a href={link.href} aria-current={isLinkActive(link.href, pathname) ? "page" : undefined}>{link.label}</a></li>
         ))}
       </ul>
-      <span class="site-header__nav-indicator" aria-hidden="true"></span>
     </nav>
   </div>
 </header>
@@ -53,10 +52,6 @@ const pathname = Astro.url.pathname;
     opacity: 0.72;
   }
 
-  .site-header__nav {
-    position: relative;
-  }
-
   .site-header__nav-list {
     display: flex;
     flex-wrap: wrap;
@@ -82,30 +77,5 @@ const pathname = Astro.url.pathname;
 
   .site-header__nav a[aria-current="page"] {
     color: var(--color-accent-2);
-  }
-
-  .site-header__nav-indicator {
-    background: var(--color-accent-2);
-    height: 0.12em;
-    left: 0;
-    opacity: 0;
-    pointer-events: none;
-    position: absolute;
-    top: 0;
-    transform: translate(var(--nav-indicator-x, 0), var(--nav-indicator-y, 0));
-    transition: none;
-    width: var(--nav-indicator-w, 0);
-  }
-
-  .site-header__nav[data-ready="true"] .site-header__nav-indicator {
-    transition:
-      background-color var(--motion-duration) var(--motion-ease),
-      opacity var(--motion-duration) var(--motion-ease),
-      transform var(--motion-duration-page) var(--motion-ease-emphasized),
-      width var(--motion-duration-page) var(--motion-ease-emphasized);
-  }
-
-  .site-header__nav[data-active="true"] .site-header__nav-indicator {
-    opacity: 1;
   }
 </style>

@@ -194,6 +194,19 @@ main:has(> .detail-page) {
   animation: none;
 }
 
+::view-transition-group(site-header) {
+  animation: none;
+}
+
+::view-transition-old(site-header) {
+  display: none;
+}
+
+::view-transition-new(site-header) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
 ::view-transition-old(main-content),
 ::view-transition-new(main-content) {
   animation-duration: var(--motion-duration-page);
