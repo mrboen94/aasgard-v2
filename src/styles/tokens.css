@@ -6,6 +6,7 @@
   --font-code: var(--font-pragmata-pro, ui-monospace, "SFMono-Regular", Consolas, monospace);
 
   --color-bg: #f8f6f0;
+  --color-article-bg: #fbfaf6;
   --color-surface: #ffffff;
   --color-text: #181713;
   --color-muted: #6f6a60;
@@ -125,9 +126,11 @@
 
   --motion-duration-fast: 120ms;
   --motion-duration: 180ms;
-  --motion-duration-page: 220ms;
+  --motion-duration-page: 260ms;
+  --motion-duration-paper: 380ms;
   --motion-ease: cubic-bezier(0.2, 0, 0, 1);
   --motion-ease-emphasized: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-ease-paper: cubic-bezier(0.22, 0.61, 0.36, 1);
   --motion-hover-lift: -0.125rem;
   --shadow-focus: 0 0 0 0.18rem color-mix(in srgb, var(--color-link) 28%, transparent);
 }
@@ -135,6 +138,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --color-bg: #171714;
+    --color-article-bg: #1c1c18;
     --color-surface: #20201c;
     --color-text: #f3efe6;
     --color-muted: #b8b0a3;

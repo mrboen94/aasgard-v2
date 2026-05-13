@@ -10,6 +10,7 @@ interactive: true
 
 import ShaderPhysicsImage from "./components/ShaderPhysicsImage.astro";
 import physicsImage from "./images/image.png";
+import SourceCode from "../../../components/content/SourceCode.astro";
 
 ## Trying WebGPU in the browser
 
@@ -27,15 +28,11 @@ The older canvas version reads pixels, creates JavaScript objects, loops over ev
 
 For this experiment I wanted the particle state itself to live on the GPU:
 
-```ts title="Particle layout"
-data[offset] = positionX
-data[offset + 1] = positionY
-data[offset + 2] = particle + 1
-data[offset + 6] = positionX / width
-data[offset + 7] = positionY / height
-data[offset + 8] = positionX
-data[offset + 9] = positionY
-```
+<SourceCode
+  file="/src/content/experiments/physics-simulation-shader-javascript/sketches/particleBuffers.ts"
+  range="104-120"
+  title="particleBuffers.ts"
+/>
 
 The first two values are the current position. The UV values point back into the image texture, and the final position pair is the particle origin. Velocity is stored in the same GPU buffer, so gravity and pointer movement can accumulate over time.
 
@@ -43,20 +40,12 @@ The first two values are the current position. The UV values point back into the
 
 The part I wanted to test most was the compute pass. Each frame dispatches a workgroup over the particle buffer. The shader reads one particle, updates its velocity and position, applies the pointer field, optionally adds gravity, and writes the result into the next buffer.
 
-```wgsl title="shaderPhysics.ts"
-@compute @workgroup_size(64)
-fn simulate(@builtin(global_invocation_id) globalId: vec3u) {
-  let index = globalId.x;
-
-  if (index >= count) {
-    return;
-  }
-
-  var particle = particlesIn[index];
-  var position = particle.position.xy;
-  var velocity = particle.velocity.xy;
-}
-```
+<SourceCode
+  file="/src/content/experiments/physics-simulation-shader-javascript/sketches/shaders/simulate.wgsl"
+  mark={[75, 76, 77]}
+  range="66-78"
+  title="simulate.wgsl"
+/>
 
 The implementation uses two particle buffers and swaps between them. That keeps the reads and writes separate, which makes the simulation easier to reason about and avoids each particle fighting with data that is being written at the same time.
 
@@ -64,43 +53,53 @@ The implementation uses two particle buffers and swaps between them. That keeps 
 
 Gravity is just another force in the compute shader. When enabled, the particles stop behaving like an elastic image distortion and start falling into the floor and walls.
 
-```wgsl title="shaderPhysics.ts"
-velocity.y = velocity.y + gravity * delta;
-position = position + velocity * delta;
-```
+<SourceCode
+  file="/src/content/experiments/physics-simulation-shader-javascript/sketches/shaders/simulate.wgsl"
+  mark={[117, 124, 126]}
+  range="111-126"
+  title="simulate.wgsl"
+/>
 
 The collision toggle is intentionally a small local pass. Each frame builds a little spatial grid on the GPU, bins particles by their current position, and then checks the neighbouring cells for overlaps. It is not a complete sand simulator, but it gives the experiment that nice collapsing, settling, sand-game feeling while still staying compact enough to fit in a post.
 
-```wgsl title="shaderPhysics.ts"
-if (distanceSquared > 0.0001 && distanceSquared < minDistanceSquared) {
-  let normal = offset / sqrt(distanceSquared);
-  position = position + normal * overlap * 0.78;
-  velocity = velocity + normal * overlap * 0.032;
-}
-```
+<SourceCode
+  collapse={["142-200"]}
+  file="/src/content/experiments/physics-simulation-shader-javascript/sketches/shaders/simulate.wgsl"
+  mark={[179, 186, 187, 211, 212]}
+  range="128-214"
+  title="simulate.wgsl"
+/>
 
 ## Rendering
 
 WebGPU does not give me the same `gl_PointSize` shortcut that the old WebGL-style particle demos often use, so each particle is rendered as a tiny instanced quad. The render shader reads the same particle buffer that the compute shader just wrote, turns the particle position into clip space, and samples the image texture.
 
-```wgsl title="shaderPhysics.ts"
-let particle = particles[instanceIndex];
-let screen = particle.position.xy + local * particleSize;
-
-output.position = vec4f(
-  screen.x / uniforms.resolution.x * 2.0 - 1.0,
-  1.0 - screen.y / uniforms.resolution.y * 2.0,
-  0.0,
-  1.0
-);
-```
+<SourceCode
+  files={[
+    {
+      file: "/src/content/experiments/physics-simulation-shader-javascript/sketches/shaders/renderParticles.wgsl",
+      mark: [51, 57, 63, 64, 65, 69],
+      range: "46-74",
+      title: "renderParticles.wgsl"
+    },
+    {
+      collapse: "510-573",
+      file: "/src/content/experiments/physics-simulation-shader-javascript/sketches/shaderPhysics.ts",
+      mark: [575, 580],
+      range: "498-585",
+      title: "shaderPhysics.ts"
+    }
+  ]}
+/>
 
 The fragment shader uses the particle UV to grab the original image colour:
 
-```wgsl title="shaderPhysics.ts"
-let color = textureSample(imageTexture, imageSampler, input.uv);
-return vec4f(color.rgb, color.a * mask * input.alpha);
-```
+<SourceCode
+  file="/src/content/experiments/physics-simulation-shader-javascript/sketches/shaders/renderParticles.wgsl"
+  mark={[79, 85]}
+  range="76-86"
+  title="renderParticles.wgsl"
+/>
 
 ## Why I like this
 

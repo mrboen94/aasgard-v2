@@ -68,9 +68,28 @@ const { title, description, canonical } = Astro.props;
         }
       }
 
-      function resolveTransitionDirection(fromPath: string, toPath: string) {
+      function routeDepth(pathname: string) {
+        return pathname.split("/").filter(Boolean).length;
+      }
+
+      function isHeaderNavigation(sourceElement: Element | null | undefined) {
+        return sourceElement instanceof Element && Boolean(sourceElement.closest(".site-header"));
+      }
+
+      function resolveTransitionDirection(fromPath: string, toPath: string, sourceElement?: Element | null) {
         const fromIndex = routeSectionIndex(fromPath);
         const toIndex = routeSectionIndex(toPath);
+        const fromDepth = routeDepth(fromPath);
+        const toDepth = routeDepth(toPath);
+        const headerNavigation = isHeaderNavigation(sourceElement);
+
+        if (fromDepth > toDepth) {
+          return "ascend";
+        }
+
+        if (!headerNavigation && toDepth > fromDepth) {
+          return "descend";
+        }
 
         if (toIndex !== fromIndex) {
           return toIndex > fromIndex ? "forward" : "back";
@@ -84,7 +103,7 @@ const { title, description, canonical } = Astro.props;
           return "ascend";
         }
 
-        return "descend";
+        return "forward";
       }
 
       function syncNavigationForTransition(event: Event) {
@@ -92,6 +111,7 @@ const { title, description, canonical } = Astro.props;
           direction: string;
           from: URL;
           navigationType: string;
+          sourceElement?: Element | null;
           to: URL;
           preventDefault?: () => void;
         };
@@ -102,7 +122,11 @@ const { title, description, canonical } = Astro.props;
         }
 
         updateActiveNavigation(transition.to.pathname);
-        transition.direction = resolveTransitionDirection(transition.from.pathname, transition.to.pathname);
+        transition.direction = resolveTransitionDirection(
+          transition.from.pathname,
+          transition.to.pathname,
+          transition.sourceElement
+        );
       }
 
       updateActiveNavigation();

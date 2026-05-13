@@ -78,9 +78,18 @@
 }
 
 .detail-page {
+  background: var(--color-article-bg);
   display: grid;
   gap: var(--detail-page-gap);
+  min-height: 100vh;
   padding-block: var(--detail-page-padding-block);
+  transition: background-color var(--motion-duration) var(--motion-ease);
+}
+
+.article-shell {
+  background: var(--color-article-bg);
+  min-height: 100vh;
+  transition: background-color var(--motion-duration) var(--motion-ease);
 }
 
 .detail-page__header {

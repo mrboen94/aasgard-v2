@@ -85,6 +85,13 @@ main {
   min-height: 60vh;
 }
 
+main:has(> .article-shell),
+main:has(> .detail-page) {
+  background: var(--color-article-bg);
+  min-height: 100vh;
+  transition: background-color var(--motion-duration) var(--motion-ease);
+}
+
 ::selection {
   background: var(--color-accent);
   color: var(--color-selection-text);
@@ -98,14 +105,14 @@ main {
 
   to {
     opacity: 0;
-    transform: translateX(-12%);
+    transform: translateX(-18%);
   }
 }
 
 @keyframes aasgard-slide-in-forward {
   from {
     opacity: 0;
-    transform: translateX(12%);
+    transform: translateX(18%);
   }
 
   to {
@@ -122,14 +129,14 @@ main {
 
   to {
     opacity: 0;
-    transform: translateX(12%);
+    transform: translateX(18%);
   }
 }
 
 @keyframes aasgard-slide-in-back {
   from {
     opacity: 0;
-    transform: translateX(-12%);
+    transform: translateX(-18%);
   }
 
   to {
@@ -138,10 +145,10 @@ main {
   }
 }
 
-@keyframes aasgard-slide-up-in {
+@keyframes aasgard-paper-enter {
   from {
     opacity: 0;
-    transform: translateY(8%);
+    transform: translateY(100%);
   }
 
   to {
@@ -150,7 +157,7 @@ main {
   }
 }
 
-@keyframes aasgard-slide-down-out {
+@keyframes aasgard-paper-exit {
   from {
     opacity: 1;
     transform: translateY(0);
@@ -158,13 +165,13 @@ main {
 
   to {
     opacity: 0;
-    transform: translateY(8%);
+    transform: translateY(100%);
   }
 }
 
-@keyframes aasgard-fade-in {
+@keyframes aasgard-hold {
   from {
-    opacity: 0;
+    opacity: 1;
   }
 
   to {
@@ -172,13 +179,13 @@ main {
   }
 }
 
-@keyframes aasgard-fade-out {
+@keyframes aasgard-underlay-fade-out {
   from {
     opacity: 1;
   }
 
   to {
-    opacity: 0;
+    opacity: 0.18;
   }
 }
 
@@ -202,29 +209,39 @@ main {
   animation-name: aasgard-slide-in-forward;
 }
 
-[data-astro-transition="back"] ::view-transition-old(main-content) {
+[data-astro-transition="back"]::view-transition-old(main-content) {
   animation-name: aasgard-slide-out-back;
 }
 
-[data-astro-transition="back"] ::view-transition-new(main-content) {
+[data-astro-transition="back"]::view-transition-new(main-content) {
   animation-name: aasgard-slide-in-back;
 }
 
-[data-astro-transition="descend"] ::view-transition-old(main-content) {
-  animation-name: aasgard-fade-out;
+[data-astro-transition="descend"]::view-transition-old(main-content),
+[data-astro-transition="descend"]::view-transition-new(main-content),
+[data-astro-transition="ascend"]::view-transition-old(main-content),
+[data-astro-transition="ascend"]::view-transition-new(main-content) {
+  animation-duration: var(--motion-duration-paper);
+  animation-timing-function: var(--motion-ease-paper);
 }
 
-[data-astro-transition="descend"] ::view-transition-new(main-content) {
-  animation-name: aasgard-slide-up-in;
+[data-astro-transition="descend"]::view-transition-old(main-content) {
+  animation-name: aasgard-underlay-fade-out;
+  z-index: 1;
 }
 
-[data-astro-transition="ascend"] ::view-transition-old(main-content) {
-  animation-name: aasgard-slide-down-out;
+[data-astro-transition="descend"]::view-transition-new(main-content) {
+  animation-name: aasgard-paper-enter;
   z-index: 2;
 }
 
-[data-astro-transition="ascend"] ::view-transition-new(main-content) {
-  animation-name: aasgard-fade-in;
+[data-astro-transition="ascend"]::view-transition-old(main-content) {
+  animation-name: aasgard-paper-exit;
+  z-index: 2;
+}
+
+[data-astro-transition="ascend"]::view-transition-new(main-content) {
+  animation-name: aasgard-hold;
   z-index: 1;
 }
 
