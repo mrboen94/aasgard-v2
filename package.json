@@ -16,6 +16,8 @@
   "dependencies": {
     "@astrojs/mdx": "^5.0.4",
     "@astrojs/rss": "^4.0.18",
+    "@expressive-code/plugin-collapsible-sections": "^0.42.0",
+    "@expressive-code/plugin-line-numbers": "^0.42.0",
     "@iconify-json/devicon": "^1.2.62",
     "@iconify-json/simple-icons": "^1.2.81",
     "astro": "^6.0.0",

@@ -7,9 +7,7 @@ export default defineConfig({
   site: "https://aasgard.dev",
   output: "static",
   integrations: [
-    expressiveCode({
-      themes: ["github-light", "github-dark"]
-    }),
+    expressiveCode(),
     mdx(),
     icon()
   ]
