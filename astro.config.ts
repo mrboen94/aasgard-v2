@@ -4,7 +4,7 @@ import icon from "astro-icon";
 import { defineConfig } from "astro/config";
 
 export default defineConfig({
-  site: "https://aasgard.dev",
+  site: "https://forcepushmain.dev",
   output: "static",
   integrations: [
     expressiveCode(),
