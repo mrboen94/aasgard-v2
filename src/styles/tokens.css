@@ -57,9 +57,9 @@
   --page-section-gap: var(--space-6);
   --page-section-padding-block: var(--space-7);
   --page-header-gap: var(--space-3);
-  --detail-page-gap: var(--space-5);
-  --detail-page-padding-block: var(--space-7);
-  --detail-header-gap: var(--space-4);
+  --content-page-gap: var(--space-5);
+  --content-page-padding-block: var(--space-7);
+  --content-header-gap: var(--space-4);
 
   --card-padding: var(--space-5);
   --card-gap: var(--space-4);
@@ -127,10 +127,10 @@
   --motion-duration-fast: 120ms;
   --motion-duration: 180ms;
   --motion-duration-page: 260ms;
-  --motion-duration-paper: 380ms;
+  --motion-duration-bottom-slide: 380ms;
   --motion-ease: cubic-bezier(0.2, 0, 0, 1);
   --motion-ease-emphasized: cubic-bezier(0.16, 1, 0.3, 1);
-  --motion-ease-paper: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --motion-ease-bottom-slide: cubic-bezier(0.22, 0.61, 0.36, 1);
   --motion-hover-lift: -0.125rem;
   --shadow-focus: 0 0 0 0.18rem color-mix(in srgb, var(--color-link) 28%, transparent);
 }

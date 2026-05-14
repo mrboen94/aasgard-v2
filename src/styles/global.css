@@ -27,18 +27,25 @@
   --font-nure: "Nure";
   --font-departure-mono: "Departure Mono";
   --font-pragmata-pro: "Pragmata Pro";
+  --transition-interactive:
+    background-color var(--motion-duration-fast) var(--motion-ease),
+    border-color var(--motion-duration-fast) var(--motion-ease),
+    box-shadow var(--motion-duration-fast) var(--motion-ease),
+    color var(--motion-duration-fast) var(--motion-ease),
+    opacity var(--motion-duration-fast) var(--motion-ease),
+    transform var(--motion-duration-fast) var(--motion-ease);
 }
 
 * {
   box-sizing: border-box;
 }
 
-html {
+html,
+body {
   background: var(--color-bg);
 }
 
 body {
-  background: var(--color-bg);
   color: var(--color-text);
   margin: 0;
   min-height: 100vh;
@@ -60,20 +67,11 @@ input,
 select,
 textarea {
   font: inherit;
+  transition: var(--transition-interactive);
 }
 
-button,
-input,
-select,
-textarea,
 [tabindex]:not([tabindex="-1"]) {
-  transition:
-    background-color var(--motion-duration-fast) var(--motion-ease),
-    border-color var(--motion-duration-fast) var(--motion-ease),
-    box-shadow var(--motion-duration-fast) var(--motion-ease),
-    color var(--motion-duration-fast) var(--motion-ease),
-    opacity var(--motion-duration-fast) var(--motion-ease),
-    transform var(--motion-duration-fast) var(--motion-ease);
+  transition: var(--transition-interactive);
 }
 
 :focus-visible {
@@ -86,7 +84,7 @@ main {
 }
 
 main:has(> .article-shell),
-main:has(> .detail-page) {
+main:has(> .content-page) {
   background: var(--color-article-bg);
   min-height: 100vh;
   transition: background-color var(--motion-duration) var(--motion-ease);
@@ -97,46 +95,32 @@ main:has(> .detail-page) {
   color: var(--color-selection-text);
 }
 
-@keyframes aasgard-slide-out-forward {
+@keyframes aasgard-slide-out-horizontal {
   from {
     opacity: 1;
     transform: translateX(0);
   }
 
+  through {
+    opacity: 0;
+    transform: translateX(var(--vt-slide-out-through-x, -10%));
+  }
+
   to {
     opacity: 0;
-    transform: translateX(-18%);
+    transform: translateX(var(--vt-slide-out-to-x, -40%));
   }
 }
 
-@keyframes aasgard-slide-in-forward {
+@keyframes aasgard-slide-in-horizontal {
   from {
     opacity: 0;
-    transform: translateX(18%);
+    transform: translateX(var(--vt-slide-in-from-x, 40%));
   }
 
-  to {
+  through {
     opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes aasgard-slide-out-back {
-  from {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  to {
-    opacity: 0;
-    transform: translateX(18%);
-  }
-}
-
-@keyframes aasgard-slide-in-back {
-  from {
-    opacity: 0;
-    transform: translateX(-18%);
+    transform: translateX(var(--vt-slide-in-through-x, 30%));
   }
 
   to {
@@ -145,22 +129,32 @@ main:has(> .detail-page) {
   }
 }
 
-@keyframes aasgard-paper-enter {
+@keyframes aasgard-slide-in-bottom {
   from {
     opacity: 0;
     transform: translateY(100%);
   }
 
+  through {
+    opacity: 1;
+    transform: translateY(95%);
+  }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-@keyframes aasgard-paper-exit {
+@keyframes aasgard-slide-out-bottom {
   from {
     opacity: 1;
     transform: translateY(0);
+  }
+
+  through {
+    opacity: 0;
+    transform: translateY(5%);
   }
 
   to {
@@ -185,16 +179,14 @@ main:has(> .detail-page) {
   }
 
   to {
-    opacity: 0.18;
+    opacity: 0;
   }
 }
 
 ::view-transition-old(root),
-::view-transition-new(root) {
-  animation: none;
-}
-
-::view-transition-group(site-header) {
+::view-transition-new(root),
+::view-transition-group(site-header),
+::view-transition-new(site-header) {
   animation: none;
 }
 
@@ -203,7 +195,6 @@ main:has(> .detail-page) {
 }
 
 ::view-transition-new(site-header) {
-  animation: none;
   mix-blend-mode: normal;
 }
 
@@ -215,47 +206,55 @@ main:has(> .detail-page) {
 }
 
 ::view-transition-old(main-content) {
-  animation-name: aasgard-slide-out-forward;
+  animation-name: aasgard-slide-out-horizontal;
 }
 
 ::view-transition-new(main-content) {
-  animation-name: aasgard-slide-in-forward;
+  animation-name: aasgard-slide-in-horizontal;
 }
 
 [data-astro-transition="back"]::view-transition-old(main-content) {
-  animation-name: aasgard-slide-out-back;
+  --vt-slide-out-through-x: 10%;
+  --vt-slide-out-to-x: 40%;
 }
 
 [data-astro-transition="back"]::view-transition-new(main-content) {
-  animation-name: aasgard-slide-in-back;
+  --vt-slide-in-from-x: -40%;
+  --vt-slide-in-through-x: -30%;
 }
 
 [data-astro-transition="descend"]::view-transition-old(main-content),
 [data-astro-transition="descend"]::view-transition-new(main-content),
 [data-astro-transition="ascend"]::view-transition-old(main-content),
 [data-astro-transition="ascend"]::view-transition-new(main-content) {
-  animation-duration: var(--motion-duration-paper);
-  animation-timing-function: var(--motion-ease-paper);
+  animation-duration: var(--motion-duration-bottom-slide);
+  animation-timing-function: var(--motion-ease-bottom-slide);
 }
 
 [data-astro-transition="descend"]::view-transition-old(main-content) {
   animation-name: aasgard-underlay-fade-out;
-  z-index: 1;
 }
 
 [data-astro-transition="descend"]::view-transition-new(main-content) {
-  animation-name: aasgard-paper-enter;
-  z-index: 2;
+  animation-name: aasgard-slide-in-bottom;
 }
 
 [data-astro-transition="ascend"]::view-transition-old(main-content) {
-  animation-name: aasgard-paper-exit;
-  z-index: 2;
+  animation-name: aasgard-slide-out-bottom;
 }
 
 [data-astro-transition="ascend"]::view-transition-new(main-content) {
   animation-name: aasgard-hold;
+}
+
+[data-astro-transition="descend"]::view-transition-old(main-content),
+[data-astro-transition="ascend"]::view-transition-new(main-content) {
   z-index: 1;
+}
+
+[data-astro-transition="descend"]::view-transition-new(main-content),
+[data-astro-transition="ascend"]::view-transition-old(main-content) {
+  z-index: 2;
 }
 
 @media (prefers-reduced-motion: reduce) {
