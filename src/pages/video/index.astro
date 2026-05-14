@@ -1,0 +1,20 @@
+---
+import BaseLayout from "../../components/layout/BaseLayout.astro";
+import VideoProjectCard from "../../components/media/VideoProjectCard.astro";
+import { getVideoProjects } from "../../lib/content/collections";
+
+const entries = await getVideoProjects();
+---
+
+<BaseLayout title="Video" description="Video projects and embeds.">
+  <section class="container page-section">
+    <header class="page-header page-header--secondary">
+      <p class="eyebrow">Motion</p>
+      <h1>Video</h1>
+      <p>Index pages stay lightweight. Detail pages can opt into provider links or embeds later.</p>
+    </header>
+    <div class="grid">
+      {entries.map((entry) => <VideoProjectCard entry={entry} />)}
+    </div>
+  </section>
+</BaseLayout>

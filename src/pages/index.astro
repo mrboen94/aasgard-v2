@@ -1,0 +1,115 @@
+---
+import ArticleList from "../components/article/ArticleList.astro";
+import ExperimentCard from "../components/lab/ExperimentCard.astro";
+import Section from "../components/layout/Section.astro";
+import BaseLayout from "../components/layout/BaseLayout.astro";
+import PhotoProjectCard from "../components/media/PhotoProjectCard.astro";
+import VideoProjectCard from "../components/media/VideoProjectCard.astro";
+import ProjectGrid from "../components/project/ProjectGrid.astro";
+import {
+  getArticles,
+  getExperiments,
+  getPhotoProjects,
+  getVideoProjects,
+  getWorkEntries
+} from "../lib/content/collections";
+
+const [articles, experiments, workEntries, photoProjects, videoProjects] = await Promise.all([
+  getArticles(),
+  getExperiments(),
+  getWorkEntries(),
+  getPhotoProjects(),
+  getVideoProjects()
+]);
+---
+
+<BaseLayout>
+  <div class="container home">
+    <section class="home-hero">
+      <p class="eyebrow">Static site skeleton</p>
+      <h1>Mathias Bøe</h1>
+      <p>
+				Notes from an unreasonable number of side quests.
+				Photography and videos, 3D modelling, data viz, prototypes and experiments, devnotes and the general overflow of a curious mind.
+				Pick a thread and pull.
+      </p>
+    </section>
+
+    <Section
+      eyebrow="Writing"
+      title="Articles"
+      description="Demo entries for standard, technical, and interactive article templates."
+      href="/articles/"
+    >
+      <ArticleList entries={articles.slice(0, 3)} />
+    </Section>
+
+    <Section
+      eyebrow="Experiments"
+      title="Lab"
+      description="Standalone prototypes live separately from explanatory articles."
+      href="/lab/"
+    >
+      <div class="grid">
+        {experiments.slice(0, 3).map((entry) => <ExperimentCard entry={entry} />)}
+      </div>
+    </Section>
+
+    <Section
+      eyebrow="Projects"
+      title="Work"
+      description="Project cards use local logo icons and technology metadata from the registry."
+      href="/work/"
+    >
+      <ProjectGrid entries={workEntries.slice(0, 3)} />
+    </Section>
+
+    <Section
+      eyebrow="Images"
+      title="Photography"
+      description="Photography projects are first-class content with room for later image pipelines."
+      href="/photography/"
+    >
+      <div class="grid">
+        {photoProjects.slice(0, 3).map((entry) => <PhotoProjectCard entry={entry} />)}
+      </div>
+    </Section>
+
+    <Section
+      eyebrow="Motion"
+      title="Video"
+      description="Video projects use a lightweight embed skeleton and avoid iframe loading on index pages."
+      href="/video/"
+    >
+      <div class="grid">
+        {videoProjects.slice(0, 3).map((entry) => <VideoProjectCard entry={entry} />)}
+      </div>
+    </Section>
+  </div>
+</BaseLayout>
+
+<style>
+  .home {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .home-hero {
+    display: grid;
+    gap: var(--space-4);
+    padding-block: var(--space-7) var(--space-4);
+  }
+
+  .home-hero .eyebrow {
+    color: var(--color-accent);
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  .home-hero p:last-child {
+    color: var(--color-muted);
+    font-size: var(--text-home-lead);
+    margin: 0;
+    max-width: var(--measure-section-copy);
+  }
+</style>

@@ -1,0 +1,37 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  name: string;
+  label: string;
+}
+
+const { name, label } = Astro.props;
+---
+
+<span class="icon-badge" title={label}>
+  <Icon name={name} aria-hidden="true" />
+  <span class="visually-hidden">{label}</span>
+</span>
+
+<style>
+  .icon-badge {
+    align-items: center;
+    aspect-ratio: 1;
+    border: var(--border);
+    border-radius: var(--radius);
+    display: inline-grid;
+    inline-size: var(--icon-badge-size);
+    justify-items: center;
+    transition:
+      border-color var(--motion-duration-fast) var(--motion-ease),
+      color var(--motion-duration-fast) var(--motion-ease),
+      transform var(--motion-duration-fast) var(--motion-ease);
+  }
+
+  .icon-badge :global(svg) {
+    block-size: var(--icon-badge-glyph-size);
+    inline-size: var(--icon-badge-glyph-size);
+    transition: transform var(--motion-duration-fast) var(--motion-ease);
+  }
+</style>

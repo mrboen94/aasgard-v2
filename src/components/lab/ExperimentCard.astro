@@ -1,0 +1,46 @@
+---
+import type { ExperimentEntry } from "../../lib/content/collections";
+import { labUrl } from "../../lib/content/urls";
+import TechIconList from "../icons/TechIconList.astro";
+
+interface Props {
+  entry: ExperimentEntry;
+}
+
+const { entry } = Astro.props;
+---
+
+<article class="experiment-card surface">
+  <a href={labUrl(entry.data.slug)}>
+    <span class="eyebrow">{entry.data.status}</span>
+    <h3>{entry.data.title}</h3>
+    <p>{entry.data.description}</p>
+  </a>
+  <TechIconList technologies={entry.data.technologies} />
+</article>
+
+<style>
+  .experiment-card {
+    display: grid;
+    gap: var(--experiment-card-gap);
+    padding: var(--experiment-card-padding);
+  }
+
+  .experiment-card a {
+    color: inherit;
+    display: grid;
+    gap: var(--experiment-card-text-gap);
+    text-decoration: none;
+  }
+
+  .experiment-card p {
+    color: var(--color-muted);
+    margin: 0;
+  }
+
+  .experiment-card .eyebrow {
+    color: var(--experiment-card-status-color);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+  }
+</style>

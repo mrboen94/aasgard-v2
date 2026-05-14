@@ -1,0 +1,33 @@
+---
+interface Props {
+  href: string;
+  title: string;
+  description?: string;
+}
+
+const { href, title, description } = Astro.props;
+---
+
+<a class="link-card surface" href={href}>
+  <span>{title}</span>
+  {description && <p>{description}</p>}
+</a>
+
+<style>
+  .link-card {
+    color: inherit;
+    display: block;
+    margin-block: var(--space-5);
+    padding: var(--space-4);
+    text-decoration: none;
+  }
+
+  .link-card span {
+    font-weight: 700;
+  }
+
+  .link-card p {
+    color: var(--color-muted);
+    margin-block: var(--space-1) 0;
+  }
+</style>

@@ -1,0 +1,264 @@
+@import "./tokens.css";
+@import "./typography.css";
+@import "./utilities.css";
+
+@font-face {
+  font-family: "Nure";
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("/fonts/aasgard-fonts/Nure-VF.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Departure Mono";
+  font-display: swap;
+  font-weight: 400;
+  src: url("/fonts/aasgard-fonts/DepartureMono-1.346/DepartureMono-Regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Pragmata Pro";
+  font-display: swap;
+  font-weight: 400;
+  src: url("/fonts/aasgard-fonts/PragmataProRLiga.woff2") format("woff2");
+}
+
+:root {
+  --font-nure: "Nure";
+  --font-departure-mono: "Departure Mono";
+  --font-pragmata-pro: "Pragmata Pro";
+  --transition-interactive:
+    background-color var(--motion-duration-fast) var(--motion-ease),
+    border-color var(--motion-duration-fast) var(--motion-ease),
+    box-shadow var(--motion-duration-fast) var(--motion-ease),
+    color var(--motion-duration-fast) var(--motion-ease),
+    opacity var(--motion-duration-fast) var(--motion-ease),
+    transform var(--motion-duration-fast) var(--motion-ease);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  background: var(--color-bg);
+}
+
+body {
+  color: var(--color-text);
+  margin: 0;
+  min-height: 100vh;
+  transition:
+    background-color var(--motion-duration) var(--motion-ease),
+    color var(--motion-duration) var(--motion-ease);
+}
+
+img,
+svg,
+canvas,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  transition: var(--transition-interactive);
+}
+
+[tabindex]:not([tabindex="-1"]) {
+  transition: var(--transition-interactive);
+}
+
+:focus-visible {
+  outline: 0.12rem solid var(--color-link);
+  outline-offset: 0.18rem;
+}
+
+main {
+  min-height: 60vh;
+}
+
+main:has(> .article-shell),
+main:has(> .content-page) {
+  background: var(--color-article-bg);
+  min-height: 100vh;
+  transition: background-color var(--motion-duration) var(--motion-ease);
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-selection-text);
+}
+
+@keyframes aasgard-slide-out-horizontal {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  40% {
+    opacity: 0;
+    transform: translateX(var(--vt-slide-out-through-x, -10%));
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(var(--vt-slide-out-to-x, -40%));
+  }
+}
+
+@keyframes aasgard-slide-in-horizontal {
+  from {
+    opacity: 0;
+    transform: translateX(var(--vt-slide-in-from-x, 40%));
+  }
+
+  40% {
+    opacity: 1;
+    transform: translateX(var(--vt-slide-in-through-x, 30%));
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes aasgard-slide-in-bottom {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+
+  16% {
+    opacity: 1;
+    transform: translateY(95%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes aasgard-slide-out-bottom {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  16% {
+    opacity: 0;
+    transform: translateY(5%);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
+
+@keyframes aasgard-hold {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes aasgard-underlay-fade-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+
+::view-transition-old(main-content),
+::view-transition-new(main-content) {
+  animation-duration: var(--motion-duration-page);
+  animation-fill-mode: both;
+  animation-timing-function: var(--motion-ease-emphasized);
+}
+
+::view-transition-old(main-content) {
+  animation-name: aasgard-slide-out-horizontal;
+}
+
+::view-transition-new(main-content) {
+  animation-name: aasgard-slide-in-horizontal;
+}
+
+[data-astro-transition="back"]::view-transition-old(main-content) {
+  --vt-slide-out-through-x: 10%;
+  --vt-slide-out-to-x: 40%;
+}
+
+[data-astro-transition="back"]::view-transition-new(main-content) {
+  --vt-slide-in-from-x: -40%;
+  --vt-slide-in-through-x: -30%;
+}
+
+[data-astro-transition="descend"]::view-transition-old(main-content),
+[data-astro-transition="descend"]::view-transition-new(main-content),
+[data-astro-transition="ascend"]::view-transition-old(main-content),
+[data-astro-transition="ascend"]::view-transition-new(main-content) {
+  animation-duration: var(--motion-duration-bottom-slide);
+  animation-timing-function: var(--motion-ease-bottom-slide);
+}
+
+[data-astro-transition="descend"]::view-transition-old(main-content) {
+  animation-name: aasgard-underlay-fade-out;
+}
+
+[data-astro-transition="descend"]::view-transition-new(main-content) {
+  animation-name: aasgard-slide-in-bottom;
+}
+
+[data-astro-transition="ascend"]::view-transition-old(main-content) {
+  animation-name: aasgard-slide-out-bottom;
+}
+
+[data-astro-transition="ascend"]::view-transition-new(main-content) {
+  animation-name: aasgard-hold;
+}
+
+[data-astro-transition="descend"]::view-transition-old(main-content),
+[data-astro-transition="ascend"]::view-transition-new(main-content) {
+  z-index: 1;
+}
+
+[data-astro-transition="descend"]::view-transition-new(main-content),
+[data-astro-transition="ascend"]::view-transition-old(main-content) {
+  z-index: 2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 1ms !important;
+  }
+
+  ::view-transition-old(main-content),
+  ::view-transition-new(main-content) {
+    animation: none;
+  }
+}

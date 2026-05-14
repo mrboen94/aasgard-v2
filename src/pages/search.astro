@@ -1,0 +1,23 @@
+---
+import BaseLayout from "../components/layout/BaseLayout.astro";
+---
+
+<BaseLayout title="Search" description="Search the static site.">
+  <section class="container page-section">
+    <header class="page-header">
+      <p class="eyebrow">Pagefind</p>
+      <h1>Search</h1>
+      <p>Static search becomes available after a production build has generated the Pagefind index.</p>
+    </header>
+    <div id="search"></div>
+  </section>
+  <link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
+  <script is:inline src="/pagefind/pagefind-ui.js"></script>
+  <script is:inline>
+    window.addEventListener("DOMContentLoaded", () => {
+      if ("PagefindUI" in window) {
+        new window.PagefindUI({ element: "#search", showSubResults: true });
+      }
+    });
+  </script>
+</BaseLayout>

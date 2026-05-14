@@ -1,0 +1,45 @@
+---
+import { Icon } from "astro-icon/components";
+import { resolveTechnology } from "../../lib/icons/resolveTechnology";
+
+interface Props {
+  id: string;
+  showLabel?: boolean;
+}
+
+const { id, showLabel = false } = Astro.props;
+const technology = resolveTechnology(id);
+const shouldShowLabel = showLabel || (technology.unknown && import.meta.env.DEV);
+---
+
+<span class:list={["tech-icon", technology.unknown && "tech-icon--unknown"]} title={technology.label}>
+  <Icon name={technology.icon} aria-hidden="true" />
+  {shouldShowLabel && <span class="tech-label">{technology.unknown ? `Unknown: ${id}` : technology.label}</span>}
+</span>
+
+<style>
+  .tech-icon {
+    align-items: center;
+    display: inline-flex;
+    gap: var(--space-2);
+    min-height: var(--tech-icon-min-height);
+    transition:
+      color var(--motion-duration-fast) var(--motion-ease),
+      opacity var(--motion-duration-fast) var(--motion-ease);
+  }
+
+  .tech-icon :global(svg) {
+    block-size: var(--tech-icon-size);
+    flex: 0 0 auto;
+    inline-size: var(--tech-icon-size);
+    transition: transform var(--motion-duration-fast) var(--motion-ease);
+  }
+
+  .tech-icon--unknown {
+    color: var(--color-muted);
+  }
+
+  .tech-label {
+    font-size: var(--text-xs);
+  }
+</style>

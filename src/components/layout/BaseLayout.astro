@@ -1,0 +1,66 @@
+---
+import { ClientRouter } from "astro:transitions";
+import "../../styles/global.css";
+import Footer from "./Footer.astro";
+import Head from "./Head.astro";
+import Header from "./Header.astro";
+import SkipLink from "./SkipLink.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+}
+
+const { title, description, canonical } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <Head title={title} description={description} canonical={canonical} />
+    <ClientRouter fallback="swap" />
+  </head>
+  <body>
+    <SkipLink />
+    <Header />
+    <main id="main-content" transition:name="main-content">
+      <slot />
+    </main>
+    <Footer />
+    <script>
+      import { resolveRouteTransitionDirection } from "../../lib/navigation/links";
+
+      function isHeaderNavigation(sourceElement: Element | null | undefined) {
+        return sourceElement instanceof Element && Boolean(sourceElement.closest(".site-header"));
+      }
+
+      function syncNavigationForTransition(event: Event) {
+        const transition = event as Event & {
+          direction: string;
+          from: URL;
+          navigationType: string;
+          sourceElement?: Element | null;
+          to: URL;
+        };
+        transition.direction = resolveRouteTransitionDirection(
+          transition.from.pathname,
+          transition.to.pathname,
+          isHeaderNavigation(transition.sourceElement) ? "header" : "content"
+        );
+      }
+
+      const navigationWindow = window as Window & { __aasgardNavigationCleanup?: () => void };
+      navigationWindow.__aasgardNavigationCleanup?.();
+
+      const navigationController = new AbortController();
+      const { signal } = navigationController;
+
+      document.addEventListener("astro:before-preparation", syncNavigationForTransition, { signal });
+
+      navigationWindow.__aasgardNavigationCleanup = () => {
+        navigationController.abort();
+      };
+    </script>
+  </body>
+</html>

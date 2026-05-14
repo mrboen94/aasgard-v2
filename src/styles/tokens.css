@@ -1,0 +1,152 @@
+:root {
+  color-scheme: light dark;
+
+  --font-main: var(--font-nure, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
+  --font-accent: var(--font-departure-mono, ui-monospace, "SFMono-Regular", Consolas, monospace);
+  --font-code: var(--font-pragmata-pro, ui-monospace, "SFMono-Regular", Consolas, monospace);
+
+  --color-bg: #f8f6f0;
+  --color-article-bg: #fbfaf6;
+  --color-surface: #ffffff;
+  --color-text: #181713;
+  --color-muted: #6f6a60;
+  --color-border: #d8d0c4;
+  --color-link: #176b87;
+  --color-accent: #d75f3f;
+  --color-accent-2: #3a7d44;
+  --color-code-bg: #efebe2;
+  --color-selection-text: #fff;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+
+  --container: 72rem;
+  --prose: 44rem;
+  --prose-wide: 58rem;
+  --measure-section-copy: var(--prose);
+  --measure-section-wide: 48rem;
+  --grid-min: 18rem;
+  --breakpoint-prose: 44rem;
+  --breakpoint-layout: 56rem;
+
+  --radius: 0.5rem;
+  --radius-small: 0.25rem;
+  --radius-pill: 999px;
+
+  --border: 1px solid var(--color-border);
+  --border-emphasis-width: 0.2rem;
+  --border-wide-width: 0.25rem;
+  --border-tab-width: 0.15rem;
+
+  --text-xs: 0.78rem;
+  --text-sm: 0.85rem;
+  --text-nav: 0.875rem;
+  --text-caption: 0.95rem;
+  --text-eyebrow: 0.8rem;
+  --text-heading-2: 1.75rem;
+  --text-heading-3: 1.25rem;
+  --text-lead: 1.15rem;
+  --text-home-lead: 1.2rem;
+
+  --page-section-gap: var(--space-6);
+  --page-section-padding-block: var(--space-7);
+  --page-header-gap: var(--space-3);
+  --content-page-gap: var(--space-5);
+  --content-page-padding-block: var(--space-7);
+  --content-header-gap: var(--space-4);
+
+  --card-padding: var(--space-5);
+  --card-gap: var(--space-4);
+  --card-text-gap: var(--space-2);
+  --media-placeholder-background:
+    linear-gradient(135deg, transparent 0 48%, var(--color-border) 48% 52%, transparent 52%),
+    var(--color-code-bg);
+
+  --control-min: 8rem;
+  --canvas-experiment-bg: var(--color-code-bg);
+  --canvas-experiment-border: var(--border);
+  --canvas-experiment-radius: var(--radius);
+  --canvas-experiment-margin-block: var(--space-6);
+  --canvas-experiment-tabs-bg: color-mix(in srgb, var(--color-surface) 68%, transparent);
+  --canvas-experiment-tabs-padding: var(--space-3) var(--space-4) 0;
+  --canvas-experiment-tab-gap: var(--space-3);
+  --canvas-experiment-tab-padding: 0 0 var(--space-2);
+  --canvas-experiment-tab-border-width: var(--border-tab-width);
+  --canvas-experiment-tab-active: var(--color-accent-2);
+  --canvas-controls-padding: var(--space-3);
+  --canvas-controls-gap: var(--space-2);
+  --canvas-control-gap: var(--space-2);
+  --canvas-control-inner-gap: var(--space-1);
+  --canvas-control-grid-min: var(--control-min);
+  --canvas-control-label-default: var(--color-muted);
+  --canvas-control-label-warning: var(--color-accent);
+  --canvas-control-label-error: #b3261e;
+  --canvas-control-label-gap: var(--space-2);
+  --canvas-control-value-color: var(--color-text);
+  --canvas-control-accent: var(--color-accent-2);
+  --canvas-control-size-narrow: 7rem;
+  --canvas-control-size-wide: 16rem;
+  --canvas-control-vertical-range: 14rem;
+  --canvas-control-vertical-track: 1.5rem;
+  --canvas-group-gap: var(--space-2);
+  --canvas-group-header-gap: var(--space-3);
+  --canvas-group-label-indent: var(--space-3);
+  --canvas-checkbox-gap: var(--space-2);
+  --canvas-radio-gap: var(--space-3);
+  --canvas-check-size: 1rem;
+  --canvas-link-toggle-size: 1.25rem;
+  --canvas-link-toggle-color: var(--color-muted);
+  --canvas-link-toggle-active-bg: color-mix(in srgb, var(--color-accent-2) 16%, transparent);
+  --canvas-link-toggle-active-color: var(--color-accent-2);
+  --canvas-debug-padding: var(--space-3) var(--space-4);
+  --canvas-debug-gap: var(--space-2);
+  --canvas-debug-metric-bg: color-mix(in srgb, var(--color-surface) 56%, transparent);
+  --canvas-debug-metric-border: var(--border);
+  --canvas-debug-metric-radius: var(--radius-small);
+  --canvas-debug-metric-gap: var(--space-2);
+  --canvas-debug-metric-padding: var(--space-1) var(--space-2);
+  --experiment-card-padding: var(--card-padding);
+  --experiment-card-gap: var(--card-gap);
+  --experiment-card-text-gap: var(--card-text-gap);
+  --experiment-card-status-color: var(--color-accent-2);
+  --icon-badge-size: 2.5rem;
+  --icon-badge-glyph-size: 1.4rem;
+  --tech-icon-size: 1.15rem;
+  --tech-icon-min-height: 1.75rem;
+  --project-logo-size: 3rem;
+  --project-logo-glyph-size: 1.75rem;
+  --technical-aside-min: 12rem;
+  --technical-aside-max: 16rem;
+
+  --motion-duration-fast: 120ms;
+  --motion-duration: 180ms;
+  --motion-duration-page: 260ms;
+  --motion-duration-bottom-slide: 380ms;
+  --motion-ease: cubic-bezier(0.2, 0, 0, 1);
+  --motion-ease-emphasized: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-ease-bottom-slide: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --motion-hover-lift: -0.125rem;
+  --shadow-focus: 0 0 0 0.18rem color-mix(in srgb, var(--color-link) 28%, transparent);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #171714;
+    --color-article-bg: #1c1c18;
+    --color-surface: #20201c;
+    --color-text: #f3efe6;
+    --color-muted: #b8b0a3;
+    --color-border: #3a352e;
+    --color-link: #73c7dd;
+    --color-accent: #ff876c;
+    --color-accent-2: #8fcf8d;
+    --color-code-bg: #2a2924;
+    --canvas-control-label-error: #ffb4ab;
+  }
+}

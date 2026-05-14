@@ -1,0 +1,78 @@
+body {
+  font-family: var(--font-main);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.15;
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(2.25rem, 8vw, 5rem);
+  max-width: 11ch;
+}
+
+h2 {
+  font-size: var(--text-heading-2);
+}
+
+h3 {
+  font-size: var(--text-heading-3);
+}
+
+p,
+ul,
+ol,
+blockquote,
+pre {
+  margin-block: 0 1.25rem;
+}
+
+a {
+  color: var(--color-link);
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.18em;
+  transition:
+    color var(--motion-duration-fast) var(--motion-ease),
+    text-decoration-color var(--motion-duration-fast) var(--motion-ease);
+}
+
+a:hover,
+a:focus-visible {
+  text-decoration-color: currentColor;
+}
+
+code,
+pre,
+kbd,
+samp {
+  font-family: var(--font-code);
+  font-feature-settings: "liga" 1, "calt" 1;
+}
+
+:not(pre) > code {
+  background: var(--color-code-bg);
+  border-radius: var(--radius-small);
+  padding: 0.08rem 0.28rem;
+  transition:
+    background-color var(--motion-duration) var(--motion-ease),
+    color var(--motion-duration) var(--motion-ease);
+}
+
+blockquote {
+  border-left: var(--border-emphasis-width) solid var(--color-accent);
+  color: var(--color-muted);
+  padding-left: var(--space-4);
+}
+
+.meta,
+.eyebrow,
+.detail,
+.tech-label {
+  font-family: var(--font-accent);
+}

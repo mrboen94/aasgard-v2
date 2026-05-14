@@ -1,0 +1,104 @@
+---
+import CanvasExperiment from "../../../../components/lab/CanvasExperiment.astro";
+import type { CanvasSettingsTree } from "../../../../components/lab/canvasExperiment";
+
+interface Props {
+  canvasMargin?: boolean;
+  src: string;
+}
+
+const { canvasMargin = false, src } = Astro.props;
+const settings = [
+  {
+    children: [
+      {
+        id: "resolution",
+        label: "Resolution",
+        max: 10,
+        min: 2,
+        showValue: true,
+        step: 1,
+        type: "range",
+        value: 9
+      },
+      {
+        id: "size",
+        label: "Size",
+        max: 6,
+        min: 1,
+        showValue: true,
+        step: 1,
+        type: "range",
+        value: 3
+      },
+      {
+        id: "mouseRadius",
+        label: "Force",
+        max: 6000,
+        min: 500,
+        showValue: true,
+        step: 100,
+        type: "range",
+        unit: "px",
+        value: 3000
+      },
+      {
+        id: "ease",
+        label: "Ease",
+        max: 0.06,
+        min: 0.005,
+        showValue: true,
+        size: "narrow",
+        step: 0.005,
+        type: "range",
+        value: 0.01
+      },
+      {
+        id: "friction",
+        label: "Friction",
+        max: 0.98,
+        min: 0.75,
+        showValue: true,
+        size: "narrow",
+        step: 0.01,
+        type: "range",
+        value: 0.86
+      },
+      {
+        children: [
+          {
+            id: "gravity",
+            label: "Gravity",
+            type: "checkbox",
+            value: false
+          },
+          {
+            id: "collisions",
+            label: "Collisions",
+            type: "checkbox",
+            value: false
+          }
+        ],
+        id: "toggles",
+        label: "Toggles",
+        layout: "cluster",
+        type: "group",
+        variant: "plain"
+      }
+    ],
+    id: "particle-controls",
+    label: "Particle controls",
+    layout: "grid",
+    type: "group",
+    variant: "box"
+  }
+] satisfies CanvasSettingsTree;
+---
+
+<CanvasExperiment
+  ariaLabel="Interactive particle image"
+  canvasMargin={canvasMargin ? 64 : 0}
+  imageSrc={src}
+  script="/src/content/experiments/physics-simulation-javascript/sketches/physics.ts"
+  settings={settings}
+/>

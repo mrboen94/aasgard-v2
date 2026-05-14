@@ -1,0 +1,83 @@
+---
+interface Props {
+  provider: "youtube" | "vimeo" | "mux" | "local";
+  id: string;
+  title: string;
+  poster?: string;
+}
+
+const { provider, id, title, poster } = Astro.props;
+const hrefByProvider = {
+  youtube: `https://www.youtube.com/watch?v=${id}`,
+  vimeo: `https://vimeo.com/${id}`,
+  mux: `https://stream.mux.com/${id}`,
+  local: id
+};
+---
+
+<figure class="video-embed">
+  <a href={hrefByProvider[provider]}>
+    <span class="video-embed__poster" style={poster ? `background-image: url(${poster})` : undefined}></span>
+    <span class="video-embed__play meta">Open {provider} video</span>
+  </a>
+  <figcaption>{title}</figcaption>
+</figure>
+
+<style>
+  .video-embed {
+    margin: var(--space-6) 0;
+  }
+
+  .video-embed a {
+    color: inherit;
+    display: grid;
+    position: relative;
+    text-decoration: none;
+  }
+
+  .video-embed__poster {
+    aspect-ratio: 16 / 9;
+    background: var(--media-placeholder-background);
+    background-position: center;
+    background-size: cover;
+    border: var(--border);
+    border-radius: var(--radius);
+    transition:
+      background-color var(--motion-duration) var(--motion-ease),
+      border-color var(--motion-duration) var(--motion-ease),
+      transform var(--motion-duration) var(--motion-ease);
+  }
+
+  .video-embed__play {
+    background: var(--color-surface);
+    border: var(--border);
+    border-radius: var(--radius-pill);
+    left: 50%;
+    padding: var(--space-2) var(--space-3);
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    transition:
+      background-color var(--motion-duration-fast) var(--motion-ease),
+      border-color var(--motion-duration-fast) var(--motion-ease),
+      color var(--motion-duration-fast) var(--motion-ease),
+      transform var(--motion-duration) var(--motion-ease);
+  }
+
+  .video-embed a:hover .video-embed__poster,
+  .video-embed a:focus-visible .video-embed__poster {
+    transform: scale(1.01);
+  }
+
+  .video-embed a:hover .video-embed__play,
+  .video-embed a:focus-visible .video-embed__play {
+    transform: translate(-50%, -50%) scale(1.03);
+  }
+
+  .video-embed figcaption {
+    color: var(--color-muted);
+    font-family: var(--font-accent);
+    font-size: var(--text-sm);
+    margin-top: var(--space-2);
+  }
+</style>

@@ -1,0 +1,40 @@
+---
+import { render } from "astro:content";
+import ArticleMeta from "../../components/article/ArticleMeta.astro";
+import ArticleProse from "../../components/article/ArticleProse.astro";
+import BaseLayout from "../../components/layout/BaseLayout.astro";
+import VideoEmbed from "../../components/media/VideoEmbed.astro";
+import { getVideoProjects } from "../../lib/content/collections";
+
+export async function getStaticPaths() {
+  const entries = await getVideoProjects();
+
+  return entries.map((entry) => ({
+    params: { slug: entry.data.slug },
+    props: { entry }
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<BaseLayout title={entry.data.title} description={entry.data.description} canonical={`/video/${entry.data.slug}/`}>
+  <article class="container content-page" data-pagefind-body>
+    <header class="content-page__header content-page__header--secondary">
+      <p class="eyebrow">Video</p>
+      <h1 data-pagefind-meta="title">{entry.data.title}</h1>
+      <p>{entry.data.description}</p>
+      <ArticleMeta date={entry.data.date} section="video" />
+    </header>
+    <VideoEmbed
+      provider={entry.data.provider}
+      id={entry.data.videoId}
+      title={entry.data.title}
+      poster={entry.data.poster}
+    />
+    <ArticleProse>
+      <Content />
+    </ArticleProse>
+  </article>
+</BaseLayout>

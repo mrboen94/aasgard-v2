@@ -1,0 +1,255 @@
+---
+import CanvasExperiment from "../../../../components/lab/CanvasExperiment.astro";
+import type { CanvasSettingsTree } from "../../../../components/lab/canvasExperiment";
+
+interface Props {
+  src: string;
+}
+
+const { src } = Astro.props;
+const settings = [
+  {
+    children: [
+      {
+        id: "simulationPreset",
+        label: "Preset",
+        options: [
+          {
+            label: "Balanced",
+            settings: {
+              cohesion: 0.8,
+              collisions: false,
+              contain: false,
+              density: 48,
+              force: 170,
+              friction: 0.12,
+              gravity: false,
+              mode: "repel",
+              particleGap: 0,
+              particleSize: 1,
+              sizeJitter: 0,
+              trails: false,
+              turbulence: 0,
+              viewportPadding: 40
+            },
+            value: "balanced"
+          },
+          {
+            label: "Fluid",
+            settings: {
+              cohesion: 0.55,
+              density: 64,
+              force: 130,
+              friction: 0.06,
+              mode: "orbit",
+              particleGap: 0,
+              particleSize: 1.5,
+              sizeJitter: 0.1,
+              trails: true,
+              turbulence: 0.25
+            },
+            value: "fluid"
+          },
+          {
+            label: "Sparse wind",
+            settings: {
+              cohesion: 0.35,
+              collisions: true,
+              contain: true,
+              density: 24,
+              force: 220,
+              friction: 0.03,
+              mode: "wind",
+              particleGap: 8,
+              particleSize: 3,
+              sizeJitter: 0.3,
+              turbulence: 0.5,
+              viewportPadding: 56
+            },
+            value: "sparse-wind"
+          }
+        ],
+        placeholder: "Preset",
+        type: "preset"
+      },
+      {
+        id: "viewportPadding",
+        label: "Viewport padding",
+        max: 120,
+        min: 0,
+        showValue: true,
+        step: 2,
+        type: "range",
+        unit: "px",
+        value: 40
+      },
+      {
+        id: "contain",
+        label: "Contain in viewport",
+        type: "checkbox",
+        value: false
+      }
+    ],
+    id: "setup",
+    label: "Setup",
+    layout: "grid",
+    type: "group",
+    variant: "box"
+  },
+  {
+    children: [
+      {
+        id: "mode",
+        label: "Field",
+        options: [
+          { label: "Repel", value: "repel" },
+          { label: "Orbit", value: "orbit" },
+          { label: "Wind", value: "wind" }
+        ],
+        type: "select",
+        value: "repel"
+      },
+      {
+        id: "force",
+        label: "Force",
+        max: 260,
+        min: 40,
+        showValue: true,
+        step: 10,
+        type: "range",
+        value: 170
+      },
+      {
+        id: "trails",
+        label: "Trails",
+        type: "checkbox",
+        value: false
+      },
+      {
+        id: "gravity",
+        label: "Gravity",
+        type: "checkbox",
+        value: false
+      },
+      {
+        id: "collisions",
+        label: "Collisions",
+        type: "checkbox",
+        value: false
+      }
+    ],
+    id: "interaction",
+    label: "Interaction",
+    layout: "grid",
+    type: "group",
+    variant: "box"
+  },
+  {
+    children: [
+      {
+        id: "density",
+        label: "Density",
+        max: 128,
+        min: 1,
+        showValue: true,
+        step: 1,
+        type: "range",
+        value: 48
+      },
+      {
+        id: "particleSize",
+        label: "Particle size",
+        max: 15,
+        min: 1,
+        showValue: true,
+        step: 0.25,
+        type: "range",
+        unit: "px",
+        value: 1
+      },
+      {
+        id: "particleGap",
+        label: "Particle gap",
+        max: 128,
+        min: 0,
+        showValue: true,
+        step: 1,
+        type: "range",
+        unit: "px",
+        value: 0
+      },
+      {
+        id: "cohesion",
+        label: "Cohesion",
+        max: 1,
+        min: 0,
+        showValue: true,
+        step: 0.05,
+        type: "range",
+        value: 0.8
+      },
+      {
+        id: "friction",
+        label: "Friction",
+        max: 0.3,
+        min: 0,
+        showValue: true,
+        step: 0.01,
+        type: "range",
+        value: 0.12
+      }
+    ],
+    id: "particles",
+    label: "Particles",
+    layout: "fill",
+    links: [
+      {
+        enabled: false,
+        source: "particleSize",
+        targets: [{ id: "particleGap", ratio: 4 }]
+      }
+    ],
+    type: "group",
+    variant: "box"
+  },
+  {
+    children: [
+      {
+        id: "turbulence",
+        label: "Turbulence",
+        max: 1,
+        min: 0,
+        orientation: "vertical",
+        showValue: true,
+        size: "narrow",
+        step: 0.05,
+        type: "range",
+        value: 0
+      },
+      {
+        id: "sizeJitter",
+        label: "Size jitter",
+        max: 1,
+        min: 0,
+        showValue: true,
+        size: "narrow",
+        step: 0.05,
+        type: "range",
+        value: 0
+      }
+    ],
+    id: "motion-field",
+    label: "Motion field",
+    labelColor: { type: "warning" },
+    layout: "row",
+    type: "details"
+  }
+] satisfies CanvasSettingsTree;
+---
+
+<CanvasExperiment
+  ariaLabel="Shader driven particle image"
+  imageSrc={src}
+  script="/src/content/experiments/physics-simulation-shader-javascript/sketches/shaderPhysics.ts"
+  settings={settings}
+/>

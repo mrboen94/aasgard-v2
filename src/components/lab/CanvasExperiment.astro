@@ -1,0 +1,155 @@
+---
+import "../../styles/canvas-experiment.css";
+import CanvasSettingsNode from "./CanvasSettingsNode.astro";
+import type {
+  CanvasExperimentScene,
+  CanvasSettings,
+  CanvasSettingsNode as CanvasSettingsTreeNode,
+  CanvasSettingsTree
+} from "./canvasExperiment";
+
+interface Props {
+  ariaLabel?: string;
+  canvasMargin?: number;
+  imageSrc?: string;
+  scenes?: CanvasExperimentScene[];
+  script?: string;
+  settings?: CanvasSettingsTree;
+}
+
+const {
+  ariaLabel = "Interactive canvas experiment",
+  canvasMargin = 0,
+  imageSrc,
+  scenes,
+  script,
+  settings = []
+} = Astro.props;
+
+const sceneList =
+  scenes && scenes.length > 0
+    ? scenes.map((scene, index) => ({
+        ...scene,
+        id: scene.id || `scene-${index + 1}`,
+        label: scene.label || `Scene ${index + 1}`,
+        settings: scene.settings ?? []
+      }))
+    : script
+      ? [
+          {
+            ariaLabel,
+            id: "default",
+            imageSrc,
+            label: "Scene",
+            script,
+            settings
+          }
+        ]
+      : [];
+
+if (sceneList.length === 0) {
+  throw new Error("CanvasExperiment requires either a script or scenes.");
+}
+
+function collectInitialSettings(nodes: CanvasSettingsTreeNode[]) {
+  const initialSettings: CanvasSettings = {};
+
+  for (const node of nodes) {
+    if (node.type === "group" || node.type === "details") {
+      Object.assign(initialSettings, collectInitialSettings(node.children));
+      continue;
+    }
+
+    if (node.type !== "preset") {
+      initialSettings[node.id] = node.value;
+    }
+  }
+
+  return initialSettings;
+}
+
+const initialSettingsByScene = Object.fromEntries(
+  sceneList.map((scene) => [
+    scene.id,
+    collectInitialSettings(scene.settings ?? [])
+  ])
+) satisfies Record<string, CanvasSettings>;
+const runtimeScenes = sceneList.map(({ ariaLabel, id, imageSrc, label, script }) => ({
+  ariaLabel,
+  id,
+  imageSrc,
+  label,
+  script
+}));
+const activeScene = sceneList[0];
+const instanceId = `canvas-experiment-${Math.random().toString(36).slice(2)}`;
+---
+
+<figure
+  class:list={[
+    "canvas-experiment",
+    activeScene.imageSrc && "canvas-experiment--with-image"
+  ]}
+  data-active-scene-id={activeScene.id}
+  data-canvas-experiment
+  data-default-aria-label={ariaLabel}
+  data-image-src={activeScene.imageSrc}
+  data-scenes={JSON.stringify(runtimeScenes)}
+  data-settings={JSON.stringify(initialSettingsByScene)}
+  style={`--canvas-experiment-margin: ${canvasMargin}px;`}
+>
+  {
+    sceneList.length > 1 && (
+      <div class="canvas-experiment__tabs" role="tablist" aria-label="Canvas scenes">
+        {sceneList.map((scene) => (
+          <button
+            aria-controls={`${instanceId}-${scene.id}-controls`}
+            aria-selected={scene.id === activeScene.id ? "true" : "false"}
+            class="canvas-experiment__tab"
+            data-canvas-scene-tab={scene.id}
+            role="tab"
+            tabindex={scene.id === activeScene.id ? 0 : -1}
+            type="button"
+          >
+            {scene.label}
+          </button>
+        ))}
+      </div>
+    )
+  }
+  <canvas aria-label={activeScene.ariaLabel ?? ariaLabel}></canvas>
+  <img
+    alt=""
+    class="canvas-experiment__fallback"
+    hidden={!activeScene.imageSrc}
+    loading="lazy"
+    src={activeScene.imageSrc}
+  />
+  <div aria-live="polite" class="canvas-experiment__debug" data-canvas-debug hidden></div>
+  {
+    sceneList.map(
+      (scene) =>
+        scene.settings?.length ? (
+          <figcaption
+            aria-label={`${scene.label} canvas controls`}
+            class="canvas-experiment__controls"
+            data-canvas-controls-panel
+            data-canvas-scene-id={scene.id}
+            hidden={scene.id !== activeScene.id}
+            id={`${instanceId}-${scene.id}-controls`}
+          >
+            {scene.settings.map((node) => (
+              <CanvasSettingsNode instanceId={instanceId} node={node} sceneId={scene.id} />
+            ))}
+          </figcaption>
+        ) : null
+    )
+  }
+</figure>
+
+<script>
+  import { mountCanvasExperiments } from "./canvasExperimentRuntime";
+
+  mountCanvasExperiments();
+  document.addEventListener("astro:page-load", mountCanvasExperiments);
+</script>

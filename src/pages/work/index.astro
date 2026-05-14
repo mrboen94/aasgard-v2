@@ -1,0 +1,18 @@
+---
+import BaseLayout from "../../components/layout/BaseLayout.astro";
+import ProjectGrid from "../../components/project/ProjectGrid.astro";
+import { getWorkEntries } from "../../lib/content/collections";
+
+const entries = await getWorkEntries();
+---
+
+<BaseLayout title="Work" description="Projects, collaborations, and experience.">
+  <section class="container page-section">
+    <header class="page-header">
+      <p class="eyebrow">Projects</p>
+      <h1>Work</h1>
+      <p>Project cards render local logos and technology icons from structured content.</p>
+    </header>
+    <ProjectGrid entries={entries} />
+  </section>
+</BaseLayout>
