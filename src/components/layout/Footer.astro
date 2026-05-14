@@ -2,11 +2,7 @@
 import { site } from "../../data/site";
 ---
 
-<footer
-  class="site-footer"
-  transition:name="site-footer"
-  transition:persist="site-footer"
->
+<footer class="site-footer" transition:animate="none">
   <div class="container site-footer__inner">
     <p>&copy; {new Date().getFullYear()} {site.author}</p>
     <a href="/rss.xml">RSS</a>

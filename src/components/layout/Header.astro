@@ -1,21 +1,37 @@
 ---
-import { NAV_LINKS, isLinkActive } from "../../lib/navigation/links";
+import { NAV_LINKS, isCurrentRouteHref, isLinkActive } from "../../lib/navigation/links";
 
 const pathname = Astro.url.pathname;
+const isHomePage = isCurrentRouteHref("/", pathname);
 ---
 
-<header
-  class="site-header"
-  transition:name="site-header"
-  transition:persist="site-header"
->
+<header class="site-header" transition:animate="none">
   <div class="container site-header__inner">
-    <a class="site-header__brand" href="/">Aasgard</a>
+    {
+      isHomePage ? (
+        <span class="site-header__brand" aria-current="page">Aasgard</span>
+      ) : (
+        <a class="site-header__brand" href="/">Aasgard</a>
+      )
+    }
     <nav class="site-header__nav" aria-label="Primary navigation">
       <ul class="site-header__nav-list">
-        {NAV_LINKS.map((link) => (
-          <li><a href={link.href} aria-current={isLinkActive(link.href, pathname) ? "page" : undefined}>{link.label}</a></li>
-        ))}
+        {NAV_LINKS.map((link) => {
+          const isCurrent = isCurrentRouteHref(link.href, pathname);
+          return (
+            <li>
+              {
+                isCurrent ? (
+                  <span aria-current="page">{link.label}</span>
+                ) : (
+                  <a href={link.href} aria-current={isLinkActive(link.href, pathname) ? "page" : undefined}>
+                    {link.label}
+                  </a>
+                )
+              }
+            </li>
+          );
+        })}
       </ul>
     </nav>
   </div>
@@ -42,13 +58,11 @@ const pathname = Astro.url.pathname;
     font-family: var(--font-accent);
     font-weight: 700;
     text-decoration: none;
-    transition:
-      color var(--motion-duration-fast) var(--motion-ease),
-      opacity var(--motion-duration-fast) var(--motion-ease);
+    transition: opacity var(--motion-duration-fast) var(--motion-ease);
   }
 
-  .site-header__brand:hover,
-  .site-header__brand:focus-visible {
+  a.site-header__brand:hover,
+  a.site-header__brand:focus-visible {
     opacity: 0.72;
   }
 
@@ -62,12 +76,12 @@ const pathname = Astro.url.pathname;
     padding: 0;
   }
 
-  .site-header__nav a {
+  .site-header__nav :is(a, span) {
     color: var(--color-muted);
     font-family: var(--font-accent);
     font-size: var(--text-nav);
     text-decoration: none;
-    transition: color var(--motion-duration-page) var(--motion-ease-emphasized);
+    transition: color var(--motion-duration-fast) var(--motion-ease);
   }
 
   .site-header__nav a:hover,
@@ -75,7 +89,7 @@ const pathname = Astro.url.pathname;
     color: var(--color-text);
   }
 
-  .site-header__nav a[aria-current="page"] {
+  .site-header__nav [aria-current="page"] {
     color: var(--color-accent-2);
   }
 </style>

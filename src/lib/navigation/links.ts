@@ -22,6 +22,10 @@ function withTrailingSlash(value: string): string {
   return value.endsWith("/") ? value : `${value}/`;
 }
 
+export function isCurrentRouteHref(href: string, pathname: string): boolean {
+  return withTrailingSlash(href) === withTrailingSlash(pathname);
+}
+
 export function isLinkActive(href: string, pathname: string): boolean {
   const normalizedPath = withTrailingSlash(pathname);
   if (href === "/") {
