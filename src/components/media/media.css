@@ -4,13 +4,6 @@
   grid-template-columns: repeat(3, 1fr);
 }
 
-.photo-grid__placeholder,
-.photo-card__media,
-.video-card__poster,
-.video-embed__poster {
-  background: var(--media-placeholder-background);
-}
-
 .photo-grid__placeholder {
   aspect-ratio: 4 / 5;
   border: var(--border);
@@ -54,12 +47,6 @@
   display: grid;
   gap: var(--card-text-gap);
   padding: var(--space-4);
-}
-
-.photo-card p,
-.video-card p {
-  color: var(--color-muted);
-  margin: 0;
 }
 
 .photo-card:has(a:hover) .photo-card__media,
@@ -120,13 +107,6 @@
 .video-embed a:hover .video-embed__play,
 .video-embed a:focus-visible .video-embed__play {
   transform: translate(-50%, -50%) scale(1.03);
-}
-
-.video-embed figcaption {
-  color: var(--color-muted);
-  font-family: var(--font-accent);
-  font-size: var(--text-sm);
-  margin-top: var(--space-2);
 }
 
 @media (max-width: 44rem) {

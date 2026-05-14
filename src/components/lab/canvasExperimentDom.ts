@@ -72,6 +72,12 @@ export function labelColorClass(labelColor?: LabelColor) {
   return `canvas-label-color canvas-label-color--${labelColor?.type ?? "default"}`;
 }
 
+export function labelColorStyle(labelColor?: LabelColor) {
+  return labelColor?.type === "custom"
+    ? `--canvas-label-color-custom: ${labelColor.value};`
+    : undefined;
+}
+
 export function applyLabelColor(element: HTMLElement, labelColor?: LabelColor) {
   element.className = labelColorClass(labelColor);
 

@@ -12,10 +12,10 @@ const { entry } = Astro.props;
 
 <article class="photo-card surface">
   <a href={photoProjectUrl(entry.data.slug)}>
-    <span class="photo-card__media" aria-hidden="true"></span>
+    <span class="photo-card__media media-placeholder" aria-hidden="true"></span>
     <span class="photo-card__text">
       <h3>{entry.data.title}</h3>
-      <p>{entry.data.description}</p>
+      <p class="listing-card__copy">{entry.data.description}</p>
     </span>
   </a>
 </article>

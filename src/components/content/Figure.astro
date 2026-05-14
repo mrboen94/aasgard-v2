@@ -10,5 +10,5 @@ const { caption } = Astro.props;
 
 <figure class="content-figure">
   <slot />
-  {caption && <figcaption>{caption}</figcaption>}
+  {caption && <figcaption class="caption">{caption}</figcaption>}
 </figure>

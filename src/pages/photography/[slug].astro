@@ -1,5 +1,4 @@
 ---
-import "./photo-details.css";
 import { render } from "astro:content";
 import ArticleMeta from "../../components/article/ArticleMeta.astro";
 import ArticleProse from "../../components/article/ArticleProse.astro";
@@ -22,7 +21,7 @@ const { Content } = await render(entry);
 
 <BaseLayout title={entry.data.title} description={entry.data.description} canonical={`/photography/${entry.data.slug}/`}>
   <article class="container content-page" data-pagefind-body>
-    <header class="content-page__header">
+    <header class="content-page__header page-intro">
       <p class="eyebrow">Photography</p>
       <h1 data-pagefind-meta="title">{entry.data.title}</h1>
       <p>{entry.data.description}</p>

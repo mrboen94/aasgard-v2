@@ -68,62 +68,6 @@
     linear-gradient(135deg, transparent 0 48%, var(--color-border) 48% 52%, transparent 52%),
     var(--color-code-bg);
 
-  --control-min: 8rem;
-  --canvas-experiment-bg: var(--color-code-bg);
-  --canvas-experiment-border: var(--border);
-  --canvas-experiment-radius: var(--radius);
-  --canvas-experiment-margin-block: var(--space-6);
-  --canvas-experiment-tabs-bg: color-mix(in srgb, var(--color-surface) 68%, transparent);
-  --canvas-experiment-tabs-padding: var(--space-3) var(--space-4) 0;
-  --canvas-experiment-tab-gap: var(--space-3);
-  --canvas-experiment-tab-padding: 0 0 var(--space-2);
-  --canvas-experiment-tab-border-width: var(--border-tab-width);
-  --canvas-experiment-tab-active: var(--color-accent-2);
-  --canvas-controls-padding: var(--space-3);
-  --canvas-controls-gap: var(--space-2);
-  --canvas-control-gap: var(--space-2);
-  --canvas-control-inner-gap: var(--space-1);
-  --canvas-control-grid-min: var(--control-min);
-  --canvas-control-label-default: var(--color-muted);
-  --canvas-control-label-warning: var(--color-accent);
-  --canvas-control-label-error: #b3261e;
-  --canvas-control-label-gap: var(--space-2);
-  --canvas-control-value-color: var(--color-text);
-  --canvas-control-accent: var(--color-accent-2);
-  --canvas-control-size-narrow: 7rem;
-  --canvas-control-size-wide: 16rem;
-  --canvas-control-vertical-range: 14rem;
-  --canvas-control-vertical-track: 1.5rem;
-  --canvas-group-gap: var(--space-2);
-  --canvas-group-header-gap: var(--space-3);
-  --canvas-group-label-indent: var(--space-3);
-  --canvas-checkbox-gap: var(--space-2);
-  --canvas-radio-gap: var(--space-3);
-  --canvas-check-size: 1rem;
-  --canvas-link-toggle-size: 1.25rem;
-  --canvas-link-toggle-color: var(--color-muted);
-  --canvas-link-toggle-active-bg: color-mix(in srgb, var(--color-accent-2) 16%, transparent);
-  --canvas-link-toggle-active-color: var(--color-accent-2);
-  --canvas-debug-padding: var(--space-3) var(--space-4);
-  --canvas-debug-gap: var(--space-2);
-  --canvas-debug-metric-bg: color-mix(in srgb, var(--color-surface) 56%, transparent);
-  --canvas-debug-metric-border: var(--border);
-  --canvas-debug-metric-radius: var(--radius-small);
-  --canvas-debug-metric-gap: var(--space-2);
-  --canvas-debug-metric-padding: var(--space-1) var(--space-2);
-  --experiment-card-padding: var(--card-padding);
-  --experiment-card-gap: var(--card-gap);
-  --experiment-card-text-gap: var(--card-text-gap);
-  --experiment-card-status-color: var(--color-accent-2);
-  --icon-badge-size: 2.5rem;
-  --icon-badge-glyph-size: 1.4rem;
-  --tech-icon-size: 1.15rem;
-  --tech-icon-min-height: 1.75rem;
-  --project-logo-size: 3rem;
-  --project-logo-glyph-size: 1.75rem;
-  --technical-aside-min: 12rem;
-  --technical-aside-max: 16rem;
-
   --motion-duration-fast: 120ms;
   --motion-duration: 180ms;
   --motion-duration-page: 260ms;
@@ -147,6 +91,5 @@
     --color-accent: #ff876c;
     --color-accent-2: #8fcf8d;
     --color-code-bg: #2a2924;
-    --canvas-control-label-error: #ffb4ab;
   }
 }

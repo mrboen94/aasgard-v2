@@ -4,9 +4,9 @@ import type {
   CanvasControl,
   CanvasRangeControl,
   CanvasSettingsLink,
-  CanvasSettingsNode,
-  LabelColor
+  CanvasSettingsNode
 } from "./canvasExperiment";
+import { labelColorClass, labelColorStyle } from "./canvasExperimentDom";
 
 interface Props {
   instanceId: string;
@@ -23,19 +23,6 @@ const {
   parentLinks,
   sceneId
 } = Astro.props;
-
-function labelColorClass(labelColor?: LabelColor) {
-  return [
-    "canvas-label-color",
-    `canvas-label-color--${labelColor?.type ?? "default"}`
-  ];
-}
-
-function labelColorStyle(labelColor?: LabelColor) {
-  return labelColor?.type === "custom"
-    ? `--canvas-label-color-custom: ${labelColor.value};`
-    : undefined;
-}
 
 function rangeSizeClass(control: CanvasRangeControl) {
   return `canvas-control--${control.size ?? "default"}`;
@@ -134,8 +121,9 @@ function pairAriaLabel(item: RenderItem & { kind: "pair" }) {
     <section
       class:list={[
         "canvas-experiment__group",
+        "canvas-controls-layout",
         `canvas-experiment__group--${node.variant}`,
-        `canvas-experiment__group--${node.layout}`
+        `canvas-controls-layout--${node.layout}`
       ]}
       data-canvas-group={node.id}
       data-canvas-links={node.links?.length ? JSON.stringify(node.links) : undefined}
@@ -206,7 +194,8 @@ function pairAriaLabel(item: RenderItem & { kind: "pair" }) {
     <details
       class:list={[
         "canvas-experiment__details",
-        node.layout && `canvas-experiment__details--${node.layout}`
+        node.layout && "canvas-controls-layout",
+        node.layout && `canvas-controls-layout--${node.layout}`
       ]}
       data-canvas-details={node.id}
       open={node.open}

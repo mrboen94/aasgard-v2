@@ -21,7 +21,7 @@ const { Content } = await render(entry);
 
 <BaseLayout title={entry.data.title} description={entry.data.description} canonical={`/video/${entry.data.slug}/`}>
   <article class="container content-page" data-pagefind-body>
-    <header class="content-page__header content-page__header--secondary">
+    <header class="content-page__header page-intro page-intro--secondary">
       <p class="eyebrow">Video</p>
       <h1 data-pagefind-meta="title">{entry.data.title}</h1>
       <p>{entry.data.description}</p>

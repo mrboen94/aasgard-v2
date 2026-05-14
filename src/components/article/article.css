@@ -42,30 +42,6 @@
   padding: 0 var(--space-2);
 }
 
-.article-card {
-  display: grid;
-  gap: var(--card-gap);
-  padding: var(--card-padding);
-}
-
-.article-card__link {
-  color: inherit;
-  display: grid;
-  gap: var(--card-text-gap);
-  text-decoration: none;
-}
-
-.article-card .eyebrow {
-  color: var(--color-accent);
-  font-size: var(--text-xs);
-  text-transform: uppercase;
-}
-
-.article-card__link p {
-  color: var(--color-muted);
-  margin: 0;
-}
-
 .article-prose {
   max-width: var(--prose);
   min-width: 0;
@@ -118,6 +94,8 @@
 }
 
 .technical-layout {
+  --technical-aside-max: 16rem;
+  --technical-aside-min: 12rem;
   align-items: start;
   display: grid;
   gap: var(--space-6);

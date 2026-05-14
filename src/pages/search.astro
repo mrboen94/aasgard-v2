@@ -4,7 +4,7 @@ import BaseLayout from "../components/layout/BaseLayout.astro";
 
 <BaseLayout title="Search" description="Search the static site.">
   <section class="container page-section">
-    <header class="page-header">
+    <header class="page-header page-intro">
       <p class="eyebrow">Pagefind</p>
       <h1>Search</h1>
     </header>
@@ -12,11 +12,10 @@ import BaseLayout from "../components/layout/BaseLayout.astro";
   </section>
   <link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
   <script is:inline src="/pagefind/pagefind-ui.js"></script>
-  <script is:inline>
-    window.addEventListener("DOMContentLoaded", () => {
-      if ("PagefindUI" in window) {
-        new window.PagefindUI({ element: "#search", showSubResults: true });
-      }
-    });
+  <script>
+    import { mountOnAstroPageLoad } from "../lib/dom/lifecycle";
+    import { mountPagefindSearch } from "../lib/search/pagefind";
+
+    mountOnAstroPageLoad(mountPagefindSearch);
   </script>
 </BaseLayout>

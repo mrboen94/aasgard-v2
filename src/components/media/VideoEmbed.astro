@@ -19,10 +19,10 @@ const hrefByProvider = {
 
 <figure class="video-embed">
   <a href={hrefByProvider[provider]}>
-    <span class="video-embed__poster">
+    <span class="video-embed__poster media-placeholder">
       {poster && <img alt="" class="video-embed__poster-image" loading="lazy" src={poster} />}
     </span>
     <span class="video-embed__play meta">Open {provider} video</span>
   </a>
-  <figcaption>{title}</figcaption>
+  <figcaption class="caption">{title}</figcaption>
 </figure>

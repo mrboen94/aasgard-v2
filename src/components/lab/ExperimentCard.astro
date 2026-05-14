@@ -11,11 +11,11 @@ interface Props {
 const { entry } = Astro.props;
 ---
 
-<article class="experiment-card surface">
-  <a href={labUrl(entry.data.slug)}>
-    <span class="eyebrow">{entry.data.status}</span>
+<article class="experiment-card listing-card surface">
+  <a class="listing-card__link" href={labUrl(entry.data.slug)}>
+    <span class="listing-card__eyebrow">{entry.data.status}</span>
     <h3>{entry.data.title}</h3>
-    <p>{entry.data.description}</p>
+    <p class="listing-card__copy">{entry.data.description}</p>
   </a>
   <TechIconList technologies={entry.data.technologies} />
 </article>

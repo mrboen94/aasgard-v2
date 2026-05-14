@@ -15,16 +15,16 @@ const accentStyle = entry.data.accent ? `--project-accent: ${entry.data.accent};
 ---
 
 <article
-  class:list={["project-card", "surface", entry.data.featured && "project-card--featured"]}
+  class:list={["project-card", "listing-card", "surface", entry.data.featured && "project-card--featured"]}
   style={accentStyle}
 >
   <div class="project-card__top">
     <span class="project-card__logo" aria-hidden="true"><Icon name={logo} /></span>
     {entry.data.featured && <span class="project-card__flag meta">Featured</span>}
   </div>
-  <div class="project-card__body">
+  <div class="project-card__body listing-card__body">
     <h3><a href={workUrl(entry.data.slug)}>{entry.data.title}</a></h3>
-    <p>{entry.data.description}</p>
+    <p class="listing-card__copy">{entry.data.description}</p>
   </div>
   <div class="project-card__footer">
     {entry.data.link && <a href={entry.data.link.href}>{entry.data.link.label}</a>}

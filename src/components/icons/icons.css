@@ -1,4 +1,6 @@
 .icon-badge {
+  --icon-badge-glyph-size: 1.4rem;
+  --icon-badge-size: 2.5rem;
   align-items: center;
   aspect-ratio: 1;
   border: var(--border);
@@ -19,6 +21,8 @@
 }
 
 .tech-icon {
+  --tech-icon-min-height: 1.75rem;
+  --tech-icon-size: 1.15rem;
   align-items: center;
   display: inline-flex;
   gap: var(--space-2);
