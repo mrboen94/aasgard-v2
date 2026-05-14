@@ -1,4 +1,6 @@
 ---
+import "./article.css";
+
 interface Props {
   date: Date;
   updated?: Date;
@@ -24,29 +26,3 @@ const dateLabel = date.toLocaleDateString("en", {
     </ul>
   )}
 </div>
-
-<style>
-  .article-meta {
-    align-items: center;
-    color: var(--color-muted);
-    display: flex;
-    flex-wrap: wrap;
-    font-size: var(--text-sm);
-    gap: var(--space-2) var(--space-3);
-  }
-
-  .article-meta ul {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .article-meta li {
-    border: var(--border);
-    border-radius: var(--radius-pill);
-    padding: 0 var(--space-2);
-  }
-</style>

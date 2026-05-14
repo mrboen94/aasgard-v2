@@ -1,5 +1,5 @@
 ---
-import "../../styles/canvas-experiment.css";
+import "./canvas-experiment.css";
 import CanvasSettingsNode from "./CanvasSettingsNode.astro";
 import type {
   CanvasExperimentScene,
@@ -83,6 +83,7 @@ const runtimeScenes = sceneList.map(({ ariaLabel, id, imageSrc, label, script })
 }));
 const activeScene = sceneList[0];
 const instanceId = `canvas-experiment-${Math.random().toString(36).slice(2)}`;
+const canvasMarginStyle = `--canvas-experiment-margin: ${canvasMargin}px;`;
 ---
 
 <figure
@@ -96,7 +97,7 @@ const instanceId = `canvas-experiment-${Math.random().toString(36).slice(2)}`;
   data-image-src={activeScene.imageSrc}
   data-scenes={JSON.stringify(runtimeScenes)}
   data-settings={JSON.stringify(initialSettingsByScene)}
-  style={`--canvas-experiment-margin: ${canvasMargin}px;`}
+  style={canvasMarginStyle}
 >
   {
     sceneList.length > 1 && (

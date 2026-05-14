@@ -1,4 +1,6 @@
 ---
+import "./layout.css";
+
 interface Props {
   eyebrow?: string;
   title: string;
@@ -21,43 +23,3 @@ const { eyebrow, title, description, href, linkLabel = "View all" } = Astro.prop
   </div>
   <slot />
 </section>
-
-<style>
-  .section {
-    display: grid;
-    gap: var(--space-5);
-    padding-block: var(--space-6);
-  }
-
-  .section__header {
-    align-items: end;
-    display: flex;
-    gap: var(--space-5);
-    justify-content: space-between;
-  }
-
-  .section__header p {
-    color: var(--color-muted);
-    margin-block: var(--space-2) 0;
-    max-width: var(--measure-section-wide);
-  }
-
-  .section__eyebrow {
-    color: var(--color-accent);
-    font-size: var(--text-eyebrow);
-    margin-block: 0 var(--space-2);
-    text-transform: uppercase;
-  }
-
-  .section__link {
-    flex: 0 0 auto;
-    font-family: var(--font-accent);
-  }
-
-  @media (max-width: 44rem) {
-    .section__header {
-      align-items: start;
-      flex-direction: column;
-    }
-  }
-</style>

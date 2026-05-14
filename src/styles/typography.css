@@ -72,7 +72,6 @@ blockquote {
 
 .meta,
 .eyebrow,
-.detail,
-.tech-label {
+.detail {
   font-family: var(--font-accent);
 }

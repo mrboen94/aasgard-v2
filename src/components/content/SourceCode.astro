@@ -1,4 +1,5 @@
 ---
+import "./content.css";
 import { Code } from "astro-expressive-code/components";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
@@ -313,65 +314,3 @@ function formatTitle(filePath: string) {
   mountSourceCodeTabs();
   document.addEventListener("astro:page-load", mountSourceCodeTabs);
 </script>
-
-<style>
-  .source-code {
-    margin-block: var(--space-5);
-    max-width: 100%;
-  }
-
-  .source-code :global(.expressive-code) {
-    margin-block: 0;
-  }
-
-  .source-code--tabs {
-    overflow: hidden;
-  }
-
-  .source-code__tablist {
-    align-items: stretch;
-    display: flex;
-    overflow-x: auto;
-    overflow-y: hidden;
-  }
-
-  .source-code__tab {
-    appearance: none;
-    background: var(--color-code-bg);
-    border: var(--border);
-    border-top: var(--border-tab-width) solid transparent;
-    border-radius: var(--radius-small) var(--radius-small) 0 0;
-    color: var(--color-muted);
-    cursor: pointer;
-    flex: 0 0 auto;
-    font-family: var(--font-accent);
-    font-size: var(--text-sm);
-    line-height: 1.4;
-    margin-bottom: -1px;
-    min-height: 2.5rem;
-    padding: var(--space-2) var(--space-4);
-    position: relative;
-    white-space: nowrap;
-  }
-
-  .source-code__tab + .source-code__tab {
-    border-inline-start: var(--border);
-  }
-
-  .source-code__tab[aria-selected="true"] {
-    background: var(--color-surface);
-    border-top-color: var(--color-accent);
-    color: var(--color-text);
-  }
-
-  .source-code__tab:hover,
-  .source-code__tab:focus-visible {
-    color: var(--color-text);
-  }
-
-  .source-code__panel {
-    min-width: 0;
-    overflow-x: auto;
-  }
-
-</style>

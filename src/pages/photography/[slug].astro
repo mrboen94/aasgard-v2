@@ -1,4 +1,5 @@
 ---
+import "./photo-details.css";
 import { render } from "astro:content";
 import ArticleMeta from "../../components/article/ArticleMeta.astro";
 import ArticleProse from "../../components/article/ArticleProse.astro";
@@ -37,22 +38,3 @@ const { Content } = await render(entry);
     </ArticleProse>
   </article>
 </BaseLayout>
-
-<style>
-  .photo-details {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3);
-    margin: 0;
-  }
-
-  .photo-details dt,
-  .photo-details dd {
-    margin: 0;
-  }
-
-  .photo-details dt {
-    color: var(--color-muted);
-    font-family: var(--font-accent);
-  }
-</style>

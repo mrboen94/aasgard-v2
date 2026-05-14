@@ -1,22 +1,5 @@
+---
+import "./layout.css";
+---
+
 <a class="skip-link" href="#main-content">Skip to content</a>
-
-<style>
-  .skip-link {
-    background: var(--color-text);
-    color: var(--color-bg);
-    left: var(--space-4);
-    padding: var(--space-2) var(--space-3);
-    position: fixed;
-    top: var(--space-4);
-    transform: translateY(-150%);
-    transition:
-      background-color var(--motion-duration-fast) var(--motion-ease),
-      color var(--motion-duration-fast) var(--motion-ease),
-      transform var(--motion-duration) var(--motion-ease-emphasized);
-    z-index: 10;
-  }
-
-  .skip-link:focus {
-    transform: translateY(0);
-  }
-</style>

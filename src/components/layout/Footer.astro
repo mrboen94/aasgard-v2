@@ -1,4 +1,5 @@
 ---
+import "./layout.css";
 import { site } from "../../data/site";
 ---
 
@@ -8,27 +9,3 @@ import { site } from "../../data/site";
     <a href="/rss.xml">RSS</a>
   </div>
 </footer>
-
-<style>
-  .site-footer {
-    border-top: var(--border);
-    color: var(--color-muted);
-    margin-top: var(--space-8);
-    transition:
-      border-color var(--motion-duration) var(--motion-ease),
-      color var(--motion-duration) var(--motion-ease);
-  }
-
-  .site-footer__inner {
-    align-items: center;
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-4);
-    justify-content: space-between;
-    padding-block: var(--space-5);
-  }
-
-  .site-footer p {
-    margin: 0;
-  }
-</style>

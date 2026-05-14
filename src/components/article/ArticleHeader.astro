@@ -1,4 +1,5 @@
 ---
+import "./article.css";
 import type { ArticleEntry } from "../../lib/content/collections";
 import ArticleMeta from "./ArticleMeta.astro";
 
@@ -21,25 +22,3 @@ const { entry, eyebrow = "Article" } = Astro.props;
     section="articles"
   />
 </header>
-
-<style>
-  .article-header {
-    display: grid;
-    gap: var(--space-4);
-    padding-block: var(--space-7) var(--space-5);
-  }
-
-  .article-header__eyebrow {
-    color: var(--section-accent, var(--color-accent));
-    font-size: var(--text-eyebrow);
-    margin: 0;
-    text-transform: uppercase;
-  }
-
-  .article-header__description {
-    color: var(--color-muted);
-    font-size: var(--text-lead);
-    margin: 0;
-    max-width: var(--measure-section-copy);
-  }
-</style>

@@ -1,4 +1,6 @@
 ---
+import "./content.css";
+
 interface Props {
   caption?: string;
 }
@@ -10,16 +12,3 @@ const { caption } = Astro.props;
   <slot />
   {caption && <figcaption>{caption}</figcaption>}
 </figure>
-
-<style>
-  .content-figure {
-    margin: var(--space-6) 0;
-  }
-
-  .content-figure figcaption {
-    color: var(--color-muted);
-    font-family: var(--font-accent);
-    font-size: var(--text-sm);
-    margin-top: var(--space-2);
-  }
-</style>

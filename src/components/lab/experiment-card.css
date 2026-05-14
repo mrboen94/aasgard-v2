@@ -1,0 +1,23 @@
+.experiment-card {
+  display: grid;
+  gap: var(--experiment-card-gap);
+  padding: var(--experiment-card-padding);
+}
+
+.experiment-card a {
+  color: inherit;
+  display: grid;
+  gap: var(--experiment-card-text-gap);
+  text-decoration: none;
+}
+
+.experiment-card .eyebrow {
+  color: var(--experiment-card-status-color);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+}
+
+.experiment-card p {
+  color: var(--color-muted);
+  margin: 0;
+}

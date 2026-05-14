@@ -404,7 +404,7 @@
 }
 
 .canvas-label-color--custom {
-  color: var(--canvas-label-color-custom);
+  color: var(--canvas-label-color-custom, var(--canvas-control-label-default));
 }
 
 .canvas-experiment__debug {

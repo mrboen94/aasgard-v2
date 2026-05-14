@@ -1,3 +1,7 @@
+---
+import "./media.css";
+---
+
 <div class="photo-grid">
   <slot>
     <div class="photo-grid__placeholder"></div>
@@ -5,27 +9,3 @@
     <div class="photo-grid__placeholder"></div>
   </slot>
 </div>
-
-<style>
-  .photo-grid {
-    display: grid;
-    gap: var(--space-3);
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .photo-grid__placeholder {
-    aspect-ratio: 4 / 5;
-    background: var(--media-placeholder-background);
-    border: var(--border);
-    border-radius: var(--radius);
-    transition:
-      background-color var(--motion-duration) var(--motion-ease),
-      border-color var(--motion-duration) var(--motion-ease);
-  }
-
-  @media (max-width: 44rem) {
-    .photo-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-</style>

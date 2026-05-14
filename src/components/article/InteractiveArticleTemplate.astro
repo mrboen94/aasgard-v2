@@ -1,4 +1,5 @@
 ---
+import "./article.css";
 import type { ArticleEntry } from "../../lib/content/collections";
 import Aside from "../content/Aside.astro";
 import Callout from "../content/Callout.astro";
@@ -28,13 +29,3 @@ const components = { Aside, Callout, CodeNote, DemoFrame, Figure, LinkCard };
     </ArticleProse>
   </article>
 </BaseLayout>
-
-<style>
-  .interactive-note {
-    background: var(--color-code-bg);
-    border-left: var(--border-emphasis-width) solid var(--color-accent);
-    margin-bottom: var(--space-5);
-    max-width: var(--prose-wide);
-    padding: var(--space-3) var(--space-4);
-  }
-</style>

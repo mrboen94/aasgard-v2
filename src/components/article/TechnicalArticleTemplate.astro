@@ -1,4 +1,5 @@
 ---
+import "./article.css";
 import type { ArticleEntry } from "../../lib/content/collections";
 import Aside from "../content/Aside.astro";
 import Callout from "../content/Callout.astro";
@@ -51,54 +52,3 @@ const tocHeadings = headings.filter((heading) => heading.depth === 2 || heading.
     </div>
   </article>
 </BaseLayout>
-
-<style>
-  .technical-layout {
-    align-items: start;
-    display: grid;
-    gap: var(--space-6);
-    grid-template-columns: minmax(var(--technical-aside-min), var(--technical-aside-max)) minmax(0, 1fr);
-  }
-
-  .technical-layout__aside {
-    border-left: var(--border-emphasis-width) solid var(--color-accent-2);
-    color: var(--color-muted);
-    display: grid;
-    gap: var(--space-4);
-    padding-left: var(--space-4);
-    position: sticky;
-    top: var(--space-5);
-  }
-
-  .technical-layout__aside ol {
-    display: grid;
-    gap: var(--space-2);
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .technical-layout__aside a {
-    color: var(--color-muted);
-    text-decoration: none;
-  }
-
-  .technical-layout__aside .depth-3 {
-    padding-left: var(--space-4);
-  }
-
-  .technical-layout__aside .eyebrow,
-  .technical-layout__aside .detail {
-    margin: 0;
-  }
-
-  @media (max-width: 56rem) {
-    .technical-layout {
-      grid-template-columns: 1fr;
-    }
-
-    .technical-layout__aside {
-      position: static;
-    }
-  }
-</style>

@@ -1,4 +1,5 @@
 ---
+import "./article.css";
 import { articleUrl } from "../../lib/content/urls";
 import type { ArticleEntry } from "../../lib/content/collections";
 import ArticleMeta from "./ArticleMeta.astro";
@@ -18,29 +19,3 @@ const { entry } = Astro.props;
   </a>
   <ArticleMeta date={entry.data.date} tags={entry.data.tags} />
 </article>
-
-<style>
-  .article-card {
-    display: grid;
-    gap: var(--card-gap);
-    padding: var(--card-padding);
-  }
-
-  .article-card__link {
-    color: inherit;
-    display: grid;
-    gap: var(--card-text-gap);
-    text-decoration: none;
-  }
-
-  .article-card__link p {
-    color: var(--color-muted);
-    margin: 0;
-  }
-
-  .article-card .eyebrow {
-    color: var(--color-accent);
-    font-size: var(--text-xs);
-    text-transform: uppercase;
-  }
-</style>

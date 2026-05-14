@@ -1,4 +1,5 @@
 ---
+import "./media.css";
 import type { PhotoProjectEntry } from "../../lib/content/collections";
 import { photoProjectUrl } from "../../lib/content/urls";
 
@@ -18,39 +19,3 @@ const { entry } = Astro.props;
     </span>
   </a>
 </article>
-
-<style>
-  .photo-card {
-    overflow: hidden;
-  }
-
-  .photo-card a {
-    color: inherit;
-    display: grid;
-    text-decoration: none;
-  }
-
-  .photo-card__media {
-    aspect-ratio: 4 / 3;
-    background: var(--media-placeholder-background);
-    transition:
-      background-color var(--motion-duration) var(--motion-ease),
-      transform var(--motion-duration) var(--motion-ease);
-  }
-
-  .photo-card__text {
-    display: grid;
-    gap: var(--card-text-gap);
-    padding: var(--space-4);
-  }
-
-  .photo-card p {
-    color: var(--color-muted);
-    margin: 0;
-  }
-
-  .photo-card:has(a:hover) .photo-card__media,
-  .photo-card:has(a:focus-visible) .photo-card__media {
-    transform: scale(1.015);
-  }
-</style>
