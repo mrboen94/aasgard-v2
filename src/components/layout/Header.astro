@@ -1,9 +1,5 @@
 ---
-import {
-  NAV_LINKS,
-  isCurrentRouteHref,
-  isLinkActive,
-} from "../../lib/navigation/links";
+import { NAV_LINKS } from "../../lib/navigation/links";
 
 const pathname = Astro.url.pathname;
 ---
@@ -25,13 +21,12 @@ const pathname = Astro.url.pathname;
           NAV_LINKS.map((link) => {
             return (
               <li>
-                  <a
-                    href={link.href}
-                    aria-current={pathname === link.href ? "page" : undefined}
-                    }
-                  >
-                    {link.label}
-                  </a>
+                <a
+                  href={link.href}
+                  aria-current={pathname === link.href ? "page" : undefined}
+                >
+                  {link.label}
+                </a>
               </li>
             );
           })
