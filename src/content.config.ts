@@ -14,6 +14,7 @@ const articles = defineCollection({
     updated: date.optional(),
     published: z.boolean().default(true),
     template: z.enum(["standard", "technical", "interactive"]).default("standard"),
+    eyebrow: z.string().default("Blogpost"),
     tags: z.array(z.string()).default([]),
     technologies: z.array(z.string()).default([]),
     cover: z.string().optional(),

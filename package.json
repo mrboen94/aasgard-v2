@@ -9,7 +9,8 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro check && astro build && pagefind --site dist",
+    "new": "bun scripts/new-content.ts",
+    "build": "astro check && astro build --force && pagefind --site dist",
     "preview": "astro preview",
     "check": "astro check"
   },

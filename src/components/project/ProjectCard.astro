@@ -24,7 +24,7 @@ const accentStyle = entry.data.accent ? `--project-accent: ${entry.data.accent};
   </div>
   <div class="project-card__body listing-card__body">
     <h3><a href={workUrl(entry.data.slug)}>{entry.data.title}</a></h3>
-    <p class="listing-card__copy">{entry.data.description}</p>
+    <p class="listing-card__description">{entry.data.description}</p>
   </div>
   <div class="project-card__footer">
     {entry.data.link && <a href={entry.data.link.href}>{entry.data.link.label}</a>}

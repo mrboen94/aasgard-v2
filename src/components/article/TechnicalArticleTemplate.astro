@@ -31,7 +31,7 @@ const tocHeadings = headings.filter((heading) => heading.depth === 2 || heading.
 
 <BaseLayout title={entry.data.title} description={entry.data.description} canonical={`/articles/${entry.data.slug}/`}>
   <article class="container article-shell article-shell--technical" data-pagefind-body>
-    <ArticleHeader entry={entry} eyebrow="Technical article" />
+    <ArticleHeader entry={entry} />
     <div class="technical-layout">
       <aside class="technical-layout__aside">
         <p class="eyebrow">Contents</p>

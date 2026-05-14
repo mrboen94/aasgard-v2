@@ -41,6 +41,17 @@
   text-decoration: none;
 }
 
+.site-header__logo {
+  background-color: currentColor;
+  block-size: 1.25rem;
+  display: block;
+  flex: 0 0 auto;
+  inline-size: 1.25rem;
+  -webkit-mask: url("/logo.svg") center / contain no-repeat;
+  mask: url("/logo.svg") center / contain no-repeat;
+  transition: background-color var(--motion-duration-fast) var(--motion-ease);
+}
+
 a.site-header__brand:hover,
 a.site-header__brand:focus-visible {
   opacity: 0.72;

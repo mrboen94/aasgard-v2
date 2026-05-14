@@ -15,7 +15,7 @@ const { entry } = Astro.props;
   <a class="listing-card__link" href={labUrl(entry.data.slug)}>
     <span class="listing-card__eyebrow">{entry.data.status}</span>
     <h3>{entry.data.title}</h3>
-    <p class="listing-card__copy">{entry.data.description}</p>
+    <p class="listing-card__description">{entry.data.description}</p>
   </a>
   <TechIconList technologies={entry.data.technologies} />
 </article>

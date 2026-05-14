@@ -4,11 +4,11 @@
   padding-block: var(--space-7) var(--space-5);
 }
 
-.article-header__eyebrow {
+.eyebrow {
   color: var(--section-accent, var(--color-accent));
-  font-size: var(--text-eyebrow);
   margin: 0;
   text-transform: uppercase;
+  text-decoration: none;
 }
 
 .article-header__description {
@@ -129,7 +129,7 @@
   padding-left: var(--space-4);
 }
 
-.technical-layout__aside .eyebrow,
+.technical-layout__aside
 .technical-layout__aside .detail {
   margin: 0;
 }

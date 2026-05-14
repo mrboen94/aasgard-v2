@@ -2,13 +2,14 @@
 import "./article.css";
 
 interface Props {
+  eyebrow?: string;
   date: Date;
   updated?: Date;
   tags?: string[];
   section?: string;
 }
 
-const { date, updated, tags = [], section } = Astro.props;
+const { eyebrow, date, updated, tags = [], section } = Astro.props;
 const dateLabel = date.toLocaleDateString("en", {
   year: "numeric",
   month: "short",
@@ -17,6 +18,7 @@ const dateLabel = date.toLocaleDateString("en", {
 ---
 
 <div class="article-meta meta">
+  {eyebrow && <span class="eyebrow" data-pagefind-meta="eyebrow">{eyebrow}</span>}
   {section && <span data-pagefind-meta="section">{section}</span>}
   <time datetime={date.toISOString()} data-pagefind-meta="date">{dateLabel}</time>
   {updated && <span>Updated {updated.toLocaleDateString("en")}</span>}

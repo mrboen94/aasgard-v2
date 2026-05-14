@@ -8,11 +8,11 @@ interface Props {
   eyebrow?: string;
 }
 
-const { entry, eyebrow = "Article" } = Astro.props;
+const { entry } = Astro.props;
 ---
 
 <header class="article-header">
-  <p class="eyebrow article-header__eyebrow">{eyebrow}</p>
+  <a class="eyebrow" href="/articles">{"< Back"}</a>
   <h1 data-pagefind-meta="title">{entry.data.title}</h1>
   <p class="article-header__description">{entry.data.description}</p>
   <ArticleMeta

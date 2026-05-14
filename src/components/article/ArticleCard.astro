@@ -13,9 +13,8 @@ const { entry } = Astro.props;
 
 <article class="article-card listing-card surface">
   <a class="article-card__link listing-card__link" href={articleUrl(entry.data.slug)}>
-    <span class="listing-card__eyebrow">{entry.data.template}</span>
     <h3>{entry.data.title}</h3>
-    <p class="listing-card__copy">{entry.data.description}</p>
+    <p class="listing-card__description">{entry.data.description}</p>
   </a>
-  <ArticleMeta date={entry.data.date} tags={entry.data.tags} />
+  <ArticleMeta eyebrow={entry.data.eyebrow} date={entry.data.date} tags={entry.data.tags} />
 </article>

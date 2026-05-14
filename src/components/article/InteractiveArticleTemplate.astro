@@ -22,7 +22,7 @@ const components = { Aside, Callout, CodeNote, DemoFrame, Figure, LinkCard };
 
 <BaseLayout title={entry.data.title} description={entry.data.description} canonical={`/articles/${entry.data.slug}/`}>
   <article class="container article-shell article-shell--interactive" data-pagefind-body>
-    <ArticleHeader entry={entry} eyebrow="Interactive article" />
+    <ArticleHeader entry={entry} />
     <div class="interactive-note detail">This article includes a local demo that uses JavaScript.</div>
     <ArticleProse wide>
       <Content components={components} />
