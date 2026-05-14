@@ -1,37 +1,41 @@
 ---
-import { NAV_LINKS, isCurrentRouteHref, isLinkActive } from "../../lib/navigation/links";
+import {
+  NAV_LINKS,
+  isCurrentRouteHref,
+  isLinkActive,
+} from "../../lib/navigation/links";
 
 const pathname = Astro.url.pathname;
-const isHomePage = isCurrentRouteHref("/", pathname);
 ---
 
-<header class="site-header" transition:animate="none">
+<header class="site-header">
   <div class="container site-header__inner">
-    {
-      isHomePage ? (
-        <span class="site-header__brand" aria-current="page">ForcePushMain</span>
-      ) : (
-        <a class="site-header__brand" href="/">ForcePushMain</a>
-      )
-    }
+    <a class="site-header__brand" href="/">
+      <img
+        src="/android-chrome-192x192.png"
+        alt="Logo"
+        width="20"
+        height="20"
+      />
+      <span>ForcePushMain</span>
+    </a>
     <nav class="site-header__nav" aria-label="Primary navigation">
       <ul class="site-header__nav-list">
-        {NAV_LINKS.map((link) => {
-          const isCurrent = isCurrentRouteHref(link.href, pathname);
-          return (
-            <li>
-              {
-                isCurrent ? (
-                  <span aria-current="page">{link.label}</span>
-                ) : (
-                  <a href={link.href} aria-current={isLinkActive(link.href, pathname) ? "page" : undefined}>
+        {
+          NAV_LINKS.map((link) => {
+            return (
+              <li>
+                  <a
+                    href={link.href}
+                    aria-current={pathname === link.href ? "page" : undefined}
+                    }
+                  >
                     {link.label}
                   </a>
-                )
-              }
-            </li>
-          );
-        })}
+              </li>
+            );
+          })
+        }
       </ul>
     </nav>
   </div>
@@ -40,9 +44,6 @@ const isHomePage = isCurrentRouteHref("/", pathname);
 <style>
   .site-header {
     border-bottom: var(--border);
-    transition:
-      background-color var(--motion-duration) var(--motion-ease),
-      border-color var(--motion-duration) var(--motion-ease);
   }
 
   .site-header__inner {
@@ -54,11 +55,20 @@ const isHomePage = isCurrentRouteHref("/", pathname);
   }
 
   .site-header__brand {
+    align-items: center;
     color: var(--color-text);
+    display: inline-flex;
     font-family: var(--font-accent);
+    gap: var(--space-2);
     font-weight: 700;
     text-decoration: none;
-    transition: opacity var(--motion-duration-fast) var(--motion-ease);
+  }
+
+  .site-header__brand-logo {
+    display: block;
+    flex-shrink: 0;
+    height: 1.25rem;
+    width: 1.25rem;
   }
 
   a.site-header__brand:hover,
@@ -81,7 +91,6 @@ const isHomePage = isCurrentRouteHref("/", pathname);
     font-family: var(--font-accent);
     font-size: var(--text-nav);
     text-decoration: none;
-    transition: color var(--motion-duration-fast) var(--motion-ease);
   }
 
   .site-header__nav a:hover,
