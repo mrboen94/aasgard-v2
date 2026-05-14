@@ -6,12 +6,12 @@ import { getExperiments } from "../../lib/content/collections";
 const experiments = await getExperiments();
 ---
 
-<BaseLayout title="Lab" description="Experiments, games, and prototypes.">
+<BaseLayout title="Bøe's Lab" description="Some of my experiments, prototypes, and playful projects.">
   <section class="container page-section">
     <header class="page-header page-header--secondary">
       <p class="eyebrow">Experiments</p>
-      <h1>Lab</h1>
-      <p>Lab entries show prototypes directly. Articles can explain them later.</p>
+      <h1>Bøe's Lab</h1>
+      <p>Some of my experiments, prototypes, and playful projects.</p>
     </header>
     <div class="grid">
       {experiments.map((entry) => <ExperimentCard entry={entry} />)}

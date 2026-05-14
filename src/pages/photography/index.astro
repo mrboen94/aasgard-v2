@@ -6,12 +6,12 @@ import { getPhotoProjects } from "../../lib/content/collections";
 const entries = await getPhotoProjects();
 ---
 
-<BaseLayout title="Photography" description="Photography projects and image essays.">
+<BaseLayout title="Photography" description="My photography projects and image essays.">
   <section class="container page-section">
     <header class="page-header">
       <p class="eyebrow">Images</p>
       <h1>Photography</h1>
-      <p>Local project folders leave room for image imports, captions, and later gallery behavior.</p>
+      <p>My photography projects and image essays.</p>
     </header>
     <div class="grid">
       {entries.map((entry) => <PhotoProjectCard entry={entry} />)}

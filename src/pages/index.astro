@@ -26,8 +26,8 @@ const [articles, experiments, workEntries, photoProjects, videoProjects] = await
 <BaseLayout>
   <div class="container home">
     <section class="home-hero">
-      <p class="eyebrow">Static site skeleton</p>
-      <h1>Mathias Bøe</h1>
+      <p class="eyebrow">Mathias Bøe</p>
+      <h1>ForcePushMain</h1>
       <p>
 				Notes from an unreasonable number of side quests.
 				Photography and videos, 3D modelling, data viz, prototypes and experiments, devnotes and the general overflow of a curious mind.
@@ -36,18 +36,18 @@ const [articles, experiments, workEntries, photoProjects, videoProjects] = await
     </section>
 
     <Section
-      eyebrow="Writing"
-      title="Articles"
-      description="Demo entries for standard, technical, and interactive article templates."
+      eyebrow="Articles"
+      title="Scribbles and thoughts"
+      description="Some of my notes and writing on various topics and various depths. Some are more polished than others, but all are written with the intention of sharing and exploring ideas."
       href="/articles/"
     >
       <ArticleList entries={articles.slice(0, 3)} />
     </Section>
 
     <Section
-      eyebrow="Experiments"
-      title="Lab"
-      description="Standalone prototypes live separately from explanatory articles."
+      eyebrow="Bøe's Lab"
+      title="Experiments and prototypes"
+      description="Experiments and prototypes are the playground of ideas, where concepts are tested, iterated upon, and sometimes discarded. They are the messy, exciting middle ground between thought and polished work."
       href="/lab/"
     >
       <div class="grid">
@@ -57,34 +57,38 @@ const [articles, experiments, workEntries, photoProjects, videoProjects] = await
 
     <Section
       eyebrow="Projects"
-      title="Work"
-      description="Project cards use local logo icons and technology metadata from the registry."
+      title="Work and personal projects"
+      description="A selection of projects I've worked on, both professionally and personally. These are the more polished and complete works, often with a focus on design, development, and problem-solving."
       href="/work/"
     >
       <ProjectGrid entries={workEntries.slice(0, 3)} />
     </Section>
 
-    <Section
-      eyebrow="Images"
-      title="Photography"
-      description="Photography projects are first-class content with room for later image pipelines."
-      href="/photography/"
+    {photoProjects.length > 0 && (
+      <Section
+        eyebrow="Photography"
+        title="Photos and photo stories"
+        description="Just some of my photos and collections."
+        href="/photography/"
     >
       <div class="grid">
         {photoProjects.slice(0, 3).map((entry) => <PhotoProjectCard entry={entry} />)}
       </div>
     </Section>
+    )}
 
-    <Section
-      eyebrow="Motion"
-      title="Video"
-      description="Video projects use a lightweight embed skeleton and avoid iframe loading on index pages."
-      href="/video/"
-    >
-      <div class="grid">
-        {videoProjects.slice(0, 3).map((entry) => <VideoProjectCard entry={entry} />)}
-      </div>
-    </Section>
+    {videoProjects.length > 0 && (
+      <Section
+        eyebrow="Videography"
+        title="Video/Visual projects"
+        description="A selection of my video and visual projects."
+        href="/video/"
+      >
+        <div class="grid">
+          {videoProjects.slice(0, 3).map((entry) => <VideoProjectCard entry={entry} />)}
+        </div>
+      </Section>
+    )}
   </div>
 </BaseLayout>
 

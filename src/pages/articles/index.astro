@@ -6,12 +6,12 @@ import { getArticles } from "../../lib/content/collections";
 const articles = await getArticles();
 ---
 
-<BaseLayout title="Articles" description="Writing, notes, and technical articles.">
+<BaseLayout title="Articles" description="Some of my thoughts, notes, and technical writeups on various topics.">
   <section class="container page-section">
     <header class="page-header">
       <p class="eyebrow">Writing</p>
       <h1>Articles</h1>
-      <p>Standard prose, technical posts, and interactive notes all use the same content source.</p>
+      <p>Some of my thoughts, notes, and technical writeups on various topics.</p>
     </header>
     <ArticleList entries={articles} />
   </section>
