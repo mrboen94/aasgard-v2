@@ -101,11 +101,6 @@ main:has(> .content-page) {
     transform: translateX(0);
   }
 
-  40% {
-    opacity: 0;
-    transform: translateX(var(--vt-slide-out-through-x, -10%));
-  }
-
   to {
     opacity: 0;
     transform: translateX(var(--vt-slide-out-to-x, -40%));
@@ -116,11 +111,6 @@ main:has(> .content-page) {
   from {
     opacity: 0;
     transform: translateX(var(--vt-slide-in-from-x, 40%));
-  }
-
-  40% {
-    opacity: 1;
-    transform: translateX(var(--vt-slide-in-through-x, 30%));
   }
 
   to {
@@ -135,11 +125,6 @@ main:has(> .content-page) {
     transform: translateY(100%);
   }
 
-  16% {
-    opacity: 1;
-    transform: translateY(95%);
-  }
-
   to {
     opacity: 1;
     transform: translateY(0);
@@ -150,11 +135,6 @@ main:has(> .content-page) {
   from {
     opacity: 1;
     transform: translateY(0);
-  }
-
-  16% {
-    opacity: 0;
-    transform: translateY(5%);
   }
 
   to {
@@ -204,13 +184,11 @@ main:has(> .content-page) {
 }
 
 [data-astro-transition="back"]::view-transition-old(main-content) {
-  --vt-slide-out-through-x: 10%;
   --vt-slide-out-to-x: 40%;
 }
 
 [data-astro-transition="back"]::view-transition-new(main-content) {
   --vt-slide-in-from-x: -40%;
-  --vt-slide-in-through-x: -30%;
 }
 
 [data-astro-transition="descend"]::view-transition-old(main-content),
