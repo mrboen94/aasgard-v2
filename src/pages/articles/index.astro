@@ -1,18 +1,31 @@
 ---
-import ArticleList from "../../components/article/ArticleList.astro";
 import BaseLayout from "../../components/layout/BaseLayout.astro";
+import EntryGrid from "../../components/ui/cards/EntryGrid.astro";
+import PageIntro from "../../components/ui/typography/PageIntro.astro";
+import PageSection from "../../components/ui/layout/PageSection.astro";
 import { getArticles } from "../../lib/content/collections";
+import { articleUrl } from "../../lib/content/urls";
 
 const articles = await getArticles();
+const articleItems = articles.map((entry) => ({
+  description: entry.data.description,
+  href: articleUrl(entry.data.slug),
+  meta: {
+    date: entry.data.date,
+    eyebrow: entry.data.eyebrow,
+    tags: entry.data.tags
+  },
+  title: entry.data.title
+}));
 ---
 
 <BaseLayout title="Articles" description="Some of my thoughts, notes, and technical writeups on various topics.">
-  <section class="container page-section">
-    <header class="page-header page-intro">
-      <p class="eyebrow">Writing</p>
-      <h1>Articles</h1>
-      <p>Some of my thoughts, notes, and technical writeups on various topics.</p>
-    </header>
-    <ArticleList entries={articles} />
-  </section>
+  <PageSection>
+    <PageIntro
+      eyebrow="Writing"
+      title="Articles"
+      description="Some of my thoughts, notes, and technical writeups on various topics."
+    />
+    <EntryGrid items={articleItems} />
+  </PageSection>
 </BaseLayout>

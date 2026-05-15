@@ -1,0 +1,18 @@
+---
+interface Props {
+  class?: string;
+  [key: string]: any;
+}
+
+const { class: className, ...attrs } = Astro.props as Props;
+---
+
+<article
+  class:list={[
+    "mx-auto min-h-screen max-w-site bg-article px-6 transition-colors duration-[var(--duration-theme)] ease-theme",
+    className
+  ]}
+  {...attrs}
+>
+  <slot />
+</article>

@@ -1,0 +1,31 @@
+---
+import Badge from "../badges/Badge.astro";
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  description?: string;
+  href?: string;
+  linkLabel?: string;
+}
+
+const { eyebrow, title, description, href, linkLabel = "View all" } = Astro.props;
+---
+
+<section class="grid gap-6 py-8">
+  <div class="flex items-end justify-between gap-6 max-[44rem]:flex-col max-[44rem]:items-start">
+    <div>
+      {
+        eyebrow && (
+          <Badge class="mb-2 text-eyebrow" textCase="uppercase" variant="text">
+            {eyebrow}
+          </Badge>
+        )
+      }
+      <h2>{title}</h2>
+      {description && <p class="mt-2 mb-0 max-w-section-wide text-muted">{description}</p>}
+    </div>
+    {href && <a class="flex-none" href={href}>{linkLabel}</a>}
+  </div>
+  <slot />
+</section>

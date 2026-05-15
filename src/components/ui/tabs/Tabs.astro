@@ -1,0 +1,32 @@
+---
+interface Props {
+  ariaLabel: string;
+  class?: string;
+  variant?: "attached" | "frame" | "underline";
+  [key: string]: any;
+}
+
+const {
+  ariaLabel,
+  class: className,
+  variant = "attached",
+  ...attrs
+} = Astro.props as Props;
+
+const variantClass = {
+  attached: "flex items-stretch overflow-x-auto overflow-y-hidden",
+  frame:
+    "flex items-stretch overflow-x-auto overflow-y-hidden rounded-t-small border border-[color:var(--ec-frm-edTabBarBrdCol,#e1e4e8)] bg-[var(--ec-frm-edTabBarBg,#f6f8fa)]",
+  underline:
+    "flex flex-wrap gap-3 border-b border-border bg-[color-mix(in_srgb,var(--color-surface)_68%,transparent)] px-4 pt-3"
+}[variant];
+---
+
+<div
+  aria-label={ariaLabel}
+  class:list={[variantClass, className]}
+  role="tablist"
+  {...attrs}
+>
+  <slot />
+</div>

@@ -1,0 +1,47 @@
+---
+interface Props {
+  as?: string;
+  class?: string;
+  size?: "icon-sm" | "sm";
+  tone?: "neutral" | "success";
+  type?: "button" | "submit" | "reset";
+  variant?: "ghost";
+  [key: string]: any;
+}
+
+const {
+  as = "button",
+  class: className,
+  size = "sm",
+  tone = "neutral",
+  type = "button",
+  variant = "ghost",
+  ...attrs
+} = Astro.props as Props;
+const Tag = as;
+
+const variantClass = {
+  ghost: "cursor-pointer border-0 bg-transparent"
+}[variant];
+
+const sizeClass = {
+  "icon-sm":
+    "inline-flex size-5 items-center justify-center rounded-full p-0 [&_svg]:block [&_svg]:size-[0.9rem]",
+  sm: "inline-flex items-center gap-2 rounded-small px-2 py-1"
+}[size];
+
+const toneClass = {
+  neutral: "text-muted hover:text-foreground",
+  success:
+    "text-muted hover:text-success aria-pressed:bg-[color-mix(in_srgb,var(--color-success)_16%,transparent)] aria-pressed:text-success"
+}[tone];
+const buttonAttrs = Tag === "button" ? { type } : {};
+---
+
+<Tag
+  class:list={[variantClass, sizeClass, toneClass, className]}
+  {...buttonAttrs}
+  {...attrs}
+>
+  <slot />
+</Tag>

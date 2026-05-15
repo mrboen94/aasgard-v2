@@ -1,0 +1,45 @@
+---
+import Badge from "../badges/Badge.astro";
+
+interface Props {
+  class?: string;
+  description?: string;
+  descriptionClass?: string;
+  eyebrow?: string;
+  secondary?: boolean;
+  title?: string;
+  titlePagefind?: boolean;
+  [key: string]: any;
+}
+
+const {
+  class: className,
+  description,
+  descriptionClass,
+  eyebrow,
+  secondary = false,
+  title,
+  titlePagefind = false,
+  ...attrs
+} = Astro.props as Props;
+---
+
+<header
+  class:list={[
+    "grid gap-3 [--section-accent:var(--color-accent)]",
+    secondary && "[--section-accent:var(--color-success)]",
+    className
+  ]}
+  {...attrs}
+>
+  {eyebrow && <Badge textCase="uppercase" variant="text">{eyebrow}</Badge>}
+  {title && <h1 data-pagefind-meta={titlePagefind ? "title" : undefined}>{title}</h1>}
+  {
+    description && (
+      <p class:list={["m-0 max-w-section-copy text-muted", descriptionClass]}>
+        {description}
+      </p>
+    )
+  }
+  <slot />
+</header>

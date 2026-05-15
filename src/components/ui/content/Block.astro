@@ -1,0 +1,63 @@
+---
+import Panel from "../panels/Panel.astro";
+
+interface Props {
+  as?: string;
+  class?: string;
+  title?: string;
+  tone?: "accent" | "danger" | "neutral" | "note" | "primary" | "success" | "warning";
+  variant?: "accent" | "code" | "frame" | "plain";
+  [key: string]: any;
+}
+
+const {
+  as,
+  class: className,
+  title,
+  tone = "note",
+  variant = "accent",
+  ...attrs
+} = Astro.props as Props;
+
+const panelTone = {
+  accent: "accent",
+  danger: "danger",
+  neutral: "neutral",
+  note: "primary",
+  primary: "primary",
+  success: "success",
+  warning: "accent"
+}[tone] as "accent" | "danger" | "neutral" | "primary" | "success";
+const Tag = as ?? (variant === "frame" ? "section" : "aside");
+---
+
+{
+  variant === "plain" ? (
+    <Tag class:list={["my-6 pl-4 text-caption text-muted", className]} {...attrs}>
+      {title && <p class="mt-0 mb-2 font-accent font-bold text-foreground">{title}</p>}
+      <slot />
+    </Tag>
+  ) : variant === "code" ? (
+    <Panel as={Tag} class={className} margin="sm" variant="code" {...attrs}>
+      {title && <p class="mt-0 mb-2 font-accent text-muted">{title}</p>}
+      <slot />
+    </Panel>
+  ) : variant === "frame" ? (
+    <Panel as={Tag} class:list={["overflow-hidden", className]} margin="lg" {...attrs}>
+      {title && <h2 class="mb-3 text-base">{title}</h2>}
+      <slot />
+    </Panel>
+  ) : (
+    <Panel
+      accent="left"
+      as={Tag}
+      class:list={["[&_:last-child]:mb-0", className]}
+      margin="md"
+      tone={panelTone}
+      {...attrs}
+    >
+      {title && <p class="mt-0 mb-2 font-accent font-bold">{title}</p>}
+      <slot />
+    </Panel>
+  )
+}

@@ -1,0 +1,38 @@
+---
+import BadgeList from "../badges/BadgeList.astro";
+import IconItem from "./IconItem.astro";
+
+interface IconDescriptor {
+  icon: string;
+  id?: string;
+  label: string;
+  muted?: boolean;
+  revealLabelInDev?: boolean;
+  showLabel?: boolean;
+  title?: string;
+}
+
+interface Props {
+  ariaLabel?: string;
+  density?: "compact" | "normal" | "wide";
+  items?: IconDescriptor[];
+  showLabels?: boolean;
+}
+
+const {
+  ariaLabel = "Icons",
+  density = "normal",
+  items = [],
+  showLabels = false
+} = Astro.props as Props;
+---
+
+{
+  items.length > 0 && (
+    <BadgeList ariaLabel={ariaLabel} density={density}>
+      {items.map((item) => (
+        <li><IconItem item={item} showLabel={showLabels} /></li>
+      ))}
+    </BadgeList>
+  )
+}

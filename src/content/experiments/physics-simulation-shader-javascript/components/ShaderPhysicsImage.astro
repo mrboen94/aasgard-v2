@@ -219,7 +219,6 @@ const settings = [
         label: "Turbulence",
         max: 1,
         min: 0,
-        orientation: "vertical",
         showValue: true,
         size: "narrow",
         step: 0.05,
@@ -250,6 +249,7 @@ const settings = [
 <CanvasExperiment
   ariaLabel="Shader driven particle image"
   imageSrc={src}
+  fallback={false}
   script="/src/content/experiments/physics-simulation-shader-javascript/sketches/shaderPhysics.ts"
   settings={settings}
 />

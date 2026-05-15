@@ -10,7 +10,7 @@ interactive: true
 
 import PhysicsImage from "./components/PhysicsImage.astro";
 import physicsImage from "./images/image.png";
-import CodeTabs from "../../../components/content/CodeTabs.astro";
+import SourceCode from "../../../components/ui/code/SourceCode.astro";
 
 ## Welcome to the world of physics simulation with Javascript
 
@@ -32,7 +32,7 @@ To render the image as he does in the video poses a couple of issues when workin
 
 You do not want to initiate the canvas before the image is loaded. This is especially true when the image you use is hosted on a remote server, such as sanity.
 
-```tsx title="PhysicsImage.tsx"
+```tsx title="PhysicsImage.tsx" collapse="1-13,16-20"
 /**
  * PhysicsImageProps
  * @param src: url to image
@@ -64,7 +64,7 @@ export default function PhysicsImage({
 
 To solve this issue I ended up dropping the `<img />` tag, this was also done to not have the image in the html of the component, as that requires you to hide the element with css. After all, the image is only being used to calculate pixel colors and values, not actually rendering the image.
 
-```tsx title="PhysicsImage.tsx"
+```tsx title="PhysicsImage.tsx" collapse="1-13"
 /**
  * PhysicsImageProps
  * @param src: url to image
@@ -92,44 +92,7 @@ export default function PhysicsImage({
 
 To get the correct image data the image was built with a `useEffect` and the [Image api](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/Image). Building it with the API has the added benefit of removing the need for another `useRef` hook.
 
-```tsx title="PhysicsImage.tsx"
-/**
- * PhysicsImageProps
- * @param src: url to image
- * @param particleSystemOptions: (Optional)
- */
-interface PhysicsImageProps {
-  src: string
-  particleSystemOptions?: IParticleSystemOptions | null
-}
-
-export default function PhysicsImage({
-  src,
-  particleSystemOptions,
-}: PhysicsImageProps): JSX.Element {
-  const [loaded, setLoaded] = useState(false)
-  const [imageSrc, setImageSrc] = useState<HTMLImageElement | null>(null)
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-
-  useEffect(() => {
-    let image = new Image()
-    image.src = src
-    image.crossOrigin = 'anonymous'
-    image.onload = function () {
-      setImageSrc(image)
-      setLoaded(true)
-    }
-  }, [])
-
-  return (
-    <div className="flex flex-col items-center justify-center px-0">
-      <canvas ref={canvasRef} />
-    </div>
-  )
-}
-```
-
-```tsx title="PhysicsImage.tsx"
+```tsx title="PhysicsImage.tsx" collapse="1-13,27-31"
 /**
  * PhysicsImageProps
  * @param src: url to image
@@ -168,7 +131,7 @@ export default function PhysicsImage({
 
 From the code you can see that the loaded state is set to `true` as soon as the image is loaded, there is also an extra step of setting the image in a state variable. This could probably be omitted, but it works for now. When working locally with image from sanity, the `image.crossOrigin` has to be set to 'anonymous', or you will get a insecure action error from the canvas API.
 
-```tsx title="PhysicsImage.tsx"
+```tsx title="PhysicsImage.tsx" collapse="1-15,47-51"
 /**
  * PhysicsImageProps
  * @param src: url to image
@@ -338,7 +301,7 @@ It is worth mentioning that this class shares an interface with the `Effect` cla
 
 ### Effect class
 
-```ts title="Effect.ts"
+```ts title="Effect.ts" collapse="3-20,71-93,107-126"
 import { IParticleSystemOptions, Particle } from './Particle'
 
 export class Effect {
@@ -490,309 +453,30 @@ It was therefore necessary to find the offset from the top of the website. This 
 
 ## Final code
 
-<CodeTabs tabs={[
-  { id: "physics-image", label: "PhysicsImage.tsx" },
-  { id: "particle", label: "Particle.ts" },
-  { id: "effect", label: "Effect.ts" }
-]}>
-<div slot="physics-image">
-
-```ts title="PhysicsImage.tsx"
-import { useEffect, useRef, useState } from 'react'
-import { Effect } from '../lib/particleSystem/Effect'
-import { IParticleSystemOptions } from '@/lib/particleSystem/Particle'
-
-/**
- * PhysicsImageProps
- * @param src: url to image
- * @param particleSystemOptions: (Optional)
- */
-interface PhysicsImageProps {
-  src: string
-  particleSystemOptions?: IParticleSystemOptions | null
-}
-
-export default function PhysicsImage({
-  src,
-  particleSystemOptions,
-}: PhysicsImageProps): JSX.Element {
-  let effect: null | Effect = null
-  const [loaded, setLoaded] = useState(false)
-  const [imageSrc, setImageSrc] = useState<HTMLImageElement | null>(null)
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-
-  useEffect(() => {
-    if (loaded) {
-      const ctx = canvasRef.current.getContext('2d')
-      const particleOptions: IParticleSystemOptions = particleSystemOptions
-        ? particleSystemOptions
-        : {
-            randomFriction: { min: 0.8, max: 0.9 },
-            mouseRadius: 3000,
-            ease: 0.01,
-            size: 3,
-            gap: 3,
-          }
-      canvasRef.current.width = window.innerWidth
-      canvasRef.current.height = window.innerHeight
-      effect = new Effect(canvasRef.current, imageSrc, particleOptions)
-
-      effect.init(ctx)
-      animate()
+<SourceCode
+  files={[
+    {
+      collapse: "11-95",
+      file: "/src/content/experiments/physics-simulation-javascript/components/PhysicsImage.astro",
+      mark: [98, 101, 102, 103],
+      range: "1-104",
+      title: "PhysicsImage.astro"
+    },
+    {
+      file: "/src/content/experiments/physics-simulation-javascript/sketches/physics.ts",
+      mark: [70, 75, 81, 87],
+      range: "34-94",
+      title: "Particle.ts"
+    },
+    {
+      collapse: ["206-281"],
+      file: "/src/content/experiments/physics-simulation-javascript/sketches/physics.ts",
+      mark: [134, 144, 146, 155, 162, 196, 202],
+      range: "96-282",
+      title: "Effect.ts"
     }
-  }, [loaded])
-
-  function animate() {
-    effect.update()
-    effect.render(canvasRef.current.getContext('2d'))
-    requestAnimationFrame(animate)
-  }
-
-  useEffect(() => {
-    let image = new Image()
-    image.src = src
-    image.crossOrigin = 'anonymous'
-    image.onload = function () {
-      setImageSrc(image)
-      setLoaded(true)
-    }
-  }, [])
-
-  return (
-    <div className="flex flex-col items-center justify-center px-0">
-      <canvas ref={canvasRef} />
-    </div>
-  )
-}
-```
-
-</div>
-<div slot="particle">
-
-```ts title="Particle.ts"
-import { Effect } from './Effect'
-
-/**
- * ParticleOptions
- * @param friction - The friction of the particle (default 0.9), number between 0 and 1
- * @param ease - The ease of the particle (default 0.1)
- * @param size - The size of the particle (default 1)
- * @param gap - Gap between particles (default 3)
- * @param mouseRadius - The radius of the mouse (default 6000)
- * @param randomFriction - Random friction between min and max (default null)
- */
-export interface IParticleSystemOptions {
-  friction?: number
-  ease?: number
-  size?: number
-  gap?: number
-  mouseRadius?: number
-  randomFriction?: { min: number; max: number }
-}
-
-export class Particle {
-  effect: Effect
-  x: number
-  y: number
-  size: number
-  color: string
-  dx: number
-  dy: number
-  vx: number
-  vy: number
-  force: number
-  angle: number
-  distance: number
-  friction: number
-  ease: number
-  originX: number
-  originY: number
-  constructor(effect, x, y, color, particleOptions?: IParticleSystemOptions) {
-    this.effect = effect
-    this.x = this.originX = x
-    this.y = this.originY = y
-    this.color = color
-    this.dx = 0
-    this.dy = 0
-    this.vx = 0
-    this.vy = 0
-    this.distance = 0
-    this.angle = 0
-    this.force = 0
-    this.friction = particleOptions?.friction
-      ? particleOptions.friction
-      : particleOptions?.randomFriction
-      ? Math.random() *
-          (particleOptions.randomFriction.max -
-            particleOptions.randomFriction.min) +
-        particleOptions.randomFriction.min
-      : 0.9
-
-    this.ease = particleOptions?.ease ? particleOptions.ease : 0.1
-    this.size = particleOptions?.size ? particleOptions.size : 1
-  }
-
-  update() {
-    this.dx = this.effect.mouse.x - this.x
-    this.dy = this.effect.mouse.y - this.y
-    this.distance = this.dx * this.dx + this.dy * this.dy
-    this.force = -this.effect.mouse.radius / this.distance
-    if (this.distance < this.effect.mouse.radius) {
-      this.angle = Math.atan2(this.dy, this.dx)
-      this.vx += this.force * Math.cos(this.angle)
-      this.vy += this.force * Math.sin(this.angle)
-    }
-    this.x += (this.vx *= this.friction) + (this.originX - this.x) * this.ease
-    this.y += (this.vy *= this.friction) + (this.originY - this.y) * this.ease
-  }
-}
-```
-
-</div>
-<div slot="effect">
-
-```ts title="Effect.ts"
-import { IParticleSystemOptions, Particle } from './Particle'
-
-export class Effect {
-  canvas: HTMLCanvasElement
-  image: HTMLImageElement
-  particleSystemOptions?: IParticleSystemOptions | null
-  width: number
-  height: number
-  centerX: number
-  centerY: number
-  x: number
-  y: number
-  particles: Particle[]
-  gap: number
-  mouse: {
-    x: number
-    y: number
-    radius: number
-    tmpRadius: number
-  }
-  box: DOMRect
-  canvasOffset: { x: number; y: number }
-
-  constructor(
-    canvas: HTMLCanvasElement,
-    image: HTMLImageElement,
-    particleOptions?: IParticleSystemOptions | null
-  ) {
-    this.canvas = canvas
-    this.box = this.canvas.getBoundingClientRect()
-    this.canvasOffset = { x: this.box.left, y: this.box.top }
-    this.width = canvas.width
-    this.height = canvas.height
-    this.image = image
-    this.centerX = this.width / 2
-    this.centerY = this.height / 2
-    this.x = this.centerX - this.image.width / 2
-    this.y = this.centerY - this.image.height / 2
-    this.particles = []
-    this.gap = particleOptions?.gap ? particleOptions.gap : 3
-    this.mouse = {
-      x: 0,
-      y: 0,
-      radius: particleOptions?.mouseRadius ? particleOptions.mouseRadius : 100,
-      tmpRadius: 0,
-    }
-    particleOptions && (this.particleSystemOptions = particleOptions)
-
-    window.addEventListener('scroll', (_) => {
-      this.canvasOffset.y = this.canvas.getBoundingClientRect().top
-    })
-
-    window.addEventListener('mousemove', (event) => {
-      this.mouse.x = event.clientX - this.canvasOffset.x
-      this.mouse.y = event.clientY - this.canvasOffset.y
-    })
-
-    window.addEventListener('mousedown', (event) => {
-      this.mouse.tmpRadius = this.mouse.radius
-      this.mouse.radius = 0
-    })
-
-    window.addEventListener('mouseup', (event) => {
-      this.mouse.radius = this.mouse.tmpRadius
-      this.mouse.tmpRadius = 0
-    })
-
-    window.addEventListener(
-      'touchstart',
-      (event) => {
-        this.mouse.x = event.changedTouches[0].clientX - this.canvasOffset.x
-        this.mouse.y = event.changedTouches[0].clientY - this.canvasOffset.y
-      },
-      false
-    )
-
-    window.addEventListener(
-      'touchmove',
-      (event) => {
-        event.preventDefault()
-        this.mouse.x = event.targetTouches[0].clientX
-        this.mouse.y = event.targetTouches[0].clientY
-      },
-      false
-    )
-
-    window.addEventListener(
-      'touchend',
-      (event) => {
-        event.preventDefault()
-        this.mouse.x = 0
-        this.mouse.y = 0
-      },
-      false
-    )
-  }
-
-  public init(context) {
-    context.drawImage(this.image, this.x, this.y)
-    let pixels = context.getImageData(0, 0, this.width, this.height).data
-    let index
-    for (let y = 0; y < this.height; y += this.gap) {
-      for (let x = 0; x < this.width; x += this.gap) {
-        index = (y * this.width + x) * 4
-        const red = pixels[index]
-        const green = pixels[index + 1]
-        const blue = pixels[index + 2]
-        const color = 'rgb(' + red + ',' + green + ',' + blue + ')'
-
-        const alpha = pixels[index + 3]
-        if (alpha > 0) {
-          this.particleSystemOptions
-            ? this.particles.push(
-                new Particle(this, x, y, color, this.particleSystemOptions)
-              )
-            : this.particles.push(new Particle(this, x, y, color))
-        }
-      }
-    }
-    context.clearRect(0, 0, this.width, this.height)
-  }
-
-  public update() {
-    for (const element of this.particles) {
-      element.update()
-    }
-  }
-
-  public render(context) {
-    context.clearRect(0, 0, this.width, this.height)
-    for (const element of this.particles) {
-      let p = element
-      context.fillStyle = p.color
-      context.fillRect(p.x, p.y, p.size, p.size)
-    }
-  }
-}
-```
-
-</div>
-</CodeTabs>
+  ]}
+/>
 
 ## Future
 

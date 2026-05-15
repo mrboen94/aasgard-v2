@@ -1,0 +1,70 @@
+---
+import { Code } from "astro-expressive-code/components";
+import {
+  prepareSourceCodeFiles,
+  type SourceCodeProps as Props
+} from "../../../lib/source-code/prepare";
+import Tab from "../tabs/Tab.astro";
+import Tabs from "../tabs/Tabs.astro";
+
+const props = Astro.props;
+const groupId = `source-code-${Math.random().toString(36).slice(2)}`;
+const preparedFiles = await prepareSourceCodeFiles(props, groupId);
+const hasTabs = preparedFiles.length > 1;
+---
+
+<div class:list={["my-6 max-w-full", hasTabs && "overflow-hidden"]} data-source-code-tabs={hasTabs ? "" : undefined}>
+  {
+    hasTabs && (
+      <Tabs ariaLabel="Source files" variant="frame">
+        {preparedFiles.map((file, index) => (
+          <Tab
+            controls={`${file.id}-panel`}
+            id={`${file.id}-tab`}
+            joined={index > 0}
+            selected={index === 0}
+            variant="frame"
+          >
+            {file.title}
+          </Tab>
+        ))}
+      </Tabs>
+    )
+  }
+
+  {
+    preparedFiles.map((file, index) => (
+      <section
+        aria-labelledby={hasTabs ? `${file.id}-tab` : undefined}
+        class:list={[
+          "min-w-0 overflow-x-auto [&_.expressive-code]:my-0",
+          hasTabs && "[&_.expressive-code_pre]:rounded-t-none [&_.expressive-code_pre]:border-t-0"
+        ]}
+        hidden={hasTabs && index !== 0}
+        id={`${file.id}-panel`}
+        role={hasTabs ? "tabpanel" : undefined}
+      >
+        <Code
+          code={file.code}
+          collapse={file.collapse}
+          del={file.del}
+          frame={hasTabs ? "none" : (file.frame ?? "code")}
+          ins={file.ins}
+          lang={file.lang}
+          mark={file.mark}
+          showLineNumbers={file.showLineNumbers}
+          startLineNumber={file.startLineNumber}
+          title={file.title}
+          wrap={file.wrap}
+        />
+      </section>
+    ))
+  }
+</div>
+
+<script>
+  import { mountOnAstroPageLoad } from "../../../lib/dom/lifecycle";
+  import { mountSourceCodeTabs } from "./sourceCodeTabs";
+
+  mountOnAstroPageLoad(mountSourceCodeTabs);
+</script>

@@ -1,18 +1,37 @@
 ---
 import BaseLayout from "../../components/layout/BaseLayout.astro";
-import ProjectGrid from "../../components/project/ProjectGrid.astro";
+import EntryGrid from "../../components/ui/cards/EntryGrid.astro";
+import PageIntro from "../../components/ui/typography/PageIntro.astro";
+import PageSection from "../../components/ui/layout/PageSection.astro";
 import { getWorkEntries } from "../../lib/content/collections";
+import { workUrl } from "../../lib/content/urls";
+import { resolveTechnologyItems } from "../../lib/icons/resolveTechnology";
 
 const entries = await getWorkEntries();
+const workItems = entries.map((entry) => ({
+  accent: entry.data.accent ?? "primary",
+  action: entry.data.link,
+  annotation: entry.data.featured ? "Featured" : undefined,
+  description: entry.data.description,
+  highlighted: entry.data.featured,
+  href: workUrl(entry.data.slug),
+  icons: resolveTechnologyItems(entry.data.technologies),
+  layout: "stack-lg" as const,
+  title: entry.data.title,
+  visual: {
+    icon: entry.data.logo ?? "custom/placeholder",
+    label: entry.data.title
+  }
+}));
 ---
 
 <BaseLayout title="Work" description="Some of my projects, collaborations, and professional experience.">
-  <section class="container page-section">
-    <header class="page-header page-intro">
-      <p class="eyebrow">Projects</p>
-      <h1>Work</h1>
-      <p>Some of my projects, collaborations, and professional experience.</p>
-    </header>
-    <ProjectGrid entries={entries} />
-  </section>
+  <PageSection>
+    <PageIntro
+      eyebrow="Projects"
+      title="Work"
+      description="Some of my projects, collaborations, and professional experience."
+    />
+    <EntryGrid items={workItems} />
+  </PageSection>
 </BaseLayout>

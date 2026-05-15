@@ -1,0 +1,31 @@
+---
+interface Props {
+  as?: string;
+  class?: string;
+  href?: string;
+  revealOnFocus?: boolean;
+  [key: string]: any;
+}
+
+const {
+  as,
+  class: className,
+  href,
+  revealOnFocus = false,
+  ...attrs
+} = Astro.props as Props;
+const Tag = as ?? (href ? "a" : "span");
+const tagAttrs = href ? { ...attrs, href } : attrs;
+---
+
+<Tag
+  class:list={[
+    "absolute h-px w-px overflow-hidden whitespace-nowrap [clip:rect(0_0_0_0)] [clip-path:inset(50%)]",
+    revealOnFocus &&
+      "font-accent text-primary transition-[color,opacity] duration-[var(--duration-fast)] ease-theme focus-visible:static focus-visible:h-auto focus-visible:w-fit focus-visible:overflow-visible focus-visible:whitespace-normal focus-visible:[clip:auto] focus-visible:[clip-path:none]",
+    className
+  ]}
+  {...tagAttrs}
+>
+  <slot />
+</Tag>

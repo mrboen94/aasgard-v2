@@ -69,7 +69,13 @@ export function valuesMatch(
 }
 
 export function labelColorClass(labelColor?: LabelColor) {
-  return `canvas-label-color canvas-label-color--${labelColor?.type ?? "default"}`;
+  if (labelColor?.type === "warning") return "text-accent";
+  if (labelColor?.type === "error") return "text-danger";
+  if (labelColor?.type === "custom") {
+    return "text-[var(--canvas-label-color-custom,var(--color-muted))]";
+  }
+
+  return "text-muted";
 }
 
 export function labelColorStyle(labelColor?: LabelColor) {

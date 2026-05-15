@@ -1,0 +1,24 @@
+---
+import MediaPlaceholder from "../media/MediaPlaceholder.astro";
+
+interface Props {
+  class?: string;
+  fallbackCount?: number;
+  fallbackAspect?: "photo" | "portrait" | "square" | "video" | string;
+  [key: string]: any;
+}
+
+const {
+  class: className,
+  fallbackAspect = "portrait",
+  fallbackCount = 3,
+  ...attrs
+} = Astro.props as Props;
+const fallbackItems = Array.from({ length: fallbackCount });
+---
+
+<div class:list={["grid grid-cols-3 gap-3 max-[44rem]:grid-cols-1", className]} {...attrs}>
+  <slot>
+    {fallbackItems.map(() => <MediaPlaceholder as="div" aspect={fallbackAspect} framed />)}
+  </slot>
+</div>

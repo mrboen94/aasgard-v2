@@ -1,0 +1,14 @@
+---
+import Caption from "../typography/Caption.astro";
+
+interface Props {
+  caption?: string;
+}
+
+const { caption } = Astro.props;
+---
+
+<figure class="my-8">
+  <slot />
+  {caption && <Caption>{caption}</Caption>}
+</figure>

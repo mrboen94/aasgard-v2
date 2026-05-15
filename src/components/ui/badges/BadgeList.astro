@@ -1,0 +1,29 @@
+---
+interface Props {
+  ariaLabel?: string;
+  class?: string;
+  density?: "compact" | "normal" | "wide";
+  [key: string]: any;
+}
+
+const {
+  ariaLabel,
+  class: className,
+  density = "normal",
+  ...attrs
+} = Astro.props as Props;
+
+const densityClass = {
+  compact: "gap-2",
+  normal: "gap-x-3 gap-y-2",
+  wide: "gap-3"
+}[density];
+---
+
+<ul
+  class:list={["m-0 flex list-none flex-wrap items-center p-0", densityClass, className]}
+  aria-label={ariaLabel}
+  {...attrs}
+>
+  <slot />
+</ul>

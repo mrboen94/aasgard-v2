@@ -1,0 +1,42 @@
+---
+import Card from "./Card.astro";
+import MediaPlaceholder from "../media/MediaPlaceholder.astro";
+
+interface Props {
+  aspect?: "photo" | "portrait" | "square" | "video" | string;
+  class?: string;
+  contentClass?: string;
+  description?: string;
+  href: string;
+  mediaClass?: string;
+  title: string;
+  [key: string]: any;
+}
+
+const {
+  aspect = "video",
+  class: className,
+  contentClass,
+  description,
+  href,
+  mediaClass,
+  title,
+  ...attrs
+} = Astro.props as Props;
+---
+
+<Card class:list={["group", className]} variant="flush" {...attrs}>
+  <a class="grid text-inherit no-underline" href={href}>
+    <slot name="media">
+      <MediaPlaceholder
+        aspect={aspect}
+        class={mediaClass}
+        interactive
+      />
+    </slot>
+    <span class:list={["grid gap-2 p-4", contentClass]}>
+      <h3>{title}</h3>
+      {description && <p class="m-0 text-muted">{description}</p>}
+    </span>
+  </a>
+</Card>

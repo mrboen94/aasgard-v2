@@ -1,0 +1,63 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface IconDescriptor {
+  icon: string;
+  id?: string;
+  label: string;
+  muted?: boolean;
+  revealLabelInDev?: boolean;
+  showLabel?: boolean;
+  title?: string;
+}
+
+interface Props {
+  icon?: string;
+  id?: string;
+  item?: IconDescriptor;
+  label?: string;
+  muted?: boolean;
+  revealLabelInDev?: boolean;
+  showLabel?: boolean;
+  title?: string;
+}
+
+const {
+  item,
+  icon,
+  id,
+  label,
+  muted,
+  revealLabelInDev,
+  showLabel = false,
+  title
+} = Astro.props as Props;
+const resolved = item ?? {
+  icon: icon ?? "custom/placeholder",
+  id,
+  label: label ?? id ?? "",
+  muted,
+  revealLabelInDev,
+  showLabel,
+  title
+};
+const shouldShowLabel =
+  showLabel || resolved.showLabel || (resolved.revealLabelInDev && import.meta.env.DEV);
+---
+
+<span
+  class:list={[
+    "inline-flex min-h-7 items-center gap-2 transition-[color,opacity] duration-[var(--duration-fast)] ease-theme [&_svg]:size-[1.15rem] [&_svg]:flex-none [&_svg]:transition-transform [&_svg]:duration-[var(--duration-fast)] [&_svg]:ease-theme",
+    resolved.muted && "text-muted"
+  ]}
+  title={resolved.title ?? resolved.label}
+>
+  <Icon name={resolved.icon} aria-hidden="true" />
+  {
+    shouldShowLabel && (
+      <span class="font-accent text-meta">
+        {resolved.label}
+      </span>
+    )
+  }
+</span>

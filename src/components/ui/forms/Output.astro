@@ -1,0 +1,24 @@
+---
+interface Props {
+  align?: "center" | "start";
+  class?: string;
+  [key: string]: any;
+}
+
+const {
+  align = "start",
+  class: className,
+  ...attrs
+} = Astro.props as Props;
+---
+
+<output
+  class:list={[
+    "text-foreground tabular-nums",
+    align === "center" && "text-center",
+    className
+  ]}
+  {...attrs}
+>
+  <slot />
+</output>

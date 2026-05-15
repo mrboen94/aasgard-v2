@@ -1,0 +1,45 @@
+---
+interface Props {
+  aspect?: "photo" | "portrait" | "square" | "video" | string;
+  as?: string;
+  class?: string;
+  framed?: boolean;
+  interactive?: boolean;
+  overflow?: "hidden" | "visible";
+  [key: string]: any;
+}
+
+const {
+  aspect,
+  as = "span",
+  class: className,
+  framed = false,
+  interactive = false,
+  overflow = "visible",
+  ...attrs
+} = Astro.props as Props;
+const Tag = as;
+
+const aspectClass = {
+  photo: "aspect-[4/3]",
+  portrait: "aspect-[4/5]",
+  square: "aspect-square",
+  video: "aspect-video"
+}[aspect ?? ""] ?? aspect;
+---
+
+<Tag
+  class:list={[
+    "bg-[var(--background-media-placeholder)]",
+    aspectClass,
+    framed &&
+      "rounded-card border border-border transition-[background-color,border-color] duration-[var(--duration-theme)] ease-theme",
+    overflow === "hidden" && "overflow-hidden",
+    interactive &&
+      "transition-[background-color,transform] duration-[var(--duration-theme)] ease-theme group-hover:scale-[1.015] group-focus-within:scale-[1.015]",
+    className
+  ]}
+  {...attrs}
+>
+  <slot />
+</Tag>

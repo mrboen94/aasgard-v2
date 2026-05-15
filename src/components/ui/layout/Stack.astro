@@ -1,0 +1,35 @@
+---
+interface Props {
+  as?: string;
+  class?: string;
+  layout?: "between" | "center" | "cluster" | "column" | "fill" | "grid" | "pair" | "row";
+  [key: string]: any;
+}
+
+const {
+  as = "div",
+  class: className,
+  layout,
+  ...attrs
+} = Astro.props as Props;
+const Tag = as;
+
+const layoutClasses = {
+  between: "flex items-center justify-between gap-2",
+  center: "flex items-center justify-center gap-2 text-center",
+  cluster: "flex flex-wrap items-center gap-2",
+  column: "grid grid-cols-1 gap-2",
+  fill:
+    "flex flex-wrap items-end gap-2 [&>[data-ui-field]]:min-w-0 [&>[data-ui-field]]:max-w-none [&>[data-ui-field]]:flex-[1_1_8rem] [&>[data-ui-field]]:w-auto",
+  grid:
+    "grid items-end gap-2 [grid-template-columns:repeat(auto-fit,minmax(min(100%,8rem),1fr))]",
+  pair:
+    "col-span-full grid min-w-0 grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-end gap-2 [&>[data-ui-field]]:w-auto [&>[data-ui-field]]:max-w-full",
+  row: "flex flex-wrap items-end gap-2"
+};
+const layoutClass = layout ? layoutClasses[layout] : undefined;
+---
+
+<Tag class:list={["min-w-0 gap-2", layoutClass, className]} {...attrs}>
+  <slot />
+</Tag>

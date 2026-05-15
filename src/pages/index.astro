@@ -1,12 +1,11 @@
 ---
-import "./index.css";
-import ArticleList from "../components/article/ArticleList.astro";
-import ExperimentCard from "../components/lab/ExperimentCard.astro";
-import Section from "../components/layout/Section.astro";
 import BaseLayout from "../components/layout/BaseLayout.astro";
-import PhotoProjectCard from "../components/media/PhotoProjectCard.astro";
-import VideoProjectCard from "../components/media/VideoProjectCard.astro";
-import ProjectGrid from "../components/project/ProjectGrid.astro";
+import Badge from "../components/ui/badges/Badge.astro";
+import EntryGrid from "../components/ui/cards/EntryGrid.astro";
+import Container from "../components/ui/layout/Container.astro";
+import Grid from "../components/ui/layout/Grid.astro";
+import Section from "../components/ui/layout/Section.astro";
+import MediaCard from "../components/ui/cards/MediaCard.astro";
 import {
   getArticles,
   getExperiments,
@@ -14,6 +13,14 @@ import {
   getVideoProjects,
   getWorkEntries
 } from "../lib/content/collections";
+import {
+  articleUrl,
+  labUrl,
+  photoProjectUrl,
+  videoProjectUrl,
+  workUrl
+} from "../lib/content/urls";
+import { resolveTechnologyItems } from "../lib/icons/resolveTechnology";
 
 const [articles, experiments, workEntries, photoProjects, videoProjects] = await Promise.all([
   getArticles(),
@@ -22,13 +29,46 @@ const [articles, experiments, workEntries, photoProjects, videoProjects] = await
   getPhotoProjects(),
   getVideoProjects()
 ]);
+const articleItems = articles.slice(0, 3).map((entry) => ({
+  description: entry.data.description,
+  href: articleUrl(entry.data.slug),
+  meta: {
+    date: entry.data.date,
+    eyebrow: entry.data.eyebrow,
+    tags: entry.data.tags
+  },
+  title: entry.data.title
+}));
+const experimentItems = experiments.slice(0, 3).map((entry) => ({
+  accent: "success",
+  badge: entry.data.status,
+  description: entry.data.description,
+  href: labUrl(entry.data.slug),
+  icons: resolveTechnologyItems(entry.data.technologies),
+  title: entry.data.title
+}));
+const workItems = workEntries.slice(0, 3).map((entry) => ({
+  accent: entry.data.accent ?? "primary",
+  action: entry.data.link,
+  annotation: entry.data.featured ? "Featured" : undefined,
+  description: entry.data.description,
+  highlighted: entry.data.featured,
+  href: workUrl(entry.data.slug),
+  icons: resolveTechnologyItems(entry.data.technologies),
+  layout: "stack-lg" as const,
+  title: entry.data.title,
+  visual: {
+    icon: entry.data.logo ?? "custom/placeholder",
+    label: entry.data.title
+  }
+}));
 ---
 
 <BaseLayout>
-  <div class="container home">
-    <section class="home-hero">
-      <p class="eyebrow">Mathias Bøe</p>
-      <p>
+  <Container class="grid gap-4">
+    <section class="grid gap-4 pt-12 pb-4">
+      <Badge textCase="uppercase" variant="text">Mathias Bøe</Badge>
+      <p class="m-0 max-w-section-copy text-home-lead text-muted">
 				Notes from an unreasonable number of side quests.
 				Photography and videos, 3D modelling, data viz, prototypes and experiments, devnotes and the general overflow of a curious mind.
 				Pick a thread and pull.
@@ -40,7 +80,7 @@ const [articles, experiments, workEntries, photoProjects, videoProjects] = await
       description="Some of my notes and writing on various topics and various depths. Some are more polished than others, but all are written with the intention of sharing and exploring ideas."
       href="/articles/"
     >
-      <ArticleList entries={articles.slice(0, 3)} />
+      <EntryGrid items={articleItems} />
     </Section>
 
     <Section
@@ -48,9 +88,7 @@ const [articles, experiments, workEntries, photoProjects, videoProjects] = await
       description="Experiments and prototypes are the playground of ideas, where concepts are tested, iterated upon, and sometimes discarded. They are the messy, exciting middle ground between thought and polished work."
       href="/lab/"
     >
-      <div class="grid">
-        {experiments.slice(0, 3).map((entry) => <ExperimentCard entry={entry} />)}
-      </div>
+      <EntryGrid items={experimentItems} />
     </Section>
 
     <Section
@@ -58,7 +96,7 @@ const [articles, experiments, workEntries, photoProjects, videoProjects] = await
       description="A selection of projects I've worked on, both professionally and personally. These are the more polished and complete works, often with a focus on design, development, and problem-solving."
       href="/work/"
     >
-      <ProjectGrid entries={workEntries.slice(0, 3)} />
+      <EntryGrid items={workItems} />
     </Section>
 
     {photoProjects.length > 0 && (
@@ -66,11 +104,20 @@ const [articles, experiments, workEntries, photoProjects, videoProjects] = await
         title="Photography"
         description="Just some of my photos and collections."
         href="/photography/"
-    >
-      <div class="grid">
-        {photoProjects.slice(0, 3).map((entry) => <PhotoProjectCard entry={entry} />)}
-      </div>
-    </Section>
+      >
+        <Grid>
+          {
+            photoProjects.slice(0, 3).map((entry) => (
+              <MediaCard
+                aspect="photo"
+                description={entry.data.description}
+                href={photoProjectUrl(entry.data.slug)}
+                title={entry.data.title}
+              />
+            ))
+          }
+        </Grid>
+      </Section>
     )}
 
     {videoProjects.length > 0 && (
@@ -79,10 +126,19 @@ const [articles, experiments, workEntries, photoProjects, videoProjects] = await
         description="A selection of my video and visual projects."
         href="/video/"
       >
-        <div class="grid">
-          {videoProjects.slice(0, 3).map((entry) => <VideoProjectCard entry={entry} />)}
-        </div>
+        <Grid>
+          {
+            videoProjects.slice(0, 3).map((entry) => (
+              <MediaCard
+                aspect="video"
+                description={entry.data.description}
+                href={videoProjectUrl(entry.data.slug)}
+                title={entry.data.title}
+              />
+            ))
+          }
+        </Grid>
       </Section>
     )}
-  </div>
+  </Container>
 </BaseLayout>

@@ -1,0 +1,50 @@
+---
+import Badge from "../badges/Badge.astro";
+import BadgeList from "../badges/BadgeList.astro";
+import InlineMeta from "../typography/InlineMeta.astro";
+
+interface Props {
+  eyebrow?: string;
+  date?: Date;
+  updated?: Date;
+  tags?: string[];
+  section?: string;
+}
+
+const { eyebrow, date, updated, tags = [], section } = Astro.props;
+const dateLabel = date
+  ? date.toLocaleDateString("en", {
+      year: "numeric",
+      month: "short",
+      day: "numeric"
+    })
+  : undefined;
+---
+
+<InlineMeta>
+  {
+    eyebrow && (
+      <Badge
+        data-pagefind-meta="eyebrow"
+        textCase="uppercase"
+        variant="text"
+      >
+        {eyebrow}
+      </Badge>
+    )
+  }
+  {section && <span data-pagefind-meta="section">{section}</span>}
+  {date && <time datetime={date.toISOString()} data-pagefind-meta="date">{dateLabel}</time>}
+  {updated && <span>Updated {updated.toLocaleDateString("en")}</span>}
+  {
+    tags.length > 0 && (
+      <BadgeList ariaLabel="Tags" density="compact">
+        {tags.map((tag) => (
+          <Badge as="li" data-pagefind-meta="tags" variant="outline">
+            {tag}
+          </Badge>
+        ))}
+      </BadgeList>
+    )
+  }
+</InlineMeta>

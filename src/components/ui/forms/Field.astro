@@ -1,0 +1,48 @@
+---
+import type { HTMLTag } from "astro/types";
+
+interface Props {
+  as?: HTMLTag;
+  class?: string;
+  layout?: "inline" | "stack";
+  orientation?: "horizontal" | "vertical";
+  size?: "default" | "full" | "narrow" | "wide";
+  [key: string]: any;
+}
+
+const {
+  as = "label",
+  class: className,
+  layout = "stack",
+  orientation,
+  size = "default",
+  ...attrs
+} = Astro.props as Props;
+const Tag = as;
+
+const layoutClass = {
+  inline: "flex items-center gap-2",
+  stack: "grid"
+}[layout];
+
+const sizeClass = {
+  default: "",
+  full: "col-span-full w-full",
+  narrow: "w-[min(100%,7rem)]",
+  wide: "w-[min(100%,16rem)]"
+}[size];
+---
+
+<Tag
+  class:list={[
+    "m-0 min-w-0 gap-1 border-0 p-0 font-accent text-meta text-muted",
+    layoutClass,
+    sizeClass,
+    orientation === "vertical" && "w-auto items-center justify-items-center",
+    className
+  ]}
+  data-ui-field
+  {...attrs}
+>
+  <slot />
+</Tag>

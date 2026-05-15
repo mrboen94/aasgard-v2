@@ -1,0 +1,67 @@
+---
+interface Props {
+  accent?: "left" | "none";
+  as?: string;
+  class?: string;
+  margin?: "lg" | "md" | "none" | "sm";
+  padding?: "md";
+  tone?: "accent" | "danger" | "neutral" | "primary" | "success";
+  variant?: "bordered" | "code" | "filled" | "plain";
+  [key: string]: any;
+}
+
+const {
+  accent = "none",
+  as = "div",
+  class: className,
+  margin = "none",
+  padding = "md",
+  tone = "neutral",
+  variant = "bordered",
+  ...attrs
+} = Astro.props as Props;
+const Tag = as;
+
+const marginClass = {
+  lg: "my-8",
+  md: "my-6",
+  none: "",
+  sm: "my-4"
+}[margin];
+
+const paddingClass = {
+  md: "p-4"
+}[padding];
+
+const toneClass = {
+  accent: "border-l-accent",
+  danger: "border-l-danger",
+  neutral: "border-l-border",
+  primary: "border-l-primary",
+  success: "border-l-success"
+}[tone];
+
+const variantClass = {
+  bordered:
+    "rounded-card border border-border transition-[background-color,border-color] duration-[var(--duration-theme)] ease-theme",
+  code:
+    "rounded-card bg-code font-code transition-[background-color,color] duration-[var(--duration-theme)] ease-theme",
+  filled:
+    "rounded-card bg-surface transition-[background-color,border-color] duration-[var(--duration-theme)] ease-theme",
+  plain: ""
+}[variant];
+---
+
+<Tag
+  class:list={[
+    marginClass,
+    variantClass,
+    paddingClass,
+    accent === "left" && "border-l-4",
+    accent === "left" && toneClass,
+    className
+  ]}
+  {...attrs}
+>
+  <slot />
+</Tag>

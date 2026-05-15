@@ -1,9 +1,9 @@
 ---
 import { render } from "astro:content";
-import ArticleTemplate from "../../components/article/ArticleTemplate.astro";
-import InteractiveArticleTemplate from "../../components/article/InteractiveArticleTemplate.astro";
-import TechnicalArticleTemplate from "../../components/article/TechnicalArticleTemplate.astro";
+import ContentPage from "../../components/ui/content/ContentPage.astro";
+import IconList from "../../components/ui/icons/IconList.astro";
 import { getArticles } from "../../lib/content/collections";
+import { resolveTechnologyItems } from "../../lib/icons/resolveTechnology";
 
 export async function getStaticPaths() {
   const articles = await getArticles();
@@ -16,14 +16,39 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content, headings } = await render(entry);
+const layoutByTemplate = {
+  interactive: "wide",
+  standard: "standard",
+  technical: "sidebar"
+} as const;
+const layout = layoutByTemplate[entry.data.template];
+const notice =
+  entry.data.template === "interactive"
+    ? "This article includes a local demo that uses JavaScript."
+    : undefined;
+const technologyItems = resolveTechnologyItems(entry.data.technologies);
 ---
 
-{
-  entry.data.template === "technical" ? (
-    <TechnicalArticleTemplate entry={entry} Content={Content} headings={headings} />
-  ) : entry.data.template === "interactive" ? (
-    <InteractiveArticleTemplate entry={entry} Content={Content} />
-  ) : (
-    <ArticleTemplate entry={entry} Content={Content} />
-  )
-}
+<ContentPage
+  backHref="/articles/"
+  backLabel="< Back"
+  canonical={`/articles/${entry.data.slug}/`}
+  Content={Content}
+  date={entry.data.date}
+  description={entry.data.description}
+  headings={headings}
+  layout={layout}
+  notice={notice}
+  section="articles"
+  tags={entry.data.tags}
+  title={entry.data.title}
+  updated={entry.data.updated}
+>
+  {
+    layout === "sidebar" && technologyItems.length > 0 && (
+      <Fragment slot="sidebar">
+        <IconList items={technologyItems} showLabels />
+      </Fragment>
+    )
+  }
+</ContentPage>

@@ -1,10 +1,13 @@
 ---
 import { render } from "astro:content";
-import ArticleMeta from "../../components/article/ArticleMeta.astro";
-import ArticleProse from "../../components/article/ArticleProse.astro";
-import TechIconList from "../../components/icons/TechIconList.astro";
 import BaseLayout from "../../components/layout/BaseLayout.astro";
+import IconList from "../../components/ui/icons/IconList.astro";
+import ContentShell from "../../components/ui/layout/ContentShell.astro";
+import MetaList from "../../components/ui/metadata/MetaList.astro";
+import PageIntro from "../../components/ui/typography/PageIntro.astro";
+import Prose from "../../components/ui/typography/Prose.astro";
 import { getWorkEntries } from "../../lib/content/collections";
+import { resolveTechnologyItems } from "../../lib/icons/resolveTechnology";
 
 export async function getStaticPaths() {
   const entries = await getWorkEntries();
@@ -17,20 +20,24 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
+const technologyItems = resolveTechnologyItems(entry.data.technologies);
 ---
 
 <BaseLayout title={entry.data.title} description={entry.data.description} canonical={`/work/${entry.data.slug}/`}>
-  <article class="container content-page" data-pagefind-body>
-    <header class="content-page__header page-intro">
-      <p class="eyebrow">Work</p>
-      <h1 data-pagefind-meta="title">{entry.data.title}</h1>
-      <p>{entry.data.description}</p>
-      <ArticleMeta date={entry.data.date} section="work" />
-      <TechIconList technologies={entry.data.technologies} showLabels />
+  <ContentShell class="grid gap-6 py-12" data-pagefind-body>
+    <PageIntro
+      class="gap-4"
+      eyebrow="Work"
+      title={entry.data.title}
+      titlePagefind
+      description={entry.data.description}
+    >
+      <MetaList date={entry.data.date} section="work" />
+      <IconList items={technologyItems} showLabels />
       {entry.data.link && <a href={entry.data.link.href}>{entry.data.link.label}</a>}
-    </header>
-    <ArticleProse>
+    </PageIntro>
+    <Prose>
       <Content />
-    </ArticleProse>
-  </article>
+    </Prose>
+  </ContentShell>
 </BaseLayout>

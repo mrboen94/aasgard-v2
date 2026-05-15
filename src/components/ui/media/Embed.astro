@@ -1,0 +1,41 @@
+---
+import Badge from "../badges/Badge.astro";
+import Caption from "../typography/Caption.astro";
+import MediaPlaceholder from "./MediaPlaceholder.astro";
+
+interface Props {
+  provider: "youtube" | "vimeo" | "mux" | "local";
+  id: string;
+  title: string;
+  poster?: string;
+}
+
+const { provider, id, title, poster } = Astro.props;
+const hrefByProvider = {
+  youtube: `https://www.youtube.com/watch?v=${id}`,
+  vimeo: `https://vimeo.com/${id}`,
+  mux: `https://stream.mux.com/${id}`,
+  local: id
+};
+---
+
+<figure class="my-8">
+  <a class="group relative grid text-inherit no-underline" href={hrefByProvider[provider]}>
+    <MediaPlaceholder
+      aspect="video"
+      class="block bg-center bg-cover group-hover:scale-[1.01] group-focus-visible:scale-[1.01]"
+      framed
+      overflow="hidden"
+    >
+      {poster && <img alt="" class="size-full object-cover" loading="lazy" src={poster} />}
+    </MediaPlaceholder>
+    <Badge
+      class="absolute top-1/2 left-1/2 bg-surface -translate-x-1/2 -translate-y-1/2 group-hover:scale-[1.03] group-focus-visible:scale-[1.03]"
+      size="md"
+      variant="outline"
+    >
+      Open {provider} video
+    </Badge>
+  </a>
+  <Caption>{title}</Caption>
+</figure>

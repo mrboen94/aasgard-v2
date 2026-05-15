@@ -1,17 +1,30 @@
 ---
 import BaseLayout from "../components/layout/BaseLayout.astro";
+import Field from "../components/ui/forms/Field.astro";
+import InlineMeta from "../components/ui/typography/InlineMeta.astro";
+import Input from "../components/ui/forms/Input.astro";
+import PageIntro from "../components/ui/typography/PageIntro.astro";
+import PageSection from "../components/ui/layout/PageSection.astro";
 ---
 
 <BaseLayout title="Search" description="Search the static site.">
-  <section class="container page-section">
-    <header class="page-header page-intro">
-      <p class="eyebrow">Pagefind</p>
-      <h1>Search</h1>
-    </header>
-    <div id="search"></div>
-  </section>
-  <link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
-  <script is:inline src="/pagefind/pagefind-ui.js"></script>
+  <PageSection>
+    <PageIntro eyebrow="Pagefind" title="Search" />
+    <div id="search" class="grid max-w-prose gap-4">
+      <Field for="pagefind-search-input">
+        <span>Search query</span>
+        <Input
+          id="pagefind-search-input"
+          data-pagefind-search-input
+          name="q"
+          type="search"
+          variant="field-lg"
+        />
+      </Field>
+      <InlineMeta as="p" class="m-0 max-w-section-copy" data-pagefind-status layout="none"></InlineMeta>
+      <div class="grid gap-4" data-pagefind-results></div>
+    </div>
+  </PageSection>
   <script>
     import { mountOnAstroPageLoad } from "../lib/dom/lifecycle";
     import { mountPagefindSearch } from "../lib/search/pagefind";
