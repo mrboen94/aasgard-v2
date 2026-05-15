@@ -4,7 +4,8 @@ import {
   prepareSourceCodeFiles,
   type SourceCodeProps as Props
 } from "../../lib/source-code/prepare";
-import SourceCodeTab from "./SourceCodeTab.astro";
+import Tab from "../ui/Tab.astro";
+import Tabs from "../ui/Tabs.astro";
 
 const props = Astro.props;
 const groupId = `source-code-${Math.random().toString(36).slice(2)}`;
@@ -15,18 +16,18 @@ const hasTabs = preparedFiles.length > 1;
 <div class:list={["my-6 max-w-full", hasTabs && "overflow-hidden"]} data-source-code-tabs={hasTabs ? "" : undefined}>
   {
     hasTabs && (
-      <div aria-label="Source files" class="flex items-stretch overflow-x-auto overflow-y-hidden" role="tablist">
+      <Tabs ariaLabel="Source files">
         {preparedFiles.map((file, index) => (
-          <SourceCodeTab
+          <Tab
             controls={`${file.id}-panel`}
             id={`${file.id}-tab`}
             joined={index > 0}
             selected={index === 0}
           >
             {file.title}
-          </SourceCodeTab>
+          </Tab>
         ))}
-      </div>
+      </Tabs>
     )
   }
 

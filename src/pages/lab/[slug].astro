@@ -1,10 +1,10 @@
 ---
 import { render } from "astro:content";
 import ArticleMeta from "../../components/article/ArticleMeta.astro";
-import ArticleProse from "../../components/article/ArticleProse.astro";
 import TechIconList from "../../components/icons/TechIconList.astro";
 import BaseLayout from "../../components/layout/BaseLayout.astro";
-import ArticleShell from "../../components/ui/ArticleShell.astro";
+import ContentShell from "../../components/ui/ContentShell.astro";
+import Prose from "../../components/ui/Prose.astro";
 import VisuallyHidden from "../../components/ui/VisuallyHidden.astro";
 import { getExperiments } from "../../lib/content/collections";
 
@@ -22,7 +22,7 @@ const { Content } = await render(entry);
 ---
 
 <BaseLayout title={entry.data.title} description={entry.data.description} canonical={`/lab/${entry.data.slug}/`}>
-  <ArticleShell class="grid gap-6 py-12" data-pagefind-body>
+  <ContentShell class="grid gap-6 py-12" data-pagefind-body>
     <header class="grid gap-4 [--section-accent:var(--color-accent)]">
       <VisuallyHidden href="/lab/" revealOnFocus>Back to Lab</VisuallyHidden>
       <h1 data-pagefind-meta="title">{entry.data.title}</h1>
@@ -30,8 +30,8 @@ const { Content } = await render(entry);
       <ArticleMeta date={entry.data.date} section="lab" />
       <TechIconList technologies={entry.data.technologies} showLabels />
     </header>
-    <ArticleProse wide>
+    <Prose width="wide">
       <Content />
-    </ArticleProse>
-  </ArticleShell>
+    </Prose>
+  </ContentShell>
 </BaseLayout>

@@ -1,8 +1,7 @@
 ---
 import BaseLayout from "../../components/layout/BaseLayout.astro";
-import Card from "../../components/ui/Card.astro";
 import Grid from "../../components/ui/Grid.astro";
-import MediaPlaceholder from "../../components/ui/MediaPlaceholder.astro";
+import MediaCard from "../../components/ui/MediaCard.astro";
 import PageIntro from "../../components/ui/PageIntro.astro";
 import PageSection from "../../components/ui/PageSection.astro";
 import { getVideoProjects } from "../../lib/content/collections";
@@ -22,18 +21,12 @@ const entries = await getVideoProjects();
     <Grid>
       {
         entries.map((entry) => (
-          <Card class="group" variant="flush">
-            <a class="grid text-inherit no-underline" href={videoProjectUrl(entry.data.slug)}>
-              <MediaPlaceholder
-                class="aspect-video transition-[background-color,transform] duration-[var(--duration-theme)] ease-theme group-hover:scale-[1.015] group-focus-within:scale-[1.015]"
-                aria-hidden="true"
-              />
-              <span class="grid gap-2 p-4">
-                <h3>{entry.data.title}</h3>
-                <p class="m-0 text-muted">{entry.data.description}</p>
-              </span>
-            </a>
-          </Card>
+          <MediaCard
+            aspect="video"
+            description={entry.data.description}
+            href={videoProjectUrl(entry.data.slug)}
+            title={entry.data.title}
+          />
         ))
       }
     </Grid>

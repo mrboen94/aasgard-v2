@@ -1,23 +1,26 @@
 ---
+import Panel from "../ui/Panel.astro";
+
 interface Props {
   title?: string;
   tone?: "note" | "warning" | "success";
 }
 
 const { title, tone = "note" } = Astro.props;
-const toneClass = {
-  note: "border-l-primary",
-  warning: "border-l-accent",
-  success: "border-l-success"
+const panelTone = {
+  note: "primary",
+  warning: "accent",
+  success: "success"
 }[tone];
 ---
 
-<aside
-  class:list={[
-    "my-6 rounded-card border border-l-4 border-border p-4 transition-[background-color,border-color] duration-[var(--duration-theme)] ease-theme [&_:last-child]:mb-0",
-    toneClass
-  ]}
+<Panel
+  accent="left"
+  as="aside"
+  class="[&_:last-child]:mb-0"
+  margin="md"
+  tone={panelTone}
 >
   {title && <p class="mt-0 mb-2 font-accent font-bold">{title}</p>}
   <slot />
-</aside>
+</Panel>

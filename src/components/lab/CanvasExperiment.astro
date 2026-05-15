@@ -1,5 +1,7 @@
 ---
 import CanvasSettingsNode from "./CanvasSettingsNode.astro";
+import Tab from "../ui/Tab.astro";
+import Tabs from "../ui/Tabs.astro";
 import type {
   CanvasExperimentScene,
   CanvasSettings,
@@ -103,25 +105,19 @@ const shouldRenderFallback = fallback && sceneList.some((scene) => Boolean(scene
 >
   {
     sceneList.length > 1 && (
-      <div
-        class="flex flex-wrap gap-3 border-b border-border bg-[color-mix(in_srgb,var(--color-surface)_68%,transparent)] px-4 pt-3"
-        role="tablist"
-        aria-label="Canvas scenes"
-      >
+      <Tabs ariaLabel="Canvas scenes" variant="underline">
         {sceneList.map((scene) => (
-          <button
+          <Tab
             aria-controls={`${instanceId}-${scene.id}-controls`}
-            aria-selected={scene.id === activeScene.id ? "true" : "false"}
-            class="cursor-pointer border-0 border-b-[0.15rem] border-b-transparent bg-transparent px-0 pb-2 font-accent text-meta text-muted aria-selected:border-b-success aria-selected:text-foreground"
             data-canvas-scene-tab={scene.id}
-            role="tab"
+            selected={scene.id === activeScene.id}
             tabindex={scene.id === activeScene.id ? 0 : -1}
-            type="button"
+            variant="underline"
           >
             {scene.label}
-          </button>
+          </Tab>
         ))}
-      </div>
+      </Tabs>
     )
   }
   <canvas aria-label={activeScene.ariaLabel ?? ariaLabel}></canvas>

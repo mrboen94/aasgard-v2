@@ -1,7 +1,7 @@
 ---
 import type { ArticleEntry } from "../../lib/content/collections";
 import { articleUrl } from "../../lib/content/urls";
-import Card from "../ui/Card.astro";
+import EntryCard from "../ui/EntryCard.astro";
 import Grid from "../ui/Grid.astro";
 import ArticleMeta from "./ArticleMeta.astro";
 
@@ -15,13 +15,13 @@ const { entries } = Astro.props;
 <Grid>
   {
     entries.map((entry) => (
-      <Card layout="stack" padding="md">
-        <a class="grid gap-2 text-inherit no-underline" href={articleUrl(entry.data.slug)}>
-          <h3>{entry.data.title}</h3>
-          <p class="m-0 text-muted">{entry.data.description}</p>
-        </a>
+      <EntryCard
+        description={entry.data.description}
+        href={articleUrl(entry.data.slug)}
+        title={entry.data.title}
+      >
         <ArticleMeta eyebrow={entry.data.eyebrow} date={entry.data.date} tags={entry.data.tags} />
-      </Card>
+      </EntryCard>
     ))
   }
 </Grid>

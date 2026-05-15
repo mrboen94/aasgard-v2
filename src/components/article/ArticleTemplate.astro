@@ -7,9 +7,9 @@ import DemoFrame from "../content/DemoFrame.astro";
 import Figure from "../content/Figure.astro";
 import LinkCard from "../content/LinkCard.astro";
 import BaseLayout from "../layout/BaseLayout.astro";
-import ArticleShell from "../ui/ArticleShell.astro";
+import ContentShell from "../ui/ContentShell.astro";
+import Prose from "../ui/Prose.astro";
 import ArticleHeader from "./ArticleHeader.astro";
-import ArticleProse from "./ArticleProse.astro";
 
 interface Props {
   entry: ArticleEntry;
@@ -21,10 +21,10 @@ const components = { Aside, Callout, CodeNote, DemoFrame, Figure, LinkCard };
 ---
 
 <BaseLayout title={entry.data.title} description={entry.data.description} canonical={`/articles/${entry.data.slug}/`}>
-  <ArticleShell data-pagefind-body>
+  <ContentShell data-pagefind-body>
     <ArticleHeader entry={entry} />
-    <ArticleProse>
+    <Prose>
       <Content components={components} />
-    </ArticleProse>
-  </ArticleShell>
+    </Prose>
+  </ContentShell>
 </BaseLayout>

@@ -1,5 +1,8 @@
 ---
 import BaseLayout from "../components/layout/BaseLayout.astro";
+import Field from "../components/ui/Field.astro";
+import InlineMeta from "../components/ui/InlineMeta.astro";
+import Input from "../components/ui/Input.astro";
 import PageIntro from "../components/ui/PageIntro.astro";
 import PageSection from "../components/ui/PageSection.astro";
 ---
@@ -8,17 +11,17 @@ import PageSection from "../components/ui/PageSection.astro";
   <PageSection>
     <PageIntro eyebrow="Pagefind" title="Search" />
     <div id="search" class="grid max-w-prose gap-4">
-      <label class="grid gap-2 font-accent text-small text-muted" for="pagefind-search-input">
+      <Field for="pagefind-search-input">
         <span>Search query</span>
-        <input
+        <Input
           id="pagefind-search-input"
-          class="w-full rounded-card border border-border bg-surface px-4 py-3 font-main text-base text-foreground shadow-none outline-none transition-[background-color,border-color,box-shadow,color] duration-[var(--duration-fast)] ease-theme focus:border-primary focus:shadow-[var(--focus-ring)]"
           data-pagefind-search-input
           name="q"
           type="search"
+          variant="field-lg"
         />
-      </label>
-      <p class="m-0 max-w-section-copy font-accent text-small text-muted" data-pagefind-status></p>
+      </Field>
+      <InlineMeta as="p" class="m-0 max-w-section-copy" data-pagefind-status layout="none"></InlineMeta>
       <div class="grid gap-4" data-pagefind-results></div>
     </div>
   </PageSection>

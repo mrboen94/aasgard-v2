@@ -1,4 +1,5 @@
 ---
+import Badge from "../ui/Badge.astro";
 import Caption from "../ui/Caption.astro";
 import MediaPlaceholder from "../ui/MediaPlaceholder.astro";
 
@@ -21,15 +22,20 @@ const hrefByProvider = {
 <figure class="my-8">
   <a class="group relative grid text-inherit no-underline" href={hrefByProvider[provider]}>
     <MediaPlaceholder
-      class="block aspect-video overflow-hidden rounded-card border border-border bg-center bg-cover transition-[background-color,border-color,transform] duration-[var(--duration-theme)] ease-theme group-hover:scale-[1.01] group-focus-visible:scale-[1.01]"
+      aspect="video"
+      class="block bg-center bg-cover group-hover:scale-[1.01] group-focus-visible:scale-[1.01]"
+      framed
+      overflow="hidden"
     >
       {poster && <img alt="" class="size-full object-cover" loading="lazy" src={poster} />}
     </MediaPlaceholder>
-    <span
-      class="absolute top-1/2 left-1/2 rounded-full border border-border bg-surface px-3 py-2 font-accent transition-[background-color,border-color,color,transform] duration-[var(--duration-theme)] ease-theme -translate-x-1/2 -translate-y-1/2 group-hover:scale-[1.03] group-focus-visible:scale-[1.03]"
+    <Badge
+      class="absolute top-1/2 left-1/2 bg-surface -translate-x-1/2 -translate-y-1/2 group-hover:scale-[1.03] group-focus-visible:scale-[1.03]"
+      size="md"
+      variant="outline"
     >
       Open {provider} video
-    </span>
+    </Badge>
   </a>
   <Caption>{title}</Caption>
 </figure>

@@ -5,10 +5,10 @@ import Section from "../components/layout/Section.astro";
 import BaseLayout from "../components/layout/BaseLayout.astro";
 import ProjectGrid from "../components/project/ProjectGrid.astro";
 import Badge from "../components/ui/Badge.astro";
-import Card from "../components/ui/Card.astro";
 import Container from "../components/ui/Container.astro";
+import EntryCard from "../components/ui/EntryCard.astro";
 import Grid from "../components/ui/Grid.astro";
-import MediaPlaceholder from "../components/ui/MediaPlaceholder.astro";
+import MediaCard from "../components/ui/MediaCard.astro";
 import {
   getArticles,
   getExperiments,
@@ -54,16 +54,15 @@ const [articles, experiments, workEntries, photoProjects, videoProjects] = await
       <Grid>
         {
           experiments.slice(0, 3).map((entry) => (
-            <Card accent="success" layout="stack" padding="md">
-              <a class="grid gap-2 text-inherit no-underline" href={labUrl(entry.data.slug)}>
-                <Badge color="var(--card-accent)" textCase="uppercase" variant="text">
-                  {entry.data.status}
-                </Badge>
-                <h3>{entry.data.title}</h3>
-                <p class="m-0 text-muted">{entry.data.description}</p>
-              </a>
+            <EntryCard
+              accent="success"
+              badge={entry.data.status}
+              description={entry.data.description}
+              href={labUrl(entry.data.slug)}
+              title={entry.data.title}
+            >
               <TechIconList technologies={entry.data.technologies} />
-            </Card>
+            </EntryCard>
           ))
         }
       </Grid>
@@ -86,18 +85,12 @@ const [articles, experiments, workEntries, photoProjects, videoProjects] = await
       <Grid>
         {
           photoProjects.slice(0, 3).map((entry) => (
-            <Card class="group" variant="flush">
-              <a class="grid text-inherit no-underline" href={photoProjectUrl(entry.data.slug)}>
-                <MediaPlaceholder
-                  class="aspect-[4/3] transition-[background-color,transform] duration-[var(--duration-theme)] ease-theme group-hover:scale-[1.015] group-focus-within:scale-[1.015]"
-                  aria-hidden="true"
-                />
-                <span class="grid gap-2 p-4">
-                  <h3>{entry.data.title}</h3>
-                  <p class="m-0 text-muted">{entry.data.description}</p>
-                </span>
-              </a>
-            </Card>
+            <MediaCard
+              aspect="photo"
+              description={entry.data.description}
+              href={photoProjectUrl(entry.data.slug)}
+              title={entry.data.title}
+            />
           ))
         }
       </Grid>
@@ -113,18 +106,12 @@ const [articles, experiments, workEntries, photoProjects, videoProjects] = await
         <Grid>
           {
             videoProjects.slice(0, 3).map((entry) => (
-              <Card class="group" variant="flush">
-                <a class="grid text-inherit no-underline" href={videoProjectUrl(entry.data.slug)}>
-                  <MediaPlaceholder
-                    class="aspect-video transition-[background-color,transform] duration-[var(--duration-theme)] ease-theme group-hover:scale-[1.015] group-focus-within:scale-[1.015]"
-                    aria-hidden="true"
-                  />
-                  <span class="grid gap-2 p-4">
-                    <h3>{entry.data.title}</h3>
-                    <p class="m-0 text-muted">{entry.data.description}</p>
-                  </span>
-                </a>
-              </Card>
+              <MediaCard
+                aspect="video"
+                description={entry.data.description}
+                href={videoProjectUrl(entry.data.slug)}
+                title={entry.data.title}
+              />
             ))
           }
         </Grid>

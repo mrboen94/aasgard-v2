@@ -1,0 +1,55 @@
+---
+import Badge from "./Badge.astro";
+import Card from "./Card.astro";
+
+interface Props {
+  accent?: "accent" | "danger" | "primary" | "success" | string;
+  badge?: string;
+  badgeColor?: string;
+  class?: string;
+  description?: string;
+  highlighted?: boolean;
+  href: string;
+  layout?: "stack" | "stack-lg";
+  title: string;
+  [key: string]: any;
+}
+
+const {
+  accent,
+  badge,
+  badgeColor,
+  class: className,
+  description,
+  highlighted = false,
+  href,
+  layout = "stack",
+  title,
+  ...attrs
+} = Astro.props as Props;
+const resolvedBadgeColor = badgeColor ?? (accent ? "var(--card-accent)" : undefined);
+---
+
+<Card
+  accent={accent}
+  class={className}
+  highlighted={highlighted}
+  layout={layout}
+  padding="md"
+  {...attrs}
+>
+  <slot name="header" />
+  <a class="grid gap-2 text-inherit no-underline" href={href}>
+    {
+      badge && (
+        <Badge color={resolvedBadgeColor} textCase="uppercase" variant="text">
+          {badge}
+        </Badge>
+      )
+    }
+    <h3>{title}</h3>
+    {description && <p class="m-0 text-muted">{description}</p>}
+  </a>
+  <slot />
+  <slot name="footer" />
+</Card>

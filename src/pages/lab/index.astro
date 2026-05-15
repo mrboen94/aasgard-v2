@@ -1,8 +1,7 @@
 ---
 import TechIconList from "../../components/icons/TechIconList.astro";
 import BaseLayout from "../../components/layout/BaseLayout.astro";
-import Badge from "../../components/ui/Badge.astro";
-import Card from "../../components/ui/Card.astro";
+import EntryCard from "../../components/ui/EntryCard.astro";
 import Grid from "../../components/ui/Grid.astro";
 import PageIntro from "../../components/ui/PageIntro.astro";
 import PageSection from "../../components/ui/PageSection.astro";
@@ -23,16 +22,15 @@ const experiments = await getExperiments();
     <Grid>
       {
         experiments.map((entry) => (
-          <Card accent="success" layout="stack" padding="md">
-            <a class="grid gap-2 text-inherit no-underline" href={labUrl(entry.data.slug)}>
-              <Badge color="var(--card-accent)" textCase="uppercase" variant="text">
-                {entry.data.status}
-              </Badge>
-              <h3>{entry.data.title}</h3>
-              <p class="m-0 text-muted">{entry.data.description}</p>
-            </a>
+          <EntryCard
+            accent="success"
+            badge={entry.data.status}
+            description={entry.data.description}
+            href={labUrl(entry.data.slug)}
+            title={entry.data.title}
+          >
             <TechIconList technologies={entry.data.technologies} />
-          </Card>
+          </EntryCard>
         ))
       }
     </Grid>

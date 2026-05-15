@@ -1,11 +1,11 @@
 ---
 import { render } from "astro:content";
 import ArticleMeta from "../../components/article/ArticleMeta.astro";
-import ArticleProse from "../../components/article/ArticleProse.astro";
 import TechIconList from "../../components/icons/TechIconList.astro";
 import BaseLayout from "../../components/layout/BaseLayout.astro";
-import ArticleShell from "../../components/ui/ArticleShell.astro";
+import ContentShell from "../../components/ui/ContentShell.astro";
 import PageIntro from "../../components/ui/PageIntro.astro";
+import Prose from "../../components/ui/Prose.astro";
 import { getWorkEntries } from "../../lib/content/collections";
 
 export async function getStaticPaths() {
@@ -22,7 +22,7 @@ const { Content } = await render(entry);
 ---
 
 <BaseLayout title={entry.data.title} description={entry.data.description} canonical={`/work/${entry.data.slug}/`}>
-  <ArticleShell class="grid gap-6 py-12" data-pagefind-body>
+  <ContentShell class="grid gap-6 py-12" data-pagefind-body>
     <PageIntro
       class="gap-4"
       eyebrow="Work"
@@ -34,8 +34,8 @@ const { Content } = await render(entry);
       <TechIconList technologies={entry.data.technologies} showLabels />
       {entry.data.link && <a href={entry.data.link.href}>{entry.data.link.label}</a>}
     </PageIntro>
-    <ArticleProse>
+    <Prose>
       <Content />
-    </ArticleProse>
-  </ArticleShell>
+    </Prose>
+  </ContentShell>
 </BaseLayout>
