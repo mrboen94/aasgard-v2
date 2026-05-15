@@ -287,8 +287,11 @@ export function mountCanvasExperiments() {
         const labelElement = document.createElement("span");
         const valueElement = document.createElement("strong");
 
-        metric.className = "canvas-experiment__debug-metric";
+        metric.className =
+          "flex items-baseline gap-2 rounded-small border border-border bg-[color-mix(in_srgb,var(--color-surface)_56%,transparent)] px-2 py-1";
         applyLabelColor(labelElement, labelColor);
+        labelElement.className = `font-accent text-meta ${labelElement.className}`;
+        valueElement.className = "font-code text-meta font-normal text-foreground";
         labelElement.textContent = label;
         valueElement.textContent = String(value);
         metric.append(labelElement, valueElement);

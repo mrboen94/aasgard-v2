@@ -1,5 +1,10 @@
 ---
-import "./article.css";
+import {
+  articleMetaClass,
+  articleMetaListClass,
+  articleMetaTagClass,
+  eyebrowClass
+} from "../../lib/styles/classes";
 
 interface Props {
   eyebrow?: string;
@@ -17,14 +22,14 @@ const dateLabel = date.toLocaleDateString("en", {
 });
 ---
 
-<div class="article-meta meta">
-  {eyebrow && <span class="eyebrow" data-pagefind-meta="eyebrow">{eyebrow}</span>}
+<div class={articleMetaClass}>
+  {eyebrow && <span class={eyebrowClass} data-pagefind-meta="eyebrow">{eyebrow}</span>}
   {section && <span data-pagefind-meta="section">{section}</span>}
   <time datetime={date.toISOString()} data-pagefind-meta="date">{dateLabel}</time>
   {updated && <span>Updated {updated.toLocaleDateString("en")}</span>}
   {tags.length > 0 && (
-    <ul aria-label="Tags">
-      {tags.map((tag) => <li data-pagefind-meta="tags">{tag}</li>)}
+    <ul class={articleMetaListClass} aria-label="Tags">
+      {tags.map((tag) => <li class={articleMetaTagClass} data-pagefind-meta="tags">{tag}</li>)}
     </ul>
   )}
 </div>

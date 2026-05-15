@@ -2,18 +2,26 @@
 import ExperimentCard from "../../components/lab/ExperimentCard.astro";
 import BaseLayout from "../../components/layout/BaseLayout.astro";
 import { getExperiments } from "../../lib/content/collections";
+import {
+  eyebrowClass,
+  gridClass,
+  pageIntroClass,
+  pageIntroCopyClass,
+  pageIntroSecondaryClass,
+  pageSectionClass
+} from "../../lib/styles/classes";
 
 const experiments = await getExperiments();
 ---
 
 <BaseLayout title="Bøe's Lab" description="Some of my experiments, prototypes, and playful projects.">
-  <section class="container page-section">
-    <header class="page-header page-intro page-intro--secondary">
-      <p class="eyebrow">Experiments</p>
+  <section class={pageSectionClass}>
+    <header class:list={[pageIntroClass, pageIntroSecondaryClass]}>
+      <p class={eyebrowClass}>Experiments</p>
       <h1>Bøe's Lab</h1>
-      <p>Some of my experiments, prototypes, and playful projects.</p>
+      <p class={pageIntroCopyClass}>Some of my experiments, prototypes, and playful projects.</p>
     </header>
-    <div class="grid">
+    <div class={gridClass}>
       {experiments.map((entry) => <ExperimentCard entry={entry} />)}
     </div>
   </section>

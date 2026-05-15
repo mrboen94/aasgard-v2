@@ -3,12 +3,32 @@ import CanvasExperiment from "../../../../components/lab/CanvasExperiment.astro"
 import type { CanvasSettingsTree } from "../../../../components/lab/canvasExperiment";
 
 interface Props {
-  canvasMargin?: boolean;
   src: string;
 }
 
-const { canvasMargin = false, src } = Astro.props;
+const { src } = Astro.props;
 const settings = [
+  {
+    children: [
+      {
+        id: "gravity",
+        label: "Gravity",
+        type: "checkbox",
+        value: false
+      },
+      {
+        id: "collisions",
+        label: "Collisions",
+        type: "checkbox",
+        value: false
+      }
+    ],
+    id: "toggles",
+    label: "Toggles",
+    layout: "row",
+    type: "group",
+    variant: "plain"
+  },
   {
     children: [
       {
@@ -48,7 +68,6 @@ const settings = [
         max: 0.06,
         min: 0.005,
         showValue: true,
-        size: "narrow",
         step: 0.005,
         type: "range",
         value: 0.01
@@ -59,45 +78,23 @@ const settings = [
         max: 0.98,
         min: 0.75,
         showValue: true,
-        size: "narrow",
         step: 0.01,
         type: "range",
         value: 0.86
-      },
-      {
-        children: [
-          {
-            id: "gravity",
-            label: "Gravity",
-            type: "checkbox",
-            value: false
-          },
-          {
-            id: "collisions",
-            label: "Collisions",
-            type: "checkbox",
-            value: false
-          }
-        ],
-        id: "toggles",
-        label: "Toggles",
-        layout: "cluster",
-        type: "group",
-        variant: "plain"
       }
     ],
     id: "particle-controls",
     label: "Particle controls",
-    layout: "grid",
+    layout: "row",
     type: "group",
-    variant: "box"
+    variant: "plain"
   }
 ] satisfies CanvasSettingsTree;
 ---
 
 <CanvasExperiment
   ariaLabel="Interactive particle image"
-  canvasMargin={canvasMargin ? 64 : 0}
+  fallback={false}
   imageSrc={src}
   script="/src/content/experiments/physics-simulation-javascript/sketches/physics.ts"
   settings={settings}

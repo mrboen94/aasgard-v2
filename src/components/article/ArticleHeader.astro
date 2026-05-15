@@ -1,6 +1,10 @@
 ---
-import "./article.css";
 import type { ArticleEntry } from "../../lib/content/collections";
+import {
+  articleDescriptionClass,
+  articleHeaderClass,
+  eyebrowClass
+} from "../../lib/styles/classes";
 import ArticleMeta from "./ArticleMeta.astro";
 
 interface Props {
@@ -11,10 +15,10 @@ interface Props {
 const { entry } = Astro.props;
 ---
 
-<header class="article-header">
-  <a class="eyebrow" href="/articles">{"< Back"}</a>
+<header class={articleHeaderClass}>
+  <a class={eyebrowClass} href="/articles">{"< Back"}</a>
   <h1 data-pagefind-meta="title">{entry.data.title}</h1>
-  <p class="article-header__description">{entry.data.description}</p>
+  <p class={articleDescriptionClass}>{entry.data.description}</p>
   <ArticleMeta
     date={entry.data.date}
     updated={entry.data.updated}

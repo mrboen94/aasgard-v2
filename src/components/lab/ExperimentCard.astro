@@ -1,7 +1,13 @@
 ---
-import "./experiment-card.css";
 import type { ExperimentEntry } from "../../lib/content/collections";
 import { labUrl } from "../../lib/content/urls";
+import {
+  listingCardClass,
+  listingCardDescriptionClass,
+  listingCardEyebrowClass,
+  listingCardLinkClass,
+  surfaceClass
+} from "../../lib/styles/classes";
 import TechIconList from "../icons/TechIconList.astro";
 
 interface Props {
@@ -11,11 +17,11 @@ interface Props {
 const { entry } = Astro.props;
 ---
 
-<article class="experiment-card listing-card surface">
-  <a class="listing-card__link" href={labUrl(entry.data.slug)}>
-    <span class="listing-card__eyebrow">{entry.data.status}</span>
+<article class:list={[listingCardClass, surfaceClass, "[--listing-card-accent:var(--color-success)]"]}>
+  <a class={listingCardLinkClass} href={labUrl(entry.data.slug)}>
+    <span class={listingCardEyebrowClass}>{entry.data.status}</span>
     <h3>{entry.data.title}</h3>
-    <p class="listing-card__description">{entry.data.description}</p>
+    <p class={listingCardDescriptionClass}>{entry.data.description}</p>
   </a>
   <TechIconList technologies={entry.data.technologies} />
 </article>

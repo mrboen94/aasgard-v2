@@ -1,5 +1,4 @@
 ---
-import "./canvas-experiment.css";
 import CanvasSettingsNode from "./CanvasSettingsNode.astro";
 import type {
   CanvasExperimentScene,
@@ -11,6 +10,7 @@ import type {
 interface Props {
   ariaLabel?: string;
   canvasMargin?: number;
+  fallback?: boolean;
   imageSrc?: string;
   scenes?: CanvasExperimentScene[];
   script?: string;
@@ -20,6 +20,7 @@ interface Props {
 const {
   ariaLabel = "Interactive canvas experiment",
   canvasMargin = 0,
+  fallback = true,
   imageSrc,
   scenes,
   script,
@@ -84,11 +85,12 @@ const runtimeScenes = sceneList.map(({ ariaLabel, id, imageSrc, label, script })
 const activeScene = sceneList[0];
 const instanceId = `canvas-experiment-${Math.random().toString(36).slice(2)}`;
 const canvasMarginStyle = `--canvas-experiment-margin: ${canvasMargin}px;`;
+const shouldRenderFallback = fallback && sceneList.some((scene) => Boolean(scene.imageSrc));
 ---
 
 <figure
   class:list={[
-    "canvas-experiment",
+    "relative my-8 w-full max-w-full overflow-hidden rounded-card border border-border bg-code transition-[background-color,border-color] duration-[var(--duration-theme)] ease-theme [&.canvas-experiment--with-image>canvas]:aspect-auto [&.canvas-experiment--with-image:not([data-ready=true])>canvas]:opacity-0 [&>canvas]:block [&>canvas]:aspect-video [&>canvas]:w-full [&>canvas]:max-w-full [&>canvas]:bg-transparent [&>canvas]:transition-opacity [&>canvas]:duration-[var(--duration-theme)] [&>canvas]:ease-theme [&[data-ready=true]_.canvas-experiment__fallback]:pointer-events-none [&[data-ready=true]_.canvas-experiment__fallback]:absolute [&[data-ready=true]_.canvas-experiment__fallback]:opacity-0",
     activeScene.imageSrc && "canvas-experiment--with-image"
   ]}
   data-active-scene-id={activeScene.id}
@@ -101,12 +103,16 @@ const canvasMarginStyle = `--canvas-experiment-margin: ${canvasMargin}px;`;
 >
   {
     sceneList.length > 1 && (
-      <div class="canvas-experiment__tabs" role="tablist" aria-label="Canvas scenes">
+      <div
+        class="flex flex-wrap gap-3 border-b border-border bg-[color-mix(in_srgb,var(--color-surface)_68%,transparent)] px-4 pt-3"
+        role="tablist"
+        aria-label="Canvas scenes"
+      >
         {sceneList.map((scene) => (
           <button
             aria-controls={`${instanceId}-${scene.id}-controls`}
             aria-selected={scene.id === activeScene.id ? "true" : "false"}
-            class="canvas-experiment__tab"
+            class="cursor-pointer border-0 border-b-[0.15rem] border-b-transparent bg-transparent px-0 pb-2 font-accent text-meta text-muted aria-selected:border-b-success aria-selected:text-foreground"
             data-canvas-scene-tab={scene.id}
             role="tab"
             tabindex={scene.id === activeScene.id ? 0 : -1}
@@ -119,21 +125,30 @@ const canvasMarginStyle = `--canvas-experiment-margin: ${canvasMargin}px;`;
     )
   }
   <canvas aria-label={activeScene.ariaLabel ?? ariaLabel}></canvas>
-  <img
-    alt=""
-    class="canvas-experiment__fallback"
-    hidden={!activeScene.imageSrc}
-    loading="lazy"
-    src={activeScene.imageSrc}
-  />
-  <div aria-live="polite" class="canvas-experiment__debug" data-canvas-debug hidden></div>
+  {
+    shouldRenderFallback && (
+      <img
+        alt=""
+        class="canvas-experiment__fallback block h-auto w-full max-w-full rounded-card transition-opacity duration-[var(--duration-theme)] ease-theme"
+        hidden={!activeScene.imageSrc}
+        loading="lazy"
+        src={activeScene.imageSrc}
+      />
+    )
+  }
+  <div
+    aria-live="polite"
+    class="flex flex-wrap gap-2 border-t border-border px-4 py-3"
+    data-canvas-debug
+    hidden
+  ></div>
   {
     sceneList.map(
       (scene) =>
         scene.settings?.length ? (
           <figcaption
             aria-label={`${scene.label} canvas controls`}
-            class="canvas-experiment__controls"
+            class="grid grid-cols-1 items-start gap-2 border-t border-border p-3"
             data-canvas-controls-panel
             data-canvas-scene-id={scene.id}
             hidden={scene.id !== activeScene.id}

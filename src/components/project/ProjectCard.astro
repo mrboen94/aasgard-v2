@@ -1,8 +1,13 @@
 ---
-import "./project-card.css";
 import { Icon } from "astro-icon/components";
 import type { WorkEntry } from "../../lib/content/collections";
 import { workUrl } from "../../lib/content/urls";
+import {
+  listingCardBodyClass,
+  listingCardClass,
+  listingCardDescriptionClass,
+  surfaceClass
+} from "../../lib/styles/classes";
 import TechIconList from "../icons/TechIconList.astro";
 
 interface Props {
@@ -15,18 +20,28 @@ const accentStyle = entry.data.accent ? `--project-accent: ${entry.data.accent};
 ---
 
 <article
-  class:list={["project-card", "listing-card", "surface", entry.data.featured && "project-card--featured"]}
+  class:list={[
+    listingCardClass,
+    surfaceClass,
+    "group gap-6 [--project-accent:var(--color-primary)]",
+    entry.data.featured && "border-[var(--project-accent)]"
+  ]}
   style={accentStyle}
 >
-  <div class="project-card__top">
-    <span class="project-card__logo" aria-hidden="true"><Icon name={logo} /></span>
-    {entry.data.featured && <span class="project-card__flag meta">Featured</span>}
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <span
+      class="grid aspect-square size-12 place-items-center rounded-card bg-code text-[var(--project-accent)] transition-[background-color,color,transform] duration-[var(--duration-theme)] ease-theme group-hover:scale-[1.04] group-focus-within:scale-[1.04] [&_svg]:size-7 [&_svg]:transition-transform [&_svg]:duration-[var(--duration-theme)] [&_svg]:ease-theme"
+      aria-hidden="true"
+    >
+      <Icon name={logo} />
+    </span>
+    {entry.data.featured && <span class="font-accent text-meta text-muted">Featured</span>}
   </div>
-  <div class="project-card__body listing-card__body">
-    <h3><a href={workUrl(entry.data.slug)}>{entry.data.title}</a></h3>
-    <p class="listing-card__description">{entry.data.description}</p>
+  <div class={listingCardBodyClass}>
+    <h3><a class="text-inherit no-underline" href={workUrl(entry.data.slug)}>{entry.data.title}</a></h3>
+    <p class={listingCardDescriptionClass}>{entry.data.description}</p>
   </div>
-  <div class="project-card__footer">
+  <div class="flex flex-wrap items-center justify-between gap-3">
     {entry.data.link && <a href={entry.data.link.href}>{entry.data.link.label}</a>}
     <TechIconList technologies={entry.data.technologies} />
   </div>

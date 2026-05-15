@@ -1,10 +1,10 @@
 ---
-import "./content.css";
 import { Code } from "astro-expressive-code/components";
 import {
   prepareSourceCodeFiles,
   type SourceCodeProps as Props
 } from "../../lib/source-code/prepare";
+import { sourceCodeTabClass } from "../../lib/styles/classes";
 
 const props = Astro.props;
 const groupId = `source-code-${Math.random().toString(36).slice(2)}`;
@@ -12,15 +12,15 @@ const preparedFiles = await prepareSourceCodeFiles(props, groupId);
 const hasTabs = preparedFiles.length > 1;
 ---
 
-<div class:list={["source-code", hasTabs && "source-code--tabs"]} data-source-code-tabs={hasTabs ? "" : undefined}>
+<div class:list={["my-6 max-w-full", hasTabs && "overflow-hidden"]} data-source-code-tabs={hasTabs ? "" : undefined}>
   {
     hasTabs && (
-      <div aria-label="Source files" class="source-code__tablist" role="tablist">
+      <div aria-label="Source files" class="flex items-stretch overflow-x-auto overflow-y-hidden" role="tablist">
         {preparedFiles.map((file, index) => (
           <button
             aria-controls={`${file.id}-panel`}
             aria-selected={index === 0 ? "true" : "false"}
-            class="source-code__tab"
+            class:list={[sourceCodeTabClass, index > 0 && "border-s-0"]}
             id={`${file.id}-tab`}
             role="tab"
             type="button"
@@ -36,7 +36,7 @@ const hasTabs = preparedFiles.length > 1;
     preparedFiles.map((file, index) => (
       <section
         aria-labelledby={hasTabs ? `${file.id}-tab` : undefined}
-        class="source-code__panel"
+        class="min-w-0 overflow-x-auto [&_.expressive-code]:my-0"
         hidden={hasTabs && index !== 0}
         id={`${file.id}-panel`}
         role={hasTabs ? "tabpanel" : undefined}

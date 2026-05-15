@@ -1,5 +1,5 @@
 ---
-import "./layout.css";
+import { eyebrowClass } from "../../lib/styles/classes";
 
 interface Props {
   eyebrow?: string;
@@ -12,14 +12,14 @@ interface Props {
 const { eyebrow, title, description, href, linkLabel = "View all" } = Astro.props;
 ---
 
-<section class="section">
-  <div class="section__header">
+<section class="grid gap-6 py-8">
+  <div class="flex items-end justify-between gap-6 max-[44rem]:flex-col max-[44rem]:items-start">
     <div>
-      {eyebrow && <p class="eyebrow section__eyebrow">{eyebrow}</p>}
+      {eyebrow && <p class={`${eyebrowClass} mb-2 text-eyebrow`}>{eyebrow}</p>}
       <h2>{title}</h2>
-      {description && <p>{description}</p>}
+      {description && <p class="mt-2 mb-0 max-w-section-wide text-muted">{description}</p>}
     </div>
-    {href && <a class="section__link" href={href}>{linkLabel}</a>}
+    {href && <a class="flex-none" href={href}>{linkLabel}</a>}
   </div>
   <slot />
 </section>

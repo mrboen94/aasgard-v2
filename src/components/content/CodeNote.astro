@@ -1,6 +1,4 @@
 ---
-import "./content.css";
-
 interface Props {
   title?: string;
 }
@@ -8,7 +6,7 @@ interface Props {
 const { title = "Code note" } = Astro.props;
 ---
 
-<aside class="code-note">
-  <p>{title}</p>
+<aside class="my-4 rounded-card bg-code p-4 font-code transition-[background-color,color] duration-[var(--duration-theme)] ease-theme">
+  <p class="mt-0 mb-2 font-accent text-muted">{title}</p>
   <slot />
 </aside>

@@ -1,5 +1,8 @@
 ---
-import "./article.css";
+import {
+  articleProseClass,
+  articleProseWideClass
+} from "../../lib/styles/classes";
 
 interface Props {
   wide?: boolean;
@@ -8,6 +11,6 @@ interface Props {
 const { wide = false } = Astro.props;
 ---
 
-<div class:list={["article-prose", wide && "article-prose--wide"]}>
+<div class:list={[articleProseClass, wide && articleProseWideClass]}>
   <slot />
 </div>

@@ -1,6 +1,4 @@
 ---
-import "./content.css";
-
 interface Props {
   title?: string;
 }
@@ -8,7 +6,7 @@ interface Props {
 const { title } = Astro.props;
 ---
 
-<section class="demo-frame">
-  {title && <h2>{title}</h2>}
+<section class="my-8 overflow-hidden rounded-card border border-border p-4 transition-[background-color,border-color] duration-[var(--duration-theme)] ease-theme">
+  {title && <h2 class="mb-3 text-base">{title}</h2>}
   <slot />
 </section>

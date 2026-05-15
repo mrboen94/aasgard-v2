@@ -1,7 +1,11 @@
 ---
-import "./media.css";
 import type { VideoProjectEntry } from "../../lib/content/collections";
 import { videoProjectUrl } from "../../lib/content/urls";
+import {
+  listingCardDescriptionClass,
+  mediaPlaceholderClass,
+  surfaceClass
+} from "../../lib/styles/classes";
 
 interface Props {
   entry: VideoProjectEntry;
@@ -10,12 +14,18 @@ interface Props {
 const { entry } = Astro.props;
 ---
 
-<article class="video-card surface">
-  <a href={videoProjectUrl(entry.data.slug)}>
-    <span class="video-card__poster media-placeholder" aria-hidden="true"></span>
-    <span class="video-card__text">
+<article class:list={[surfaceClass, "group overflow-hidden"]}>
+  <a class="grid text-inherit no-underline" href={videoProjectUrl(entry.data.slug)}>
+    <span
+      class:list={[
+        mediaPlaceholderClass,
+        "aspect-video transition-[background-color,transform] duration-[var(--duration-theme)] ease-theme group-hover:scale-[1.015] group-focus-within:scale-[1.015]"
+      ]}
+      aria-hidden="true"
+    ></span>
+    <span class="grid gap-2 p-4">
       <h3>{entry.data.title}</h3>
-      <p class="listing-card__description">{entry.data.description}</p>
+      <p class={listingCardDescriptionClass}>{entry.data.description}</p>
     </span>
   </a>
 </article>

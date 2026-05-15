@@ -1,6 +1,4 @@
 ---
-import "./content.css";
-
 interface Props {
   title?: string;
 }
@@ -8,7 +6,7 @@ interface Props {
 const { title } = Astro.props;
 ---
 
-<aside class="content-aside">
-  {title && <p class="content-aside__title">{title}</p>}
+<aside class="my-6 pl-4 text-caption text-muted">
+  {title && <p class="mt-0 mb-2 font-accent font-bold text-foreground">{title}</p>}
   <slot />
 </aside>

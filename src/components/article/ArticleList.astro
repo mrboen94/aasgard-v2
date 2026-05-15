@@ -1,5 +1,6 @@
 ---
 import type { ArticleEntry } from "../../lib/content/collections";
+import { gridClass } from "../../lib/styles/classes";
 import ArticleCard from "./ArticleCard.astro";
 
 interface Props {
@@ -9,6 +10,6 @@ interface Props {
 const { entries } = Astro.props;
 ---
 
-<div class="grid">
+<div class={gridClass}>
   {entries.map((entry) => <ArticleCard entry={entry} />)}
 </div>

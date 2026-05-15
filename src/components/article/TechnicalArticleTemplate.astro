@@ -1,5 +1,4 @@
 ---
-import "./article.css";
 import type { ArticleEntry } from "../../lib/content/collections";
 import Aside from "../content/Aside.astro";
 import Callout from "../content/Callout.astro";
@@ -9,6 +8,11 @@ import Figure from "../content/Figure.astro";
 import LinkCard from "../content/LinkCard.astro";
 import TechIconList from "../icons/TechIconList.astro";
 import BaseLayout from "../layout/BaseLayout.astro";
+import {
+  articleShellClass,
+  detailClass,
+  eyebrowClass
+} from "../../lib/styles/classes";
 import ArticleHeader from "./ArticleHeader.astro";
 import ArticleProse from "./ArticleProse.astro";
 
@@ -30,19 +34,21 @@ const tocHeadings = headings.filter((heading) => heading.depth === 2 || heading.
 ---
 
 <BaseLayout title={entry.data.title} description={entry.data.description} canonical={`/articles/${entry.data.slug}/`}>
-  <article class="container article-shell article-shell--technical" data-pagefind-body>
+  <article class={articleShellClass} data-pagefind-body>
     <ArticleHeader entry={entry} />
-    <div class="technical-layout">
-      <aside class="technical-layout__aside">
-        <p class="eyebrow">Contents</p>
+    <div class="grid items-start gap-8 [grid-template-columns:minmax(12rem,16rem)_minmax(0,1fr)] max-[56rem]:grid-cols-1">
+      <aside class="sticky top-6 grid gap-4 border-l-[0.2rem] border-success pl-4 text-muted max-[56rem]:static">
+        <p class={eyebrowClass}>Contents</p>
         {tocHeadings.length > 0 ? (
-          <ol>
+          <ol class="m-0 grid list-none gap-2 p-0">
             {tocHeadings.map((heading) => (
-              <li class={`depth-${heading.depth}`}><a href={`#${heading.slug}`}>{heading.text}</a></li>
+              <li class:list={[heading.depth === 3 && "pl-4"]}>
+                <a class="text-muted no-underline" href={`#${heading.slug}`}>{heading.text}</a>
+              </li>
             ))}
           </ol>
         ) : (
-          <p class="detail">Headings will appear here.</p>
+          <p class={`${detailClass} m-0`}>Headings will appear here.</p>
         )}
         <TechIconList technologies={entry.data.technologies} showLabels />
       </aside>

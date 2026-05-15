@@ -1,5 +1,8 @@
 ---
-import "./media.css";
+import {
+  captionClass,
+  mediaPlaceholderClass
+} from "../../lib/styles/classes";
 
 interface Props {
   provider: "youtube" | "vimeo" | "mux" | "local";
@@ -17,12 +20,21 @@ const hrefByProvider = {
 };
 ---
 
-<figure class="video-embed">
-  <a href={hrefByProvider[provider]}>
-    <span class="video-embed__poster media-placeholder">
-      {poster && <img alt="" class="video-embed__poster-image" loading="lazy" src={poster} />}
+<figure class="my-8">
+  <a class="group relative grid text-inherit no-underline" href={hrefByProvider[provider]}>
+    <span
+      class:list={[
+        mediaPlaceholderClass,
+        "block aspect-video overflow-hidden rounded-card border border-border bg-center bg-cover transition-[background-color,border-color,transform] duration-[var(--duration-theme)] ease-theme group-hover:scale-[1.01] group-focus-visible:scale-[1.01]"
+      ]}
+    >
+      {poster && <img alt="" class="size-full object-cover" loading="lazy" src={poster} />}
     </span>
-    <span class="video-embed__play meta">Open {provider} video</span>
+    <span
+      class="absolute top-1/2 left-1/2 rounded-full border border-border bg-surface px-3 py-2 font-accent transition-[background-color,border-color,color,transform] duration-[var(--duration-theme)] ease-theme -translate-x-1/2 -translate-y-1/2 group-hover:scale-[1.03] group-focus-visible:scale-[1.03]"
+    >
+      Open {provider} video
+    </span>
   </a>
-  <figcaption class="caption">{title}</figcaption>
+  <figcaption class={captionClass}>{title}</figcaption>
 </figure>

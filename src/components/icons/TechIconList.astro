@@ -1,5 +1,4 @@
 ---
-import "./icons.css";
 import TechIcon from "./TechIcon.astro";
 
 interface Props {
@@ -11,7 +10,7 @@ const { technologies = [], showLabels = false } = Astro.props;
 ---
 
 {technologies.length > 0 && (
-  <ul class="tech-icon-list" aria-label="Technologies">
+  <ul class="m-0 flex list-none flex-wrap items-center gap-x-3 gap-y-2 p-0" aria-label="Technologies">
     {technologies.map((technology) => (
       <li><TechIcon id={technology} showLabel={showLabels} /></li>
     ))}

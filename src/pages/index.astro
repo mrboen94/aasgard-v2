@@ -1,5 +1,4 @@
 ---
-import "./index.css";
 import ArticleList from "../components/article/ArticleList.astro";
 import ExperimentCard from "../components/lab/ExperimentCard.astro";
 import Section from "../components/layout/Section.astro";
@@ -14,6 +13,12 @@ import {
   getVideoProjects,
   getWorkEntries
 } from "../lib/content/collections";
+import {
+  containerClass,
+  eyebrowClass,
+  gridClass,
+  pageIntroCopyClass
+} from "../lib/styles/classes";
 
 const [articles, experiments, workEntries, photoProjects, videoProjects] = await Promise.all([
   getArticles(),
@@ -25,10 +30,10 @@ const [articles, experiments, workEntries, photoProjects, videoProjects] = await
 ---
 
 <BaseLayout>
-  <div class="container home">
-    <section class="home-hero">
-      <p class="eyebrow">Mathias Bøe</p>
-      <p>
+  <div class={`${containerClass} grid gap-4`}>
+    <section class="grid gap-4 pt-12 pb-4">
+      <p class={eyebrowClass}>Mathias Bøe</p>
+      <p class={`${pageIntroCopyClass} text-home-lead`}>
 				Notes from an unreasonable number of side quests.
 				Photography and videos, 3D modelling, data viz, prototypes and experiments, devnotes and the general overflow of a curious mind.
 				Pick a thread and pull.
@@ -48,7 +53,7 @@ const [articles, experiments, workEntries, photoProjects, videoProjects] = await
       description="Experiments and prototypes are the playground of ideas, where concepts are tested, iterated upon, and sometimes discarded. They are the messy, exciting middle ground between thought and polished work."
       href="/lab/"
     >
-      <div class="grid">
+      <div class={gridClass}>
         {experiments.slice(0, 3).map((entry) => <ExperimentCard entry={entry} />)}
       </div>
     </Section>
@@ -67,7 +72,7 @@ const [articles, experiments, workEntries, photoProjects, videoProjects] = await
         description="Just some of my photos and collections."
         href="/photography/"
     >
-      <div class="grid">
+      <div class={gridClass}>
         {photoProjects.slice(0, 3).map((entry) => <PhotoProjectCard entry={entry} />)}
       </div>
     </Section>
@@ -79,7 +84,7 @@ const [articles, experiments, workEntries, photoProjects, videoProjects] = await
         description="A selection of my video and visual projects."
         href="/video/"
       >
-        <div class="grid">
+        <div class={gridClass}>
           {videoProjects.slice(0, 3).map((entry) => <VideoProjectCard entry={entry} />)}
         </div>
       </Section>

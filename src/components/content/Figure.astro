@@ -1,5 +1,5 @@
 ---
-import "./content.css";
+import { captionClass } from "../../lib/styles/classes";
 
 interface Props {
   caption?: string;
@@ -8,7 +8,7 @@ interface Props {
 const { caption } = Astro.props;
 ---
 
-<figure class="content-figure">
+<figure class="my-8">
   <slot />
-  {caption && <figcaption class="caption">{caption}</figcaption>}
+  {caption && <figcaption class={captionClass}>{caption}</figcaption>}
 </figure>

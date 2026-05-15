@@ -1,5 +1,4 @@
 ---
-import "./canvas-experiment.css";
 import type {
   CanvasControl,
   CanvasRangeControl,
@@ -25,7 +24,13 @@ const {
 } = Astro.props;
 
 function rangeSizeClass(control: CanvasRangeControl) {
-  return `canvas-control--${control.size ?? "default"}`;
+  const size = control.size ?? "default";
+
+  if (size === "full") return "col-span-full w-full";
+  if (size === "narrow") return "w-[min(100%,7rem)]";
+  if (size === "wide") return "w-[min(100%,16rem)]";
+
+  return "";
 }
 
 function rangeValue(control: CanvasRangeControl) {
@@ -34,14 +39,62 @@ function rangeValue(control: CanvasRangeControl) {
 
 function controlClass(control: CanvasControl) {
   if (control.type !== "range") {
-    return ["canvas-control", `canvas-control--${control.type}`];
+    return [
+      "canvas-control m-0 min-w-0 gap-1 border-0 p-0 font-accent text-meta text-muted",
+      control.type === "checkbox" ? "flex items-center gap-2" : "grid"
+    ];
   }
 
   return [
-    "canvas-control",
-    "canvas-control--range",
+    "canvas-control m-0 grid min-w-0 gap-1 border-0 p-0 font-accent text-meta text-muted",
     rangeSizeClass(control),
-    `canvas-control--${control.orientation ?? "horizontal"}`
+    control.orientation === "vertical" && "w-auto items-center justify-items-center"
+  ];
+}
+
+function layoutBodyClass(layout?: "cluster" | "column" | "fill" | "grid" | "row") {
+  const baseClass = "min-w-0 gap-2";
+
+  switch (layout) {
+    case "cluster":
+      return [baseClass, "flex flex-wrap items-center gap-2"];
+    case "column":
+      return [baseClass, "grid grid-cols-1 gap-2"];
+    case "fill":
+      return [
+        baseClass,
+        "flex flex-wrap items-end gap-2 [&>.canvas-control]:min-w-0 [&>.canvas-control]:max-w-none [&>.canvas-control]:flex-[1_1_8rem] [&>.canvas-control]:w-auto"
+      ];
+    case "grid":
+      return [
+        baseClass,
+        "grid items-end gap-2 [grid-template-columns:repeat(auto-fit,minmax(min(100%,8rem),1fr))]"
+      ];
+    case "row":
+      return [baseClass, "flex flex-wrap items-end gap-2"];
+    default:
+      return [baseClass];
+  }
+}
+
+function rangeLabelRowClass(control: CanvasRangeControl) {
+  return [
+    "flex items-center justify-between gap-2",
+    control.orientation === "vertical" && "justify-center text-center"
+  ];
+}
+
+function rangeInputClass(control: CanvasRangeControl) {
+  return [
+    "w-full accent-success",
+    control.orientation === "vertical" && "my-1 h-56 w-6 [direction:rtl] [writing-mode:vertical-lr]"
+  ];
+}
+
+function outputClass(control: CanvasRangeControl) {
+  return [
+    "text-foreground tabular-nums",
+    control.orientation === "vertical" && "text-center"
   ];
 }
 
@@ -120,10 +173,8 @@ function pairAriaLabel(item: RenderItem & { kind: "pair" }) {
   node.type === "group" && (
     <section
       class:list={[
-        "canvas-experiment__group",
-        "canvas-controls-layout",
-        `canvas-experiment__group--${node.variant}`,
-        `canvas-controls-layout--${node.layout}`
+        "grid min-w-0 gap-2 rounded-none border-0 bg-transparent p-0",
+        parentGroupId && node.variant === "plain" && "w-full flex-[1_1_100%]"
       ]}
       data-canvas-group={node.id}
       data-canvas-links={node.links?.length ? JSON.stringify(node.links) : undefined}
@@ -135,15 +186,18 @@ function pairAriaLabel(item: RenderItem & { kind: "pair" }) {
           : undefined
       }
     >
-      <header class="canvas-experiment__group-header">
+      <header class="min-w-0">
         <h3
-          class:list={["canvas-experiment__group-label", labelColorClass(node.labelColor)]}
+          class:list={[
+            "m-0 flex min-w-0 items-center gap-2 p-0 font-accent text-meta font-bold uppercase tracking-[0.04em] before:h-px before:w-3 before:flex-shrink-0 before:bg-border before:content-[''] after:h-px after:flex-1 after:bg-border after:content-['']",
+            labelColorClass(node.labelColor)
+          ]}
           style={labelColorStyle(node.labelColor)}
         >
           {node.label}
         </h3>
       </header>
-      <div class="canvas-experiment__group-body">
+      <div class:list={layoutBodyClass(node.layout)}>
         {groupItems.map((item) =>
           item.kind === "single" ? (
             <Astro.self
@@ -154,7 +208,7 @@ function pairAriaLabel(item: RenderItem & { kind: "pair" }) {
               sceneId={sceneId}
             />
           ) : (
-            <div class="canvas-experiment__linked-pair">
+            <div class="col-span-full grid min-w-0 grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-end gap-2 [&>.canvas-control]:w-auto [&>.canvas-control]:max-w-full">
               <Astro.self
                 instanceId={instanceId}
                 node={item.source}
@@ -164,7 +218,7 @@ function pairAriaLabel(item: RenderItem & { kind: "pair" }) {
               <button
                 aria-label={pairAriaLabel(item)}
                 aria-pressed={item.link.enabled !== false ? "true" : "false"}
-                class="canvas-experiment__link-toggle canvas-experiment__link-toggle--between"
+                class="mb-[0.35rem] inline-flex size-5 cursor-pointer items-center justify-center rounded-full border-0 bg-transparent p-0 text-muted hover:text-success aria-pressed:bg-[color-mix(in_srgb,var(--color-success)_16%,transparent)] aria-pressed:text-success [&_svg]:block [&_svg]:size-[0.9rem]"
                 data-canvas-link-toggle={node.id}
                 title={pairAriaLabel(item)}
                 type="button"
@@ -192,24 +246,26 @@ function pairAriaLabel(item: RenderItem & { kind: "pair" }) {
 {
   node.type === "details" && (
     <details
-      class:list={[
-        "canvas-experiment__details",
-        node.layout && "canvas-controls-layout",
-        node.layout && `canvas-controls-layout--${node.layout}`
-      ]}
+      class="group grid min-w-0 gap-2 rounded-none border-0 bg-transparent p-0"
       data-canvas-details={node.id}
       open={node.open}
     >
-      <summary>
+      <summary class="min-w-0 cursor-pointer list-none marker:hidden [&::-webkit-details-marker]:hidden">
         <span
-          class:list={["canvas-experiment__group-label", labelColorClass(node.labelColor)]}
+          class:list={[
+            "m-0 flex min-w-0 items-center gap-2 p-0 font-accent text-meta font-bold uppercase tracking-[0.04em] before:h-px before:w-3 before:flex-shrink-0 before:bg-border before:content-[''] after:h-px after:flex-1 after:bg-border after:content-['']",
+            labelColorClass(node.labelColor)
+          ]}
           style={labelColorStyle(node.labelColor)}
         >
-          <span aria-hidden="true" class="canvas-experiment__chevron"></span>
+          <span
+            aria-hidden="true"
+            class="inline-block size-[0.45rem] rotate-[-45deg] border-r-[1.5px] border-b-[1.5px] border-current transition-transform duration-[var(--duration-theme)] ease-theme group-open:rotate-45"
+          ></span>
           {node.label}
         </span>
       </summary>
-      <div class="canvas-experiment__details-body">
+      <div class:list={[layoutBodyClass(node.layout), "mt-2"]}>
         {node.children.map((child) => (
           <Astro.self instanceId={instanceId} node={child} sceneId={sceneId} />
         ))}
@@ -225,6 +281,7 @@ function pairAriaLabel(item: RenderItem & { kind: "pair" }) {
       style={labelColorStyle(node.labelColor)}
     >
       <input
+        class="size-4 accent-success"
         checked={node.value}
         data-canvas-control={node.id}
         type="checkbox"
@@ -241,10 +298,11 @@ function pairAriaLabel(item: RenderItem & { kind: "pair" }) {
       style={labelColorStyle(node.labelColor)}
     >
       <legend class:list={labelColorClass(node.labelColor)}>{node.label}</legend>
-      <div class="canvas-experiment__radio-group">
+      <div class="flex flex-wrap gap-3">
         {node.options.map((option) => (
-          <label>
+          <label class="flex items-center gap-2">
             <input
+              class="size-4 accent-success"
               checked={option.value === node.value}
               data-canvas-control={node.id}
               name={`${instanceId}-${sceneId}-${node.id}`}
@@ -266,9 +324,16 @@ function pairAriaLabel(item: RenderItem & { kind: "pair" }) {
       style={labelColorStyle(node.labelColor)}
     >
       <span class:list={labelColorClass(node.labelColor)}>{node.label}</span>
-      <select data-canvas-control={node.id}>
+      <select
+        class="min-h-8 w-full min-w-0 rounded-small border border-border bg-surface px-2 py-1 font-accent text-meta text-foreground accent-success shadow-none outline-none transition-[background-color,border-color,color,box-shadow] duration-[var(--duration-fast)] ease-theme focus-visible:border-success focus-visible:ring-2 focus-visible:ring-success"
+        data-canvas-control={node.id}
+      >
         {node.options.map((option) => (
-          <option selected={option.value === node.value} value={option.value}>
+          <option
+            class="bg-surface text-foreground"
+            selected={option.value === node.value}
+            value={option.value}
+          >
             {option.label}
           </option>
         ))}
@@ -284,12 +349,16 @@ function pairAriaLabel(item: RenderItem & { kind: "pair" }) {
       style={labelColorStyle(node.labelColor)}
     >
       <span class:list={labelColorClass(node.labelColor)}>{node.label}</span>
-      <select data-canvas-preset={node.id} data-canvas-preset-options={JSON.stringify(node.options)}>
-        <option selected value="">
+      <select
+        class="min-h-8 w-full min-w-0 rounded-small border border-border bg-surface px-2 py-1 font-accent text-meta text-foreground accent-success shadow-none outline-none transition-[background-color,border-color,color,box-shadow] duration-[var(--duration-fast)] ease-theme focus-visible:border-success focus-visible:ring-2 focus-visible:ring-success"
+        data-canvas-preset={node.id}
+        data-canvas-preset-options={JSON.stringify(node.options)}
+      >
+        <option class="bg-surface text-muted" selected value="">
           {node.placeholder ?? "Choose preset"}
         </option>
         {node.options.map((option) => (
-          <option value={option.value}>{option.label}</option>
+          <option class="bg-surface text-foreground" value={option.value}>{option.label}</option>
         ))}
       </select>
     </label>
@@ -304,6 +373,7 @@ function pairAriaLabel(item: RenderItem & { kind: "pair" }) {
     >
       <span class:list={labelColorClass(node.labelColor)}>{node.label}</span>
       <input
+        class="min-h-8 w-full min-w-0 rounded-small border border-border bg-surface px-2 py-1 font-accent text-meta text-foreground accent-success shadow-none outline-none transition-[background-color,border-color,color,box-shadow] duration-[var(--duration-fast)] ease-theme focus-visible:border-success focus-visible:ring-2 focus-visible:ring-success"
         data-canvas-control={node.id}
         max={node.max}
         min={node.min}
@@ -321,17 +391,22 @@ function pairAriaLabel(item: RenderItem & { kind: "pair" }) {
       class:list={controlClass(node)}
       style={labelColorStyle(node.labelColor)}
     >
-      <span class="canvas-control__label-row">
+      <span class:list={rangeLabelRowClass(node)}>
         <span class:list={labelColorClass(node.labelColor)}>{node.label}</span>
         {
           node.showValue && node.orientation !== "vertical" && (
-            <output data-canvas-value-for={node.id} data-canvas-value-unit={node.unit}>
+            <output
+              class:list={outputClass(node)}
+              data-canvas-value-for={node.id}
+              data-canvas-value-unit={node.unit}
+            >
               {rangeValue(node)}
             </output>
           )
         }
       </span>
       <input
+        class:list={rangeInputClass(node)}
         data-canvas-control={node.id}
         max={node.max}
         min={node.min}
@@ -341,7 +416,11 @@ function pairAriaLabel(item: RenderItem & { kind: "pair" }) {
       />
       {
         node.showValue && node.orientation === "vertical" && (
-          <output data-canvas-value-for={node.id} data-canvas-value-unit={node.unit}>
+          <output
+            class:list={outputClass(node)}
+            data-canvas-value-for={node.id}
+            data-canvas-value-unit={node.unit}
+          >
             {rangeValue(node)}
           </output>
         )
@@ -351,7 +430,7 @@ function pairAriaLabel(item: RenderItem & { kind: "pair" }) {
           <button
             aria-label={linkAriaLabel}
             aria-pressed={linkInitiallyEnabled ? "true" : "false"}
-            class="canvas-experiment__link-toggle canvas-experiment__link-toggle--trailing"
+            class="mt-1 inline-flex size-5 cursor-pointer items-center justify-center justify-self-center rounded-full border-0 bg-transparent p-0 text-muted hover:text-success aria-pressed:bg-[color-mix(in_srgb,var(--color-success)_16%,transparent)] aria-pressed:text-success [&_svg]:block [&_svg]:size-[0.9rem]"
             data-canvas-link-toggle={parentGroupId}
             title={linkAriaLabel}
             type="button"
