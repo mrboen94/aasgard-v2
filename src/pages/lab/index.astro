@@ -1,14 +1,21 @@
 ---
-import TechIconList from "../../components/icons/TechIconList.astro";
 import BaseLayout from "../../components/layout/BaseLayout.astro";
-import EntryCard from "../../components/ui/cards/EntryCard.astro";
-import Grid from "../../components/ui/layout/Grid.astro";
+import EntryGrid from "../../components/ui/cards/EntryGrid.astro";
 import PageIntro from "../../components/ui/typography/PageIntro.astro";
 import PageSection from "../../components/ui/layout/PageSection.astro";
 import { getExperiments } from "../../lib/content/collections";
 import { labUrl } from "../../lib/content/urls";
+import { resolveTechnologyItems } from "../../lib/icons/resolveTechnology";
 
 const experiments = await getExperiments();
+const experimentItems = experiments.map((entry) => ({
+  accent: "success",
+  badge: entry.data.status,
+  description: entry.data.description,
+  href: labUrl(entry.data.slug),
+  icons: resolveTechnologyItems(entry.data.technologies),
+  title: entry.data.title
+}));
 ---
 
 <BaseLayout title="Bøe's Lab" description="Some of my experiments, prototypes, and playful projects.">
@@ -19,20 +26,6 @@ const experiments = await getExperiments();
       description="Some of my experiments, prototypes, and playful projects."
       secondary
     />
-    <Grid>
-      {
-        experiments.map((entry) => (
-          <EntryCard
-            accent="success"
-            badge={entry.data.status}
-            description={entry.data.description}
-            href={labUrl(entry.data.slug)}
-            title={entry.data.title}
-          >
-            <TechIconList technologies={entry.data.technologies} />
-          </EntryCard>
-        ))
-      }
-    </Grid>
+    <EntryGrid items={experimentItems} />
   </PageSection>
 </BaseLayout>

@@ -1,0 +1,49 @@
+---
+title: "Vibecoding this website"
+slug: "ai-wont-take-your-job"
+description: "Exploring the value of context and instruction files for AI-development, what is the difference between Vibecoding and Agentic Engeneering?"
+date: 2026-05-15
+published: true
+template: "standard"
+eyebrow: "AI"
+tags: ["ai", "agentic development", "vibecoding"]
+technologies: []
+---
+
+import SourceCode from "../../../components/ui/code/SourceCode.astro";
+
+# Will AI take your job as a developer?
+
+Let's go through the code of this website that has been very much vibecoded from the start
+and now I am stuck with refactoring it slowly but surely into something that is actually usable.
+
+## Why Astro?
+
+I had a website earlier too that used a tailwind template, I spent a lot of time customizing that website and converting it to typescript. 
+The content on the old version of the website was hosted on a Sanity as the CMS as well as page settings and i18n, the code was structured had interactive elements that took a lot of time to get right and satisfying, however, over time I wanted a website that can support more interactive articles and experiments in an effort to give my one-off experiments and prototypes a place to live without having to create a new repo on github for a simple experiment.
+One thing I was really happy with was my code blocks and animations using CodeHike and the [ScrollyCoding](https://codehike.org/docs/layouts/scrollycoding) feature to tell stories with code and examples.
+
+Moving over to astro for a smaller website footprint and faster loading I lost the ability to use CodeHike, unfortunately, but what I gained in performance is a tradeoff I was willing to accept.
+In the future I will probably try to make my own component and framework for this, as the feature itself is not too hard to implement. The main issue is making it nice and satisfying as well as rendering nicely on all devices and screens. So look out for new posts about visualization techniques for Code and especially [Scrollytelling](https://data.europa.eu/apps/data-visualisation-guide/scrollytelling-introduction).
+
+I was first introduced to the `Scrollytelling` term by Eric Mörth and his [research on the topic](https://vis.uib.no/publications/mittenentzwei2023investigating/) while working on my master thesis in visualization at the same faculty. And is also explored in multiple experiments by [Neal Agarwal](https://neal.fun/size-of-space/).
+
+I don't know why I like Astro so much, I just do, and I found it easier to implement certain features without having to fight for the right to render and draw in the DOM. React is notoriously selfish with its DommyMommy and is unwilling to share it without going through all the hoops. It might have gotten better over the years, but that was my last experience with the Virtual DOM, same goes for NextJs.
+I also wanted to free myself a bit more from vercel and big companies too, so I just feel more self sustained by using Astro, though NextJs is a great framework with many cool bells and whistles that I lose out on, including image optimizations I don't get by default anymore, but in return I also dont have to fight with it anymore.
+
+## Scope of the vibes
+
+My prompt was simple, codex CLI:
+
+`Create a static website skeleton using astro and bun, simple, easy and good setup, using my fonts provided in the font folder, and icons/logos in the assets folder, articles and documents should be written in MDX, but in the future this will be swapped for a custom markup language, architecture must therefore be modular enough to be able to swap out rendering and components in the future. Articles need to support interactive canvas elements and have a couple of templates to choose from. This is a technical writing blog that also hosts projects and project writeups along with normal blogposts about random things.`
+
+This resulted in a fairly nice website. The code though.. The code was absolutely horrible. Inline styles in every file, hundreds of lines in the frontmatter of astro files, amazing variables for theming such as `--ec-frm-edActTabFg` and extremely specific component names such as `CavasSettingsButton` Instead of `Button` with variants. When trying to use AI to fix these issues later (you can go through the commits of this code if you want, though its not recommended), it does help, but it requires a lot of prompting and handholding. Now, remember the goal of this is to see how far I can take vibe-coding, there is a big difference between vibe-coding and agentic development. Agentic development requires setup and planning and results in way higher quality of code in my experience, but it's still not perfect, and it's important to stay critical and vigilant when using AI for real work. I think the secret to successfull agentic-development is proper scoping and limit PR's to small changes and features so they are actually reviewable and verifiable. Git history quickly becomes useless if every PR is 2k+ lines changed on every commit/pr (such as this repo in its most recent commits).
+
+The articles and experiments of this website are all handcrafted, so what you see in the lab section is, as of now, all my dumb brain, so I can't blame AI. But the rest of the code im currently trying to get AI to refactor by steering it and controlling without all the skills and markdown files.
+I know skills and rules will help, but this is driven by curiosity and trying to find the difference in performance and quirks between versions and models with little to no hand holding.
+
+## Example code from AI
+
+<SourceCode file="src/content/articles/ai-wont-take-your-job/codeExamples/sloppinator.diff" />
+
+Now, I don't know about you, but I am not particularly a fan of that frame change. That being said, it was still committed to this repo for shame reasons. Commit the AI will be tasked to fix this and hopefully comply.

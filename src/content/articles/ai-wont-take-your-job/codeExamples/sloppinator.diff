@@ -5,7 +5,8 @@ interface Props {
   joined?: boolean;
   selected?: boolean;
   type?: "button" | "submit" | "reset";
-  variant?: "attached" | "frame" | "underline";
+-  variant?: "attached" | "frame";
++  variant?: "attached" | "frame" | "underline";
   [key: string]: any;
 }
 
@@ -22,8 +23,8 @@ const {
 const variantClass = {
   attached:
     "relative mb-[-1px] min-h-10 flex-none cursor-pointer appearance-none whitespace-nowrap rounded-t-small border border-border border-t-[0.15rem] border-t-transparent bg-code px-4 py-2 font-accent text-small leading-[1.4] text-muted aria-selected:bg-surface aria-selected:border-t-accent aria-selected:text-foreground hover:text-foreground focus-visible:text-foreground",
-  frame:
-    "relative mb-[-1px] flex-none cursor-pointer appearance-none whitespace-nowrap rounded-t-small border border-b-0 border-[color:var(--ec-frm-edTabBarBrdCol,#e1e4e8)] border-t-[length:var(--ec-frm-edActTabIndHt,1.5px)] border-t-transparent bg-[var(--ec-frm-edTabBarBg,#f6f8fa)] px-[var(--ec-uiPadInl,1rem)] py-[calc(var(--ec-uiPadBlk,0.25rem)+var(--ec-frm-edActTabIndHt,1.5px))] font-accent text-small leading-[var(--ec-uiLineHt,1.65)] text-muted aria-selected:border-[color:var(--ec-frm-edActTabBrdCol,var(--color-accent))] aria-selected:border-t-[color:var(--ec-frm-edActTabIndTopCol,#f9826c)] aria-selected:bg-[var(--ec-frm-edActTabBg,#fff)] aria-selected:text-[color:var(--ec-frm-edActTabFg,var(--color-foreground))] hover:text-[color:var(--ec-frm-edActTabFg,var(--color-foreground))] focus-visible:text-[color:var(--ec-frm-edActTabFg,var(--color-foreground))]",
++  frame:
++    "relative mb-[-1px] flex-none cursor-pointer appearance-none whitespace-nowrap rounded-t-small border border-b-0 border-[color:var(--ec-frm-edTabBarBrdCol,#e1e4e8)] border-t-[length:var(--ec-frm-edActTabIndHt,1.5px)] border-t-transparent bg-[var(--ec-frm-edTabBarBg,#f6f8fa)] px-[var(--ec-uiPadInl,1rem)] py-[calc(var(--ec-uiPadBlk,0.25rem)+var(--ec-frm-edActTabIndHt,1.5px))] font-accent text-small leading-[var(--ec-uiLineHt,1.65)] text-muted aria-selected:border-[color:var(--ec-frm-edActTabBrdCol,var(--color-accent))] aria-selected:border-t-[color:var(--ec-frm-edActTabIndTopCol,#f9826c)] aria-selected:bg-[var(--ec-frm-edActTabBg,#fff)] aria-selected:text-[color:var(--ec-frm-edActTabFg,var(--color-foreground))] hover:text-[color:var(--ec-frm-edActTabFg,var(--color-foreground))] focus-visible:text-[color:var(--ec-frm-edActTabFg,var(--color-foreground))]",
   underline:
     "cursor-pointer border-0 border-b-[0.15rem] border-b-transparent bg-transparent px-0 pb-2 font-accent text-meta text-muted aria-selected:border-b-success aria-selected:text-foreground"
 }[variant];

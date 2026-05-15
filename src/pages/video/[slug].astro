@@ -1,9 +1,9 @@
 ---
 import { render } from "astro:content";
-import ArticleMeta from "../../components/article/ArticleMeta.astro";
 import BaseLayout from "../../components/layout/BaseLayout.astro";
-import VideoEmbed from "../../components/media/VideoEmbed.astro";
 import ContentShell from "../../components/ui/layout/ContentShell.astro";
+import Embed from "../../components/ui/media/Embed.astro";
+import MetaList from "../../components/ui/metadata/MetaList.astro";
 import PageIntro from "../../components/ui/typography/PageIntro.astro";
 import Prose from "../../components/ui/typography/Prose.astro";
 import { getVideoProjects } from "../../lib/content/collections";
@@ -31,9 +31,9 @@ const { Content } = await render(entry);
       description={entry.data.description}
       secondary
     >
-      <ArticleMeta date={entry.data.date} section="video" />
+      <MetaList date={entry.data.date} section="video" />
     </PageIntro>
-    <VideoEmbed
+    <Embed
       provider={entry.data.provider}
       id={entry.data.videoId}
       title={entry.data.title}

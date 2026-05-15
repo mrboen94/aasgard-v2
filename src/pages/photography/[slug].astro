@@ -1,9 +1,9 @@
 ---
 import { render } from "astro:content";
-import ArticleMeta from "../../components/article/ArticleMeta.astro";
 import BaseLayout from "../../components/layout/BaseLayout.astro";
 import ContentShell from "../../components/ui/layout/ContentShell.astro";
 import MediaGrid from "../../components/ui/layout/MediaGrid.astro";
+import MetaList from "../../components/ui/metadata/MetaList.astro";
 import PageIntro from "../../components/ui/typography/PageIntro.astro";
 import Prose from "../../components/ui/typography/Prose.astro";
 import { getPhotoProjects } from "../../lib/content/collections";
@@ -30,7 +30,7 @@ const { Content } = await render(entry);
       titlePagefind
       description={entry.data.description}
     >
-      <ArticleMeta date={entry.data.date} section="photography" />
+      <MetaList date={entry.data.date} section="photography" />
       <dl class="m-0 flex flex-wrap gap-3">
         {entry.data.camera && <><dt class="m-0 font-accent text-muted">Camera</dt><dd class="m-0">{entry.data.camera}</dd></>}
         {entry.data.location && <><dt class="m-0 font-accent text-muted">Location</dt><dd class="m-0">{entry.data.location}</dd></>}

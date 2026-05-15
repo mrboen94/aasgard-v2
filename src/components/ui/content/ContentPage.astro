@@ -1,0 +1,99 @@
+---
+import BaseLayout from "../../layout/BaseLayout.astro";
+import Badge from "../badges/Badge.astro";
+import CardLink from "../cards/CardLink.astro";
+import ContentShell from "../layout/ContentShell.astro";
+import MetaList from "../metadata/MetaList.astro";
+import Prose from "../typography/Prose.astro";
+import Block from "./Block.astro";
+import Figure from "./Figure.astro";
+
+type Heading = {
+  depth: number;
+  slug: string;
+  text: string;
+};
+
+interface Props {
+  backHref?: string;
+  backLabel?: string;
+  canonical?: string;
+  Content: any;
+  date?: Date;
+  description: string;
+  eyebrow?: string;
+  headings?: Heading[];
+  layout?: "sidebar" | "standard" | "wide";
+  notice?: string;
+  section?: string;
+  tags?: string[];
+  title: string;
+  updated?: Date;
+}
+
+const {
+  backHref,
+  backLabel = "Back",
+  canonical,
+  Content,
+  date,
+  description,
+  eyebrow,
+  headings = [],
+  layout = "standard",
+  notice,
+  section,
+  tags = [],
+  title,
+  updated
+} = Astro.props as Props;
+const contentComponents = { Block, CardLink, Figure };
+const tocHeadings = headings.filter((heading) => heading.depth === 2 || heading.depth === 3);
+const proseWidth = layout === "standard" ? undefined : "wide";
+const hasMeta = date || updated || tags.length > 0 || section;
+---
+
+<BaseLayout title={title} description={description} canonical={canonical}>
+  <ContentShell data-pagefind-body>
+    <header class="grid gap-4 pt-12 pb-6">
+      {backHref && <Badge href={backHref} textCase="uppercase" variant="text">{backLabel}</Badge>}
+      {eyebrow && <Badge data-pagefind-meta="eyebrow" textCase="uppercase" variant="text">{eyebrow}</Badge>}
+      <h1 data-pagefind-meta="title">{title}</h1>
+      <p class="m-0 max-w-section-copy text-lead text-muted">{description}</p>
+      {hasMeta && <MetaList date={date} updated={updated} tags={tags} section={section} />}
+      <slot name="header-extra" />
+    </header>
+
+    {notice && <Block tone="accent">{notice}</Block>}
+    <slot name="before-content" />
+
+    {
+      layout === "sidebar" ? (
+        <div class="grid items-start gap-8 [grid-template-columns:minmax(12rem,16rem)_minmax(0,1fr)] max-[56rem]:grid-cols-1">
+          <aside class="sticky top-6 grid gap-4 border-l-[0.2rem] border-success pl-4 text-muted max-[56rem]:static">
+            <Badge textCase="uppercase" variant="text">Contents</Badge>
+            {tocHeadings.length > 0 ? (
+              <ol class="m-0 grid list-none gap-2 p-0">
+                {tocHeadings.map((heading) => (
+                  <li class:list={[heading.depth === 3 && "pl-4"]}>
+                    <a class="text-muted no-underline" href={`#${heading.slug}`}>{heading.text}</a>
+                  </li>
+                ))}
+              </ol>
+            ) : (
+              <p class="m-0 font-accent">Headings will appear here.</p>
+            )}
+            <slot name="sidebar" />
+          </aside>
+          <Prose width="wide">
+            <Content components={contentComponents} />
+          </Prose>
+        </div>
+      ) : (
+        <Prose width={proseWidth}>
+          <Content components={contentComponents} />
+        </Prose>
+      )
+    }
+  </ContentShell>
+</BaseLayout>

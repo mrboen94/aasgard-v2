@@ -1,10 +1,10 @@
 ---
-import Card from "../ui/cards/Card.astro";
+import Card from "./Card.astro";
 
 interface Props {
+  description?: string;
   href: string;
   title: string;
-  description?: string;
 }
 
 const { href, title, description } = Astro.props;

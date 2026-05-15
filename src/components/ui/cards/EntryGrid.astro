@@ -1,0 +1,102 @@
+---
+import { Icon } from "astro-icon/components";
+import Badge from "../badges/Badge.astro";
+import Grid from "../layout/Grid.astro";
+import IconList from "../icons/IconList.astro";
+import MetaList from "../metadata/MetaList.astro";
+import EntryCard from "./EntryCard.astro";
+
+interface EntryGridItem {
+  accent?: "accent" | "danger" | "primary" | "success" | string;
+  action?: {
+    href: string;
+    label: string;
+  };
+  annotation?: string;
+  badge?: string;
+  badgeColor?: string;
+  class?: string;
+  description?: string;
+  highlighted?: boolean;
+  href: string;
+  icons?: {
+    icon: string;
+    id?: string;
+    label: string;
+    muted?: boolean;
+    revealLabelInDev?: boolean;
+    showLabel?: boolean;
+    title?: string;
+  }[];
+  layout?: "stack" | "stack-lg";
+  meta?: {
+    date: Date;
+    eyebrow?: string;
+    section?: string;
+    tags?: string[];
+    updated?: Date;
+  };
+  title: string;
+  visual?: {
+    icon: string;
+    label?: string;
+  };
+}
+
+interface Props {
+  items: EntryGridItem[];
+}
+
+const { items } = Astro.props as Props;
+---
+
+<Grid>
+  {
+    items.map((item) => {
+      const cardClass = [item.visual && "group", item.class].filter(Boolean).join(" ") || undefined;
+
+      return (
+        <EntryCard
+          accent={item.accent}
+          badge={item.badge}
+          badgeColor={item.badgeColor}
+          class={cardClass}
+          description={item.description}
+          highlighted={item.highlighted}
+          href={item.href}
+          layout={item.layout}
+          title={item.title}
+        >
+          {
+            (item.visual || item.annotation) && (
+              <div class="flex flex-wrap items-center justify-between gap-3" slot="header">
+                {
+                  item.visual && (
+                    <span
+                      class="grid aspect-square size-12 place-items-center rounded-card bg-code text-[var(--card-accent)] transition-[background-color,color,transform] duration-[var(--duration-theme)] ease-theme group-hover:scale-[1.04] group-focus-within:scale-[1.04] [&_svg]:size-7 [&_svg]:transition-transform [&_svg]:duration-[var(--duration-theme)] [&_svg]:ease-theme"
+                      aria-hidden={item.visual.label ? undefined : "true"}
+                      aria-label={item.visual.label}
+                      title={item.visual.label}
+                    >
+                      <Icon name={item.visual.icon} />
+                    </span>
+                  )
+                }
+                {item.annotation && <Badge tone="muted">{item.annotation}</Badge>}
+              </div>
+            )
+          }
+          {item.meta && <MetaList {...item.meta} />}
+          {
+            (item.action || item.icons?.length) && (
+              <div class="flex flex-wrap items-center justify-between gap-3" slot="footer">
+                {item.action && <a href={item.action.href}>{item.action.label}</a>}
+                {item.icons?.length ? <IconList ariaLabel="Technologies" items={item.icons} /> : null}
+              </div>
+            )
+          }
+        </EntryCard>
+      );
+    })
+  }
+</Grid>
