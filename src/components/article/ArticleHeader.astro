@@ -1,6 +1,6 @@
 ---
 import type { ArticleEntry } from "../../lib/content/collections";
-import Eyebrow from "../ui/Eyebrow.astro";
+import Badge from "../ui/Badge.astro";
 import ArticleMeta from "./ArticleMeta.astro";
 
 interface Props {
@@ -12,7 +12,7 @@ const { entry } = Astro.props;
 ---
 
 <header class="grid gap-4 pt-12 pb-6">
-  <Eyebrow href="/articles">{"< Back"}</Eyebrow>
+  <Badge href="/articles" textCase="uppercase" variant="text">{"< Back"}</Badge>
   <h1 data-pagefind-meta="title">{entry.data.title}</h1>
   <p class="m-0 max-w-section-copy text-lead text-muted">{entry.data.description}</p>
   <ArticleMeta

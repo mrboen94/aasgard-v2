@@ -1,5 +1,5 @@
 ---
-import Eyebrow from "./Eyebrow.astro";
+import Badge from "./Badge.astro";
 
 interface Props {
   class?: string;
@@ -32,7 +32,7 @@ const {
   ]}
   {...attrs}
 >
-  {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
+  {eyebrow && <Badge textCase="uppercase" variant="text">{eyebrow}</Badge>}
   {title && <h1 data-pagefind-meta={titlePagefind ? "title" : undefined}>{title}</h1>}
   {
     description && (

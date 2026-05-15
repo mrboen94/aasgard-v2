@@ -1,4 +1,5 @@
 ---
+import BadgeList from "../ui/BadgeList.astro";
 import TechIcon from "./TechIcon.astro";
 
 interface Props {
@@ -9,10 +10,12 @@ interface Props {
 const { technologies = [], showLabels = false } = Astro.props;
 ---
 
-{technologies.length > 0 && (
-  <ul class="m-0 flex list-none flex-wrap items-center gap-x-3 gap-y-2 p-0" aria-label="Technologies">
-    {technologies.map((technology) => (
-      <li><TechIcon id={technology} showLabel={showLabels} /></li>
-    ))}
-  </ul>
-)}
+{
+  technologies.length > 0 && (
+    <BadgeList ariaLabel="Technologies">
+      {technologies.map((technology) => (
+        <li><TechIcon id={technology} showLabel={showLabels} /></li>
+      ))}
+    </BadgeList>
+  )
+}

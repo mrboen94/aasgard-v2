@@ -9,7 +9,7 @@ import LinkCard from "../content/LinkCard.astro";
 import TechIconList from "../icons/TechIconList.astro";
 import BaseLayout from "../layout/BaseLayout.astro";
 import ArticleShell from "../ui/ArticleShell.astro";
-import Eyebrow from "../ui/Eyebrow.astro";
+import Badge from "../ui/Badge.astro";
 import ArticleHeader from "./ArticleHeader.astro";
 import ArticleProse from "./ArticleProse.astro";
 
@@ -35,7 +35,7 @@ const tocHeadings = headings.filter((heading) => heading.depth === 2 || heading.
     <ArticleHeader entry={entry} />
     <div class="grid items-start gap-8 [grid-template-columns:minmax(12rem,16rem)_minmax(0,1fr)] max-[56rem]:grid-cols-1">
       <aside class="sticky top-6 grid gap-4 border-l-[0.2rem] border-success pl-4 text-muted max-[56rem]:static">
-        <Eyebrow>Contents</Eyebrow>
+        <Badge textCase="uppercase" variant="text">Contents</Badge>
         {tocHeadings.length > 0 ? (
           <ol class="m-0 grid list-none gap-2 p-0">
             {tocHeadings.map((heading) => (

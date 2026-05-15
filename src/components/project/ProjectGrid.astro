@@ -1,7 +1,11 @@
 ---
+import { Icon } from "astro-icon/components";
 import type { WorkEntry } from "../../lib/content/collections";
+import { workUrl } from "../../lib/content/urls";
+import TechIconList from "../icons/TechIconList.astro";
+import Badge from "../ui/Badge.astro";
+import Card from "../ui/Card.astro";
 import Grid from "../ui/Grid.astro";
-import ProjectCard from "./ProjectCard.astro";
 
 interface Props {
   entries: WorkEntry[];
@@ -11,5 +15,42 @@ const { entries } = Astro.props;
 ---
 
 <Grid>
-  {entries.map((entry) => <ProjectCard entry={entry} />)}
+  {
+    entries.map((entry) => {
+      const logo = entry.data.logo ?? "custom/placeholder";
+      const accent = entry.data.accent ?? "primary";
+
+      return (
+        <Card
+          accent={accent}
+          class="group"
+          highlighted={entry.data.featured}
+          layout="stack-lg"
+          padding="md"
+        >
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <span
+              class="grid aspect-square size-12 place-items-center rounded-card bg-code text-[var(--card-accent)] transition-[background-color,color,transform] duration-[var(--duration-theme)] ease-theme group-hover:scale-[1.04] group-focus-within:scale-[1.04] [&_svg]:size-7 [&_svg]:transition-transform [&_svg]:duration-[var(--duration-theme)] [&_svg]:ease-theme"
+              aria-hidden="true"
+            >
+              <Icon name={logo} />
+            </span>
+            {entry.data.featured && <Badge tone="muted">Featured</Badge>}
+          </div>
+          <div class="grid gap-2">
+            <h3>
+              <a class="text-inherit no-underline" href={workUrl(entry.data.slug)}>
+                {entry.data.title}
+              </a>
+            </h3>
+            <p class="m-0 text-muted">{entry.data.description}</p>
+          </div>
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            {entry.data.link && <a href={entry.data.link.href}>{entry.data.link.label}</a>}
+            <TechIconList technologies={entry.data.technologies} />
+          </div>
+        </Card>
+      );
+    })
+  }
 </Grid>

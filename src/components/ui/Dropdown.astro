@@ -1,4 +1,6 @@
 ---
+import Field from "./Field.astro";
+
 type DropdownOption = {
   label: string;
   muted?: boolean;
@@ -28,13 +30,7 @@ const {
 } = Astro.props as Props;
 ---
 
-<label
-  class:list={[
-    "canvas-control m-0 grid min-w-0 gap-1 border-0 p-0 font-accent text-meta text-muted",
-    className
-  ]}
-  {...attrs}
->
+<Field class={className} {...attrs}>
   <span class:list={labelClass}>{label}</span>
   <select
     class="min-h-8 w-full min-w-0 rounded-small border border-border bg-surface px-2 py-1 font-accent text-meta text-foreground accent-success shadow-none outline-none transition-[background-color,border-color,color,box-shadow] duration-[var(--duration-fast)] ease-theme focus-visible:border-success focus-visible:ring-2 focus-visible:ring-success"
@@ -59,4 +55,4 @@ const {
       ))
     }
   </select>
-</label>
+</Field>

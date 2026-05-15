@@ -1,5 +1,5 @@
 ---
-import Eyebrow from "../ui/Eyebrow.astro";
+import Badge from "../ui/Badge.astro";
 
 interface Props {
   eyebrow?: string;
@@ -15,7 +15,13 @@ const { eyebrow, title, description, href, linkLabel = "View all" } = Astro.prop
 <section class="grid gap-6 py-8">
   <div class="flex items-end justify-between gap-6 max-[44rem]:flex-col max-[44rem]:items-start">
     <div>
-      {eyebrow && <Eyebrow class="mb-2 text-eyebrow">{eyebrow}</Eyebrow>}
+      {
+        eyebrow && (
+          <Badge class="mb-2 text-eyebrow" textCase="uppercase" variant="text">
+            {eyebrow}
+          </Badge>
+        )
+      }
       <h2>{title}</h2>
       {description && <p class="mt-2 mb-0 max-w-section-wide text-muted">{description}</p>}
     </div>

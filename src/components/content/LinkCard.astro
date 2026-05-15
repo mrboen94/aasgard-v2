@@ -1,5 +1,5 @@
 ---
-import Surface from "../ui/Surface.astro";
+import Card from "../ui/Card.astro";
 
 interface Props {
   href: string;
@@ -10,7 +10,7 @@ interface Props {
 const { href, title, description } = Astro.props;
 ---
 
-<Surface as="a" class="my-6 block p-4 text-inherit no-underline" href={href}>
+<Card as="a" class="my-6 block text-inherit no-underline" href={href} padding="sm">
   <span class="font-bold">{title}</span>
   {description && <p class="mt-1 mb-0 text-muted">{description}</p>}
-</Surface>
+</Card>

@@ -1,0 +1,34 @@
+---
+interface Props {
+  as?: string;
+  class?: string;
+  disclosure?: boolean;
+  [key: string]: any;
+}
+
+const {
+  as = "h3",
+  class: className,
+  disclosure = false,
+  ...attrs
+} = Astro.props as Props;
+const Tag = as;
+---
+
+<Tag
+  class:list={[
+    "m-0 flex min-w-0 items-center gap-2 p-0 font-accent text-meta font-bold uppercase tracking-[0.04em] before:h-px before:w-3 before:flex-shrink-0 before:bg-border before:content-[''] after:h-px after:flex-1 after:bg-border after:content-['']",
+    className
+  ]}
+  {...attrs}
+>
+  {
+    disclosure && (
+      <span
+        aria-hidden="true"
+        class="inline-block size-[0.45rem] rotate-[-45deg] border-r-[1.5px] border-b-[1.5px] border-current transition-transform duration-[var(--duration-theme)] ease-theme group-open:rotate-45"
+      ></span>
+    )
+  }
+  <slot />
+</Tag>

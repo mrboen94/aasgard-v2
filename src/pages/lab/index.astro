@@ -1,10 +1,13 @@
 ---
-import ExperimentCard from "../../components/lab/ExperimentCard.astro";
+import TechIconList from "../../components/icons/TechIconList.astro";
 import BaseLayout from "../../components/layout/BaseLayout.astro";
+import Badge from "../../components/ui/Badge.astro";
+import Card from "../../components/ui/Card.astro";
 import Grid from "../../components/ui/Grid.astro";
 import PageIntro from "../../components/ui/PageIntro.astro";
 import PageSection from "../../components/ui/PageSection.astro";
 import { getExperiments } from "../../lib/content/collections";
+import { labUrl } from "../../lib/content/urls";
 
 const experiments = await getExperiments();
 ---
@@ -18,7 +21,20 @@ const experiments = await getExperiments();
       secondary
     />
     <Grid>
-      {experiments.map((entry) => <ExperimentCard entry={entry} />)}
+      {
+        experiments.map((entry) => (
+          <Card accent="success" layout="stack" padding="md">
+            <a class="grid gap-2 text-inherit no-underline" href={labUrl(entry.data.slug)}>
+              <Badge color="var(--card-accent)" textCase="uppercase" variant="text">
+                {entry.data.status}
+              </Badge>
+              <h3>{entry.data.title}</h3>
+              <p class="m-0 text-muted">{entry.data.description}</p>
+            </a>
+            <TechIconList technologies={entry.data.technologies} />
+          </Card>
+        ))
+      }
     </Grid>
   </PageSection>
 </BaseLayout>

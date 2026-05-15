@@ -1,0 +1,18 @@
+---
+interface Props {
+  class?: string;
+  [key: string]: any;
+}
+
+const { class: className, ...attrs } = Astro.props as Props;
+---
+
+<summary
+  class:list={[
+    "min-w-0 cursor-pointer list-none marker:hidden [&::-webkit-details-marker]:hidden",
+    className
+  ]}
+  {...attrs}
+>
+  <slot />
+</summary>

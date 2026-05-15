@@ -1,14 +1,14 @@
 ---
 import ArticleList from "../components/article/ArticleList.astro";
-import ExperimentCard from "../components/lab/ExperimentCard.astro";
+import TechIconList from "../components/icons/TechIconList.astro";
 import Section from "../components/layout/Section.astro";
 import BaseLayout from "../components/layout/BaseLayout.astro";
-import PhotoProjectCard from "../components/media/PhotoProjectCard.astro";
-import VideoProjectCard from "../components/media/VideoProjectCard.astro";
 import ProjectGrid from "../components/project/ProjectGrid.astro";
+import Badge from "../components/ui/Badge.astro";
+import Card from "../components/ui/Card.astro";
 import Container from "../components/ui/Container.astro";
-import Eyebrow from "../components/ui/Eyebrow.astro";
 import Grid from "../components/ui/Grid.astro";
+import MediaPlaceholder from "../components/ui/MediaPlaceholder.astro";
 import {
   getArticles,
   getExperiments,
@@ -16,6 +16,7 @@ import {
   getVideoProjects,
   getWorkEntries
 } from "../lib/content/collections";
+import { labUrl, photoProjectUrl, videoProjectUrl } from "../lib/content/urls";
 
 const [articles, experiments, workEntries, photoProjects, videoProjects] = await Promise.all([
   getArticles(),
@@ -29,7 +30,7 @@ const [articles, experiments, workEntries, photoProjects, videoProjects] = await
 <BaseLayout>
   <Container class="grid gap-4">
     <section class="grid gap-4 pt-12 pb-4">
-      <Eyebrow>Mathias Bøe</Eyebrow>
+      <Badge textCase="uppercase" variant="text">Mathias Bøe</Badge>
       <p class="m-0 max-w-section-copy text-home-lead text-muted">
 				Notes from an unreasonable number of side quests.
 				Photography and videos, 3D modelling, data viz, prototypes and experiments, devnotes and the general overflow of a curious mind.
@@ -51,7 +52,20 @@ const [articles, experiments, workEntries, photoProjects, videoProjects] = await
       href="/lab/"
     >
       <Grid>
-        {experiments.slice(0, 3).map((entry) => <ExperimentCard entry={entry} />)}
+        {
+          experiments.slice(0, 3).map((entry) => (
+            <Card accent="success" layout="stack" padding="md">
+              <a class="grid gap-2 text-inherit no-underline" href={labUrl(entry.data.slug)}>
+                <Badge color="var(--card-accent)" textCase="uppercase" variant="text">
+                  {entry.data.status}
+                </Badge>
+                <h3>{entry.data.title}</h3>
+                <p class="m-0 text-muted">{entry.data.description}</p>
+              </a>
+              <TechIconList technologies={entry.data.technologies} />
+            </Card>
+          ))
+        }
       </Grid>
     </Section>
 
@@ -70,7 +84,22 @@ const [articles, experiments, workEntries, photoProjects, videoProjects] = await
         href="/photography/"
     >
       <Grid>
-        {photoProjects.slice(0, 3).map((entry) => <PhotoProjectCard entry={entry} />)}
+        {
+          photoProjects.slice(0, 3).map((entry) => (
+            <Card class="group" variant="flush">
+              <a class="grid text-inherit no-underline" href={photoProjectUrl(entry.data.slug)}>
+                <MediaPlaceholder
+                  class="aspect-[4/3] transition-[background-color,transform] duration-[var(--duration-theme)] ease-theme group-hover:scale-[1.015] group-focus-within:scale-[1.015]"
+                  aria-hidden="true"
+                />
+                <span class="grid gap-2 p-4">
+                  <h3>{entry.data.title}</h3>
+                  <p class="m-0 text-muted">{entry.data.description}</p>
+                </span>
+              </a>
+            </Card>
+          ))
+        }
       </Grid>
     </Section>
     )}
@@ -82,7 +111,22 @@ const [articles, experiments, workEntries, photoProjects, videoProjects] = await
         href="/video/"
       >
         <Grid>
-          {videoProjects.slice(0, 3).map((entry) => <VideoProjectCard entry={entry} />)}
+          {
+            videoProjects.slice(0, 3).map((entry) => (
+              <Card class="group" variant="flush">
+                <a class="grid text-inherit no-underline" href={videoProjectUrl(entry.data.slug)}>
+                  <MediaPlaceholder
+                    class="aspect-video transition-[background-color,transform] duration-[var(--duration-theme)] ease-theme group-hover:scale-[1.015] group-focus-within:scale-[1.015]"
+                    aria-hidden="true"
+                  />
+                  <span class="grid gap-2 p-4">
+                    <h3>{entry.data.title}</h3>
+                    <p class="m-0 text-muted">{entry.data.description}</p>
+                  </span>
+                </a>
+              </Card>
+            ))
+          }
         </Grid>
       </Section>
     )}

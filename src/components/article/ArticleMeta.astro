@@ -1,6 +1,6 @@
 ---
-import Eyebrow from "../ui/Eyebrow.astro";
-import TagList from "../ui/TagList.astro";
+import Badge from "../ui/Badge.astro";
+import BadgeList from "../ui/BadgeList.astro";
 
 interface Props {
   eyebrow?: string;
@@ -19,9 +19,29 @@ const dateLabel = date.toLocaleDateString("en", {
 ---
 
 <div class="flex flex-wrap items-center gap-x-3 gap-y-2 font-accent text-small text-muted">
-  {eyebrow && <Eyebrow as="span" data-pagefind-meta="eyebrow">{eyebrow}</Eyebrow>}
+  {
+    eyebrow && (
+      <Badge
+        data-pagefind-meta="eyebrow"
+        textCase="uppercase"
+        variant="text"
+      >
+        {eyebrow}
+      </Badge>
+    )
+  }
   {section && <span data-pagefind-meta="section">{section}</span>}
   <time datetime={date.toISOString()} data-pagefind-meta="date">{dateLabel}</time>
   {updated && <span>Updated {updated.toLocaleDateString("en")}</span>}
-  {tags.length > 0 && <TagList tags={tags} meta="tags" />}
+  {
+    tags.length > 0 && (
+      <BadgeList ariaLabel="Tags" density="compact">
+        {tags.map((tag) => (
+          <Badge as="li" data-pagefind-meta="tags" variant="outline">
+            {tag}
+          </Badge>
+        ))}
+      </BadgeList>
+    )
+  }
 </div>

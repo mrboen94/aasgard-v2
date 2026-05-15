@@ -1,0 +1,74 @@
+---
+interface Props {
+  accent?: "accent" | "danger" | "primary" | "success" | string;
+  as?: string;
+  class?: string;
+  highlighted?: boolean;
+  interactive?: boolean;
+  layout?: "none" | "stack" | "stack-lg";
+  padding?: "none" | "sm" | "md";
+  style?: string;
+  variant?: "flush" | "outlined";
+  [key: string]: any;
+}
+
+const {
+  accent,
+  as = "article",
+  class: className,
+  highlighted = false,
+  interactive = true,
+  layout = "none",
+  padding = "none",
+  style: styleAttr,
+  variant = "outlined",
+  ...attrs
+} = Astro.props as Props;
+const Tag = as;
+
+const tokenAccents = new Set(["accent", "danger", "primary", "success"]);
+const accentValue =
+  accent && tokenAccents.has(accent)
+    ? `var(--color-${accent})`
+    : accent;
+const accentStyle = accentValue ? `--card-accent: ${accentValue};` : undefined;
+const style = [accentStyle, styleAttr].filter(Boolean).join(" ") || undefined;
+const styleAttrs = style ? { style } : {};
+
+const layoutClass = {
+  none: "",
+  stack: "grid gap-4",
+  "stack-lg": "grid gap-6"
+}[layout];
+
+const paddingClass = {
+  none: "",
+  sm: "p-4",
+  md: "p-6"
+}[padding];
+
+const variantClass = {
+  flush: "overflow-hidden",
+  outlined: ""
+}[variant];
+
+const interactionClass =
+  interactive &&
+  "hover:-translate-y-0.5 hover:border-[color-mix(in_srgb,var(--color-border)_55%,var(--card-accent,var(--color-primary)))] focus-visible:-translate-y-0.5 focus-visible:border-[color-mix(in_srgb,var(--color-border)_55%,var(--card-accent,var(--color-primary)))] has-[a:hover]:-translate-y-0.5 has-[a:hover]:border-[color-mix(in_srgb,var(--color-border)_55%,var(--card-accent,var(--color-primary)))] has-[a:focus-visible]:-translate-y-0.5 has-[a:focus-visible]:border-[color-mix(in_srgb,var(--color-border)_55%,var(--card-accent,var(--color-primary)))]";
+---
+
+<Tag
+  class:list={[
+    "rounded-card border border-border bg-surface transition-[background-color,border-color,box-shadow,transform] duration-[var(--duration-theme)] ease-theme",
+    variantClass,
+    layoutClass,
+    paddingClass,
+    highlighted && "border-[var(--card-accent,var(--color-primary))]",
+    interactionClass,
+    className
+  ]}
+  {...styleAttrs}
+  {...attrs}
+>
+  <slot />
+</Tag>
