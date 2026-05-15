@@ -1,14 +1,8 @@
 ---
 import type { ExperimentEntry } from "../../lib/content/collections";
 import { labUrl } from "../../lib/content/urls";
-import {
-  listingCardClass,
-  listingCardDescriptionClass,
-  listingCardEyebrowClass,
-  listingCardLinkClass,
-  surfaceClass
-} from "../../lib/styles/classes";
 import TechIconList from "../icons/TechIconList.astro";
+import Surface from "../ui/Surface.astro";
 
 interface Props {
   entry: ExperimentEntry;
@@ -17,11 +11,13 @@ interface Props {
 const { entry } = Astro.props;
 ---
 
-<article class:list={[listingCardClass, surfaceClass, "[--listing-card-accent:var(--color-success)]"]}>
-  <a class={listingCardLinkClass} href={labUrl(entry.data.slug)}>
-    <span class={listingCardEyebrowClass}>{entry.data.status}</span>
+<Surface as="article" class="grid gap-4 p-6 [--listing-card-accent:var(--color-success)]">
+  <a class="grid gap-2 text-inherit no-underline" href={labUrl(entry.data.slug)}>
+    <span class="font-accent text-meta text-[var(--listing-card-accent,var(--color-accent))] uppercase">
+      {entry.data.status}
+    </span>
     <h3>{entry.data.title}</h3>
-    <p class={listingCardDescriptionClass}>{entry.data.description}</p>
+    <p class="m-0 text-muted">{entry.data.description}</p>
   </a>
   <TechIconList technologies={entry.data.technologies} />
-</article>
+</Surface>

@@ -2,13 +2,8 @@
 import { Icon } from "astro-icon/components";
 import type { WorkEntry } from "../../lib/content/collections";
 import { workUrl } from "../../lib/content/urls";
-import {
-  listingCardBodyClass,
-  listingCardClass,
-  listingCardDescriptionClass,
-  surfaceClass
-} from "../../lib/styles/classes";
 import TechIconList from "../icons/TechIconList.astro";
+import Surface from "../ui/Surface.astro";
 
 interface Props {
   entry: WorkEntry;
@@ -19,10 +14,10 @@ const logo = entry.data.logo ?? "custom/placeholder";
 const accentStyle = entry.data.accent ? `--project-accent: ${entry.data.accent};` : undefined;
 ---
 
-<article
+<Surface
+  as="article"
   class:list={[
-    listingCardClass,
-    surfaceClass,
+    "grid gap-4 p-6",
     "group gap-6 [--project-accent:var(--color-primary)]",
     entry.data.featured && "border-[var(--project-accent)]"
   ]}
@@ -37,12 +32,12 @@ const accentStyle = entry.data.accent ? `--project-accent: ${entry.data.accent};
     </span>
     {entry.data.featured && <span class="font-accent text-meta text-muted">Featured</span>}
   </div>
-  <div class={listingCardBodyClass}>
+  <div class="grid gap-2">
     <h3><a class="text-inherit no-underline" href={workUrl(entry.data.slug)}>{entry.data.title}</a></h3>
-    <p class={listingCardDescriptionClass}>{entry.data.description}</p>
+    <p class="m-0 text-muted">{entry.data.description}</p>
   </div>
   <div class="flex flex-wrap items-center justify-between gap-3">
     {entry.data.link && <a href={entry.data.link.href}>{entry.data.link.label}</a>}
     <TechIconList technologies={entry.data.technologies} />
   </div>
-</article>
+</Surface>

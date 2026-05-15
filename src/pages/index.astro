@@ -6,6 +6,9 @@ import BaseLayout from "../components/layout/BaseLayout.astro";
 import PhotoProjectCard from "../components/media/PhotoProjectCard.astro";
 import VideoProjectCard from "../components/media/VideoProjectCard.astro";
 import ProjectGrid from "../components/project/ProjectGrid.astro";
+import Container from "../components/ui/Container.astro";
+import Eyebrow from "../components/ui/Eyebrow.astro";
+import Grid from "../components/ui/Grid.astro";
 import {
   getArticles,
   getExperiments,
@@ -13,12 +16,6 @@ import {
   getVideoProjects,
   getWorkEntries
 } from "../lib/content/collections";
-import {
-  containerClass,
-  eyebrowClass,
-  gridClass,
-  pageIntroCopyClass
-} from "../lib/styles/classes";
 
 const [articles, experiments, workEntries, photoProjects, videoProjects] = await Promise.all([
   getArticles(),
@@ -30,10 +27,10 @@ const [articles, experiments, workEntries, photoProjects, videoProjects] = await
 ---
 
 <BaseLayout>
-  <div class={`${containerClass} grid gap-4`}>
+  <Container class="grid gap-4">
     <section class="grid gap-4 pt-12 pb-4">
-      <p class={eyebrowClass}>Mathias Bøe</p>
-      <p class={`${pageIntroCopyClass} text-home-lead`}>
+      <Eyebrow>Mathias Bøe</Eyebrow>
+      <p class="m-0 max-w-section-copy text-home-lead text-muted">
 				Notes from an unreasonable number of side quests.
 				Photography and videos, 3D modelling, data viz, prototypes and experiments, devnotes and the general overflow of a curious mind.
 				Pick a thread and pull.
@@ -53,9 +50,9 @@ const [articles, experiments, workEntries, photoProjects, videoProjects] = await
       description="Experiments and prototypes are the playground of ideas, where concepts are tested, iterated upon, and sometimes discarded. They are the messy, exciting middle ground between thought and polished work."
       href="/lab/"
     >
-      <div class={gridClass}>
+      <Grid>
         {experiments.slice(0, 3).map((entry) => <ExperimentCard entry={entry} />)}
-      </div>
+      </Grid>
     </Section>
 
     <Section
@@ -72,9 +69,9 @@ const [articles, experiments, workEntries, photoProjects, videoProjects] = await
         description="Just some of my photos and collections."
         href="/photography/"
     >
-      <div class={gridClass}>
+      <Grid>
         {photoProjects.slice(0, 3).map((entry) => <PhotoProjectCard entry={entry} />)}
-      </div>
+      </Grid>
     </Section>
     )}
 
@@ -84,10 +81,10 @@ const [articles, experiments, workEntries, photoProjects, videoProjects] = await
         description="A selection of my video and visual projects."
         href="/video/"
       >
-        <div class={gridClass}>
+        <Grid>
           {videoProjects.slice(0, 3).map((entry) => <VideoProjectCard entry={entry} />)}
-        </div>
+        </Grid>
       </Section>
     )}
-  </div>
+  </Container>
 </BaseLayout>

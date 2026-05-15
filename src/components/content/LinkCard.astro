@@ -1,5 +1,5 @@
 ---
-import { surfaceClass } from "../../lib/styles/classes";
+import Surface from "../ui/Surface.astro";
 
 interface Props {
   href: string;
@@ -10,7 +10,7 @@ interface Props {
 const { href, title, description } = Astro.props;
 ---
 
-<a class:list={[surfaceClass, "my-6 block p-4 text-inherit no-underline"]} href={href}>
+<Surface as="a" class="my-6 block p-4 text-inherit no-underline" href={href}>
   <span class="font-bold">{title}</span>
   {description && <p class="mt-1 mb-0 text-muted">{description}</p>}
-</a>
+</Surface>

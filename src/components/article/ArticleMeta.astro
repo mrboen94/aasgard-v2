@@ -1,10 +1,6 @@
 ---
-import {
-  articleMetaClass,
-  articleMetaListClass,
-  articleMetaTagClass,
-  eyebrowClass
-} from "../../lib/styles/classes";
+import Eyebrow from "../ui/Eyebrow.astro";
+import TagList from "../ui/TagList.astro";
 
 interface Props {
   eyebrow?: string;
@@ -22,14 +18,10 @@ const dateLabel = date.toLocaleDateString("en", {
 });
 ---
 
-<div class={articleMetaClass}>
-  {eyebrow && <span class={eyebrowClass} data-pagefind-meta="eyebrow">{eyebrow}</span>}
+<div class="flex flex-wrap items-center gap-x-3 gap-y-2 font-accent text-small text-muted">
+  {eyebrow && <Eyebrow as="span" data-pagefind-meta="eyebrow">{eyebrow}</Eyebrow>}
   {section && <span data-pagefind-meta="section">{section}</span>}
   <time datetime={date.toISOString()} data-pagefind-meta="date">{dateLabel}</time>
   {updated && <span>Updated {updated.toLocaleDateString("en")}</span>}
-  {tags.length > 0 && (
-    <ul class={articleMetaListClass} aria-label="Tags">
-      {tags.map((tag) => <li class={articleMetaTagClass} data-pagefind-meta="tags">{tag}</li>)}
-    </ul>
-  )}
+  {tags.length > 0 && <TagList tags={tags} meta="tags" />}
 </div>

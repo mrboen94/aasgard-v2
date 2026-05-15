@@ -1,28 +1,24 @@
 ---
 import BaseLayout from "../../components/layout/BaseLayout.astro";
 import VideoProjectCard from "../../components/media/VideoProjectCard.astro";
+import Grid from "../../components/ui/Grid.astro";
+import PageIntro from "../../components/ui/PageIntro.astro";
+import PageSection from "../../components/ui/PageSection.astro";
 import { getVideoProjects } from "../../lib/content/collections";
-import {
-  eyebrowClass,
-  gridClass,
-  pageIntroClass,
-  pageIntroCopyClass,
-  pageIntroSecondaryClass,
-  pageSectionClass
-} from "../../lib/styles/classes";
 
 const entries = await getVideoProjects();
 ---
 
 <BaseLayout title="Video" description="My video projects and visual media experiments.">
-  <section class={pageSectionClass}>
-    <header class:list={[pageIntroClass, pageIntroSecondaryClass]}>
-      <p class={eyebrowClass}>Motion</p>
-      <h1>Video</h1>
-      <p class={pageIntroCopyClass}>My video projects and visual media experiments.</p>
-    </header>
-    <div class={gridClass}>
+  <PageSection>
+    <PageIntro
+      eyebrow="Motion"
+      title="Video"
+      description="My video projects and visual media experiments."
+      secondary
+    />
+    <Grid>
       {entries.map((entry) => <VideoProjectCard entry={entry} />)}
-    </div>
-  </section>
+    </Grid>
+  </PageSection>
 </BaseLayout>

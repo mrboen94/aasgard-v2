@@ -1,24 +1,20 @@
 ---
 import ArticleList from "../../components/article/ArticleList.astro";
 import BaseLayout from "../../components/layout/BaseLayout.astro";
+import PageIntro from "../../components/ui/PageIntro.astro";
+import PageSection from "../../components/ui/PageSection.astro";
 import { getArticles } from "../../lib/content/collections";
-import {
-  eyebrowClass,
-  pageIntroClass,
-  pageIntroCopyClass,
-  pageSectionClass
-} from "../../lib/styles/classes";
 
 const articles = await getArticles();
 ---
 
 <BaseLayout title="Articles" description="Some of my thoughts, notes, and technical writeups on various topics.">
-  <section class={pageSectionClass}>
-    <header class={pageIntroClass}>
-      <p class={eyebrowClass}>Writing</p>
-      <h1>Articles</h1>
-      <p class={pageIntroCopyClass}>Some of my thoughts, notes, and technical writeups on various topics.</p>
-    </header>
+  <PageSection>
+    <PageIntro
+      eyebrow="Writing"
+      title="Articles"
+      description="Some of my thoughts, notes, and technical writeups on various topics."
+    />
     <ArticleList entries={articles} />
-  </section>
+  </PageSection>
 </BaseLayout>

@@ -1,24 +1,20 @@
 ---
 import BaseLayout from "../../components/layout/BaseLayout.astro";
 import ProjectGrid from "../../components/project/ProjectGrid.astro";
+import PageIntro from "../../components/ui/PageIntro.astro";
+import PageSection from "../../components/ui/PageSection.astro";
 import { getWorkEntries } from "../../lib/content/collections";
-import {
-  eyebrowClass,
-  pageIntroClass,
-  pageIntroCopyClass,
-  pageSectionClass
-} from "../../lib/styles/classes";
 
 const entries = await getWorkEntries();
 ---
 
 <BaseLayout title="Work" description="Some of my projects, collaborations, and professional experience.">
-  <section class={pageSectionClass}>
-    <header class={pageIntroClass}>
-      <p class={eyebrowClass}>Projects</p>
-      <h1>Work</h1>
-      <p class={pageIntroCopyClass}>Some of my projects, collaborations, and professional experience.</p>
-    </header>
+  <PageSection>
+    <PageIntro
+      eyebrow="Projects"
+      title="Work"
+      description="Some of my projects, collaborations, and professional experience."
+    />
     <ProjectGrid entries={entries} />
-  </section>
+  </PageSection>
 </BaseLayout>

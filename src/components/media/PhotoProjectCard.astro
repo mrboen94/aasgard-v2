@@ -1,11 +1,8 @@
 ---
 import type { PhotoProjectEntry } from "../../lib/content/collections";
 import { photoProjectUrl } from "../../lib/content/urls";
-import {
-  listingCardDescriptionClass,
-  mediaPlaceholderClass,
-  surfaceClass
-} from "../../lib/styles/classes";
+import MediaPlaceholder from "../ui/MediaPlaceholder.astro";
+import Surface from "../ui/Surface.astro";
 
 interface Props {
   entry: PhotoProjectEntry;
@@ -14,18 +11,15 @@ interface Props {
 const { entry } = Astro.props;
 ---
 
-<article class:list={[surfaceClass, "group overflow-hidden"]}>
+<Surface as="article" class="group overflow-hidden">
   <a class="grid text-inherit no-underline" href={photoProjectUrl(entry.data.slug)}>
-    <span
-      class:list={[
-        mediaPlaceholderClass,
-        "aspect-[4/3] transition-[background-color,transform] duration-[var(--duration-theme)] ease-theme group-hover:scale-[1.015] group-focus-within:scale-[1.015]"
-      ]}
+    <MediaPlaceholder
+      class="aspect-[4/3] transition-[background-color,transform] duration-[var(--duration-theme)] ease-theme group-hover:scale-[1.015] group-focus-within:scale-[1.015]"
       aria-hidden="true"
-    ></span>
+    />
     <span class="grid gap-2 p-4">
       <h3>{entry.data.title}</h3>
-      <p class={listingCardDescriptionClass}>{entry.data.description}</p>
+      <p class="m-0 text-muted">{entry.data.description}</p>
     </span>
   </a>
-</article>
+</Surface>

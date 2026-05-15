@@ -8,11 +8,8 @@ import Figure from "../content/Figure.astro";
 import LinkCard from "../content/LinkCard.astro";
 import TechIconList from "../icons/TechIconList.astro";
 import BaseLayout from "../layout/BaseLayout.astro";
-import {
-  articleShellClass,
-  detailClass,
-  eyebrowClass
-} from "../../lib/styles/classes";
+import ArticleShell from "../ui/ArticleShell.astro";
+import Eyebrow from "../ui/Eyebrow.astro";
 import ArticleHeader from "./ArticleHeader.astro";
 import ArticleProse from "./ArticleProse.astro";
 
@@ -34,11 +31,11 @@ const tocHeadings = headings.filter((heading) => heading.depth === 2 || heading.
 ---
 
 <BaseLayout title={entry.data.title} description={entry.data.description} canonical={`/articles/${entry.data.slug}/`}>
-  <article class={articleShellClass} data-pagefind-body>
+  <ArticleShell data-pagefind-body>
     <ArticleHeader entry={entry} />
     <div class="grid items-start gap-8 [grid-template-columns:minmax(12rem,16rem)_minmax(0,1fr)] max-[56rem]:grid-cols-1">
       <aside class="sticky top-6 grid gap-4 border-l-[0.2rem] border-success pl-4 text-muted max-[56rem]:static">
-        <p class={eyebrowClass}>Contents</p>
+        <Eyebrow>Contents</Eyebrow>
         {tocHeadings.length > 0 ? (
           <ol class="m-0 grid list-none gap-2 p-0">
             {tocHeadings.map((heading) => (
@@ -48,7 +45,7 @@ const tocHeadings = headings.filter((heading) => heading.depth === 2 || heading.
             ))}
           </ol>
         ) : (
-          <p class={`${detailClass} m-0`}>Headings will appear here.</p>
+          <p class="m-0 font-accent">Headings will appear here.</p>
         )}
         <TechIconList technologies={entry.data.technologies} showLabels />
       </aside>
@@ -56,5 +53,5 @@ const tocHeadings = headings.filter((heading) => heading.depth === 2 || heading.
         <Content components={components} />
       </ArticleProse>
     </div>
-  </article>
+  </ArticleShell>
 </BaseLayout>

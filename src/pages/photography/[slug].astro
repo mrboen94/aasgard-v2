@@ -4,13 +4,9 @@ import ArticleMeta from "../../components/article/ArticleMeta.astro";
 import ArticleProse from "../../components/article/ArticleProse.astro";
 import BaseLayout from "../../components/layout/BaseLayout.astro";
 import PhotoGrid from "../../components/media/PhotoGrid.astro";
+import ArticleShell from "../../components/ui/ArticleShell.astro";
+import PageIntro from "../../components/ui/PageIntro.astro";
 import { getPhotoProjects } from "../../lib/content/collections";
-import {
-  contentHeaderClass,
-  contentPageClass,
-  eyebrowClass,
-  pageIntroCopyClass
-} from "../../lib/styles/classes";
 
 export async function getStaticPaths() {
   const entries = await getPhotoProjects();
@@ -26,20 +22,23 @@ const { Content } = await render(entry);
 ---
 
 <BaseLayout title={entry.data.title} description={entry.data.description} canonical={`/photography/${entry.data.slug}/`}>
-  <article class={contentPageClass} data-pagefind-body>
-    <header class={contentHeaderClass}>
-      <p class={eyebrowClass}>Photography</p>
-      <h1 data-pagefind-meta="title">{entry.data.title}</h1>
-      <p class={pageIntroCopyClass}>{entry.data.description}</p>
+  <ArticleShell class="grid gap-6 py-12" data-pagefind-body>
+    <PageIntro
+      class="gap-4"
+      eyebrow="Photography"
+      title={entry.data.title}
+      titlePagefind
+      description={entry.data.description}
+    >
       <ArticleMeta date={entry.data.date} section="photography" />
       <dl class="m-0 flex flex-wrap gap-3">
         {entry.data.camera && <><dt class="m-0 font-accent text-muted">Camera</dt><dd class="m-0">{entry.data.camera}</dd></>}
         {entry.data.location && <><dt class="m-0 font-accent text-muted">Location</dt><dd class="m-0">{entry.data.location}</dd></>}
       </dl>
-    </header>
+    </PageIntro>
     <PhotoGrid />
     <ArticleProse>
       <Content />
     </ArticleProse>
-  </article>
+  </ArticleShell>
 </BaseLayout>

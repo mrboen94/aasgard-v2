@@ -1,12 +1,7 @@
 ---
 import { articleUrl } from "../../lib/content/urls";
 import type { ArticleEntry } from "../../lib/content/collections";
-import {
-  listingCardClass,
-  listingCardDescriptionClass,
-  listingCardLinkClass,
-  surfaceClass
-} from "../../lib/styles/classes";
+import Surface from "../ui/Surface.astro";
 import ArticleMeta from "./ArticleMeta.astro";
 
 interface Props {
@@ -16,10 +11,10 @@ interface Props {
 const { entry } = Astro.props;
 ---
 
-<article class:list={[listingCardClass, surfaceClass]}>
-  <a class={listingCardLinkClass} href={articleUrl(entry.data.slug)}>
+<Surface as="article" class="grid gap-4 p-6">
+  <a class="grid gap-2 text-inherit no-underline" href={articleUrl(entry.data.slug)}>
     <h3>{entry.data.title}</h3>
-    <p class={listingCardDescriptionClass}>{entry.data.description}</p>
+    <p class="m-0 text-muted">{entry.data.description}</p>
   </a>
   <ArticleMeta eyebrow={entry.data.eyebrow} date={entry.data.date} tags={entry.data.tags} />
-</article>
+</Surface>

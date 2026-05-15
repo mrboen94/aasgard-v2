@@ -1,0 +1,29 @@
+---
+interface Props {
+  controls: string;
+  id: string;
+  joined?: boolean;
+  selected?: boolean;
+}
+
+const {
+  controls,
+  id,
+  joined = false,
+  selected = false
+} = Astro.props;
+---
+
+<button
+  aria-controls={controls}
+  aria-selected={selected ? "true" : "false"}
+  class:list={[
+    "relative mb-[-1px] min-h-10 flex-none cursor-pointer appearance-none whitespace-nowrap rounded-t-small border border-border border-t-[0.15rem] border-t-transparent bg-code px-4 py-2 font-accent text-small leading-[1.4] text-muted aria-selected:bg-surface aria-selected:border-t-accent aria-selected:text-foreground hover:text-foreground focus-visible:text-foreground",
+    joined && "border-s-0"
+  ]}
+  id={id}
+  role="tab"
+  type="button"
+>
+  <slot />
+</button>

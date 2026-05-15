@@ -1,19 +1,12 @@
 ---
 import BaseLayout from "../components/layout/BaseLayout.astro";
-import {
-  eyebrowClass,
-  pageIntroClass,
-  pageIntroCopyClass,
-  pageSectionClass
-} from "../lib/styles/classes";
+import PageIntro from "../components/ui/PageIntro.astro";
+import PageSection from "../components/ui/PageSection.astro";
 ---
 
 <BaseLayout title="Search" description="Search the static site.">
-  <section class={pageSectionClass}>
-    <header class={pageIntroClass}>
-      <p class={eyebrowClass}>Pagefind</p>
-      <h1>Search</h1>
-    </header>
+  <PageSection>
+    <PageIntro eyebrow="Pagefind" title="Search" />
     <div id="search" class="grid max-w-prose gap-4">
       <label class="grid gap-2 font-accent text-small text-muted" for="pagefind-search-input">
         <span>Search query</span>
@@ -25,10 +18,10 @@ import {
           type="search"
         />
       </label>
-      <p class={`${pageIntroCopyClass} font-accent text-small`} data-pagefind-status></p>
+      <p class="m-0 max-w-section-copy font-accent text-small text-muted" data-pagefind-status></p>
       <div class="grid gap-4" data-pagefind-results></div>
     </div>
-  </section>
+  </PageSection>
   <script>
     import { mountOnAstroPageLoad } from "../lib/dom/lifecycle";
     import { mountPagefindSearch } from "../lib/search/pagefind";

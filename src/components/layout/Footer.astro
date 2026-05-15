@@ -1,14 +1,14 @@
 ---
 import { site } from "../../data/site";
-import { containerClass } from "../../lib/styles/classes";
+import Container from "../ui/Container.astro";
 ---
 
 <footer
   class="mt-16 border-t border-border text-muted transition-[border-color,color] duration-[var(--duration-theme)] ease-theme"
   transition:animate="none"
 >
-  <div class={`${containerClass} flex flex-wrap items-center justify-between gap-4 py-6`}>
+  <Container class="flex flex-wrap items-center justify-between gap-4 py-6">
     <p class="m-0">&copy; {new Date().getFullYear()} {site.author}</p>
     <a href="/rss.xml">RSS</a>
-  </div>
+  </Container>
 </footer>

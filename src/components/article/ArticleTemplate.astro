@@ -7,7 +7,7 @@ import DemoFrame from "../content/DemoFrame.astro";
 import Figure from "../content/Figure.astro";
 import LinkCard from "../content/LinkCard.astro";
 import BaseLayout from "../layout/BaseLayout.astro";
-import { articleShellClass } from "../../lib/styles/classes";
+import ArticleShell from "../ui/ArticleShell.astro";
 import ArticleHeader from "./ArticleHeader.astro";
 import ArticleProse from "./ArticleProse.astro";
 
@@ -21,10 +21,10 @@ const components = { Aside, Callout, CodeNote, DemoFrame, Figure, LinkCard };
 ---
 
 <BaseLayout title={entry.data.title} description={entry.data.description} canonical={`/articles/${entry.data.slug}/`}>
-  <article class={articleShellClass} data-pagefind-body>
+  <ArticleShell data-pagefind-body>
     <ArticleHeader entry={entry} />
     <ArticleProse>
       <Content components={components} />
     </ArticleProse>
-  </article>
+  </ArticleShell>
 </BaseLayout>

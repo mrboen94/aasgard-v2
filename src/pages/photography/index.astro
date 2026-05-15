@@ -1,27 +1,23 @@
 ---
 import BaseLayout from "../../components/layout/BaseLayout.astro";
 import PhotoProjectCard from "../../components/media/PhotoProjectCard.astro";
+import Grid from "../../components/ui/Grid.astro";
+import PageIntro from "../../components/ui/PageIntro.astro";
+import PageSection from "../../components/ui/PageSection.astro";
 import { getPhotoProjects } from "../../lib/content/collections";
-import {
-  eyebrowClass,
-  gridClass,
-  pageIntroClass,
-  pageIntroCopyClass,
-  pageSectionClass
-} from "../../lib/styles/classes";
 
 const entries = await getPhotoProjects();
 ---
 
 <BaseLayout title="Photography" description="My photography projects and image essays.">
-  <section class={pageSectionClass}>
-    <header class={pageIntroClass}>
-      <p class={eyebrowClass}>Images</p>
-      <h1>Photography</h1>
-      <p class={pageIntroCopyClass}>My photography projects and image essays.</p>
-    </header>
-    <div class={gridClass}>
+  <PageSection>
+    <PageIntro
+      eyebrow="Images"
+      title="Photography"
+      description="My photography projects and image essays."
+    />
+    <Grid>
       {entries.map((entry) => <PhotoProjectCard entry={entry} />)}
-    </div>
-  </section>
+    </Grid>
+  </PageSection>
 </BaseLayout>

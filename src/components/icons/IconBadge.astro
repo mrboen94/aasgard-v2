@@ -1,6 +1,6 @@
 ---
 import { Icon } from "astro-icon/components";
-import { visuallyHiddenClass } from "../../lib/styles/classes";
+import VisuallyHidden from "../ui/VisuallyHidden.astro";
 
 interface Props {
   name: string;
@@ -15,5 +15,5 @@ const { name, label } = Astro.props;
   title={label}
 >
   <Icon name={name} aria-hidden="true" />
-  <span class={visuallyHiddenClass}>{label}</span>
+  <VisuallyHidden>{label}</VisuallyHidden>
 </span>

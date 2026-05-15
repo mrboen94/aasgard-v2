@@ -5,6 +5,7 @@ import type {
   CanvasSettingsLink,
   CanvasSettingsNode
 } from "./canvasExperiment";
+import Dropdown from "../ui/Dropdown.astro";
 import { labelColorClass, labelColorStyle } from "./canvasExperimentDom";
 
 interface Props {
@@ -319,49 +320,33 @@ function pairAriaLabel(item: RenderItem & { kind: "pair" }) {
 
 {
   node.type === "select" && (
-    <label
-      class:list={controlClass(node)}
+    <Dropdown
+      label={node.label}
+      labelClass={labelColorClass(node.labelColor)}
+      options={node.options}
+      selectAttributes={{ "data-canvas-control": node.id }}
       style={labelColorStyle(node.labelColor)}
-    >
-      <span class:list={labelColorClass(node.labelColor)}>{node.label}</span>
-      <select
-        class="min-h-8 w-full min-w-0 rounded-small border border-border bg-surface px-2 py-1 font-accent text-meta text-foreground accent-success shadow-none outline-none transition-[background-color,border-color,color,box-shadow] duration-[var(--duration-fast)] ease-theme focus-visible:border-success focus-visible:ring-2 focus-visible:ring-success"
-        data-canvas-control={node.id}
-      >
-        {node.options.map((option) => (
-          <option
-            class="bg-surface text-foreground"
-            selected={option.value === node.value}
-            value={option.value}
-          >
-            {option.label}
-          </option>
-        ))}
-      </select>
-    </label>
+      value={node.value}
+    />
   )
 }
 
 {
   node.type === "preset" && (
-    <label
-      class:list={controlClass(node)}
+    <Dropdown
+      label={node.label}
+      labelClass={labelColorClass(node.labelColor)}
+      options={node.options.map((option) => ({
+        label: option.label,
+        value: option.value
+      }))}
+      placeholder={node.placeholder ?? "Choose preset"}
+      selectAttributes={{
+        "data-canvas-preset": node.id,
+        "data-canvas-preset-options": JSON.stringify(node.options)
+      }}
       style={labelColorStyle(node.labelColor)}
-    >
-      <span class:list={labelColorClass(node.labelColor)}>{node.label}</span>
-      <select
-        class="min-h-8 w-full min-w-0 rounded-small border border-border bg-surface px-2 py-1 font-accent text-meta text-foreground accent-success shadow-none outline-none transition-[background-color,border-color,color,box-shadow] duration-[var(--duration-fast)] ease-theme focus-visible:border-success focus-visible:ring-2 focus-visible:ring-success"
-        data-canvas-preset={node.id}
-        data-canvas-preset-options={JSON.stringify(node.options)}
-      >
-        <option class="bg-surface text-muted" selected value="">
-          {node.placeholder ?? "Choose preset"}
-        </option>
-        {node.options.map((option) => (
-          <option class="bg-surface text-foreground" value={option.value}>{option.label}</option>
-        ))}
-      </select>
-    </label>
+    />
   )
 }
 

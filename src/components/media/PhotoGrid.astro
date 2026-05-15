@@ -1,11 +1,11 @@
 ---
-import { mediaPlaceholderClass } from "../../lib/styles/classes";
+import MediaPlaceholder from "../ui/MediaPlaceholder.astro";
 ---
 
 <div class="grid grid-cols-3 gap-3 max-[44rem]:grid-cols-1">
   <slot>
-    <div class:list={[mediaPlaceholderClass, "aspect-[4/5] rounded-card border border-border transition-[background-color,border-color] duration-[var(--duration-theme)] ease-theme"]}></div>
-    <div class:list={[mediaPlaceholderClass, "aspect-[4/5] rounded-card border border-border transition-[background-color,border-color] duration-[var(--duration-theme)] ease-theme"]}></div>
-    <div class:list={[mediaPlaceholderClass, "aspect-[4/5] rounded-card border border-border transition-[background-color,border-color] duration-[var(--duration-theme)] ease-theme"]}></div>
+    <MediaPlaceholder as="div" class="aspect-[4/5] rounded-card border border-border transition-[background-color,border-color] duration-[var(--duration-theme)] ease-theme" />
+    <MediaPlaceholder as="div" class="aspect-[4/5] rounded-card border border-border transition-[background-color,border-color] duration-[var(--duration-theme)] ease-theme" />
+    <MediaPlaceholder as="div" class="aspect-[4/5] rounded-card border border-border transition-[background-color,border-color] duration-[var(--duration-theme)] ease-theme" />
   </slot>
 </div>

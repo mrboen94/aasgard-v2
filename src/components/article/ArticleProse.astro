@@ -1,9 +1,4 @@
 ---
-import {
-  articleProseClass,
-  articleProseWideClass
-} from "../../lib/styles/classes";
-
 interface Props {
   wide?: boolean;
 }
@@ -11,6 +6,11 @@ interface Props {
 const { wide = false } = Astro.props;
 ---
 
-<div class:list={[articleProseClass, wide && articleProseWideClass]}>
+<div
+  class:list={[
+    "w-full min-w-0 max-w-prose break-words [&_.expressive-code]:max-w-full [&_.expressive-code]:rounded-tl-none [&_canvas]:w-full [&_canvas]:rounded-card [&_h2]:mt-8 [&_h2]:mb-4 [&_h3]:mt-8 [&_h3]:mb-4 [&_iframe]:max-w-full [&_img]:max-w-full [&_img]:rounded-card [&_pre]:max-w-full [&_pre]:overflow-x-auto [&_pre]:rounded-tl-none [&_table]:max-w-full [&_table]:overflow-x-auto [&_table]:rounded-tl-none [&_video]:max-w-full",
+    wide && "max-w-prose-wide"
+  ]}
+>
   <slot />
 </div>

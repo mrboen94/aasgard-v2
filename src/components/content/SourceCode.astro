@@ -4,7 +4,7 @@ import {
   prepareSourceCodeFiles,
   type SourceCodeProps as Props
 } from "../../lib/source-code/prepare";
-import { sourceCodeTabClass } from "../../lib/styles/classes";
+import SourceCodeTab from "./SourceCodeTab.astro";
 
 const props = Astro.props;
 const groupId = `source-code-${Math.random().toString(36).slice(2)}`;
@@ -17,16 +17,14 @@ const hasTabs = preparedFiles.length > 1;
     hasTabs && (
       <div aria-label="Source files" class="flex items-stretch overflow-x-auto overflow-y-hidden" role="tablist">
         {preparedFiles.map((file, index) => (
-          <button
-            aria-controls={`${file.id}-panel`}
-            aria-selected={index === 0 ? "true" : "false"}
-            class:list={[sourceCodeTabClass, index > 0 && "border-s-0"]}
+          <SourceCodeTab
+            controls={`${file.id}-panel`}
             id={`${file.id}-tab`}
-            role="tab"
-            type="button"
+            joined={index > 0}
+            selected={index === 0}
           >
             {file.title}
-          </button>
+          </SourceCodeTab>
         ))}
       </div>
     )

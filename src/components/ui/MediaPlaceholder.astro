@@ -1,0 +1,14 @@
+---
+interface Props {
+  as?: string;
+  class?: string;
+  [key: string]: any;
+}
+
+const { as = "span", class: className, ...attrs } = Astro.props as Props;
+const Tag = as;
+---
+
+<Tag class:list={["bg-[var(--background-media-placeholder)]", className]} {...attrs}>
+  <slot />
+</Tag>

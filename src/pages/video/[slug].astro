@@ -4,14 +4,9 @@ import ArticleMeta from "../../components/article/ArticleMeta.astro";
 import ArticleProse from "../../components/article/ArticleProse.astro";
 import BaseLayout from "../../components/layout/BaseLayout.astro";
 import VideoEmbed from "../../components/media/VideoEmbed.astro";
+import ArticleShell from "../../components/ui/ArticleShell.astro";
+import PageIntro from "../../components/ui/PageIntro.astro";
 import { getVideoProjects } from "../../lib/content/collections";
-import {
-  contentHeaderClass,
-  contentPageClass,
-  eyebrowClass,
-  pageIntroCopyClass,
-  pageIntroSecondaryClass
-} from "../../lib/styles/classes";
 
 export async function getStaticPaths() {
   const entries = await getVideoProjects();
@@ -27,13 +22,17 @@ const { Content } = await render(entry);
 ---
 
 <BaseLayout title={entry.data.title} description={entry.data.description} canonical={`/video/${entry.data.slug}/`}>
-  <article class={contentPageClass} data-pagefind-body>
-    <header class:list={[contentHeaderClass, pageIntroSecondaryClass]}>
-      <p class={eyebrowClass}>Video</p>
-      <h1 data-pagefind-meta="title">{entry.data.title}</h1>
-      <p class={pageIntroCopyClass}>{entry.data.description}</p>
+  <ArticleShell class="grid gap-6 py-12" data-pagefind-body>
+    <PageIntro
+      class="gap-4"
+      eyebrow="Video"
+      title={entry.data.title}
+      titlePagefind
+      description={entry.data.description}
+      secondary
+    >
       <ArticleMeta date={entry.data.date} section="video" />
-    </header>
+    </PageIntro>
     <VideoEmbed
       provider={entry.data.provider}
       id={entry.data.videoId}
@@ -43,5 +42,5 @@ const { Content } = await render(entry);
     <ArticleProse>
       <Content />
     </ArticleProse>
-  </article>
+  </ArticleShell>
 </BaseLayout>
