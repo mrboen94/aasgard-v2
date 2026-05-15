@@ -2,10 +2,10 @@
 import { render } from "astro:content";
 import ArticleMeta from "../../components/article/ArticleMeta.astro";
 import BaseLayout from "../../components/layout/BaseLayout.astro";
-import ContentShell from "../../components/ui/ContentShell.astro";
-import MediaGrid from "../../components/ui/MediaGrid.astro";
-import PageIntro from "../../components/ui/PageIntro.astro";
-import Prose from "../../components/ui/Prose.astro";
+import ContentShell from "../../components/ui/layout/ContentShell.astro";
+import MediaGrid from "../../components/ui/layout/MediaGrid.astro";
+import PageIntro from "../../components/ui/typography/PageIntro.astro";
+import Prose from "../../components/ui/typography/Prose.astro";
 import { getPhotoProjects } from "../../lib/content/collections";
 
 export async function getStaticPaths() {

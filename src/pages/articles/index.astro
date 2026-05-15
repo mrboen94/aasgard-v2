@@ -1,8 +1,8 @@
 ---
 import ArticleList from "../../components/article/ArticleList.astro";
 import BaseLayout from "../../components/layout/BaseLayout.astro";
-import PageIntro from "../../components/ui/PageIntro.astro";
-import PageSection from "../../components/ui/PageSection.astro";
+import PageIntro from "../../components/ui/typography/PageIntro.astro";
+import PageSection from "../../components/ui/layout/PageSection.astro";
 import { getArticles } from "../../lib/content/collections";
 
 const articles = await getArticles();

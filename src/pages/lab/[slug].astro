@@ -3,9 +3,9 @@ import { render } from "astro:content";
 import ArticleMeta from "../../components/article/ArticleMeta.astro";
 import TechIconList from "../../components/icons/TechIconList.astro";
 import BaseLayout from "../../components/layout/BaseLayout.astro";
-import ContentShell from "../../components/ui/ContentShell.astro";
-import Prose from "../../components/ui/Prose.astro";
-import VisuallyHidden from "../../components/ui/VisuallyHidden.astro";
+import ContentShell from "../../components/ui/layout/ContentShell.astro";
+import Prose from "../../components/ui/typography/Prose.astro";
+import VisuallyHidden from "../../components/ui/a11y/VisuallyHidden.astro";
 import { getExperiments } from "../../lib/content/collections";
 
 export async function getStaticPaths() {
